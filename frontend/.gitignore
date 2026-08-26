@@ -47,6 +47,9 @@ cypress/screenshots/
 # TypeScript
 *.tsbuildinfo
 
+# Lighthouse reports (contain embedded API keys from scanned pages)
+lighthouse-report.*
+
 # Firebase / Vercel / Netlify / AWS Deployments (if applicable)
 .firebase/
 .vercel/

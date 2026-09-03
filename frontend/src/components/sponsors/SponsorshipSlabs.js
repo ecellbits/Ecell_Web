@@ -2,15 +2,15 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
 import ChromaGrid from '../Teams/ChromaGrid';
-import shihab from "../../assets/por_photos/shihab.jpg";
-import akshat_kumar from "../../assets/por_photos/akshat_kumar.jpeg";
-import akshat_ajmera from "../../assets/por_photos/akshat_ajmera.jpeg";
+import dhaanvi from "../../assets/por_photos/p Dhaanvi Bhadani.jpeg";
+import sejal from "../../assets/por_photos/p Sejal Mittal.jpeg";
+import divvij from "../../assets/por_photos/p Divvij Chichra.jpeg";
 
 const SponsorshipSlabs = () => {
     const sponsorshipTeam = [
-        { name: "Shihab Saiyad", role: "Chairman", image: shihab, email: "f20230223@hyderabad.bits-pilani.ac.in", phone: "+91 9347270686", linkedin: "https://www.linkedin.com/in/shihab-saiyad/" },
-        { name: "Akshat Kumar", role: "Execution Head", image: akshat_kumar, linkedin: "https://www.linkedin.com/in/akshat-kumar-a898a61a7/" },
-        { name: "Akshat Ajmera", role: "Tech Head", image: akshat_ajmera, email: "f20230141@hyderabad.bits-pilani.ac.in", phone: "+91 9636211800", linkedin: "https://www.linkedin.com/in/akshatajmera07/" },
+        { name: "Dhaanvi Bhadani", role: "Chairwoman Launchpad", image: dhaanvi, email: "f20240762@hyderabad.bits-pilani.ac.in", phone: "+91 63618 03120", linkedin: "https://www.linkedin.com/in/dhaanvi-bhadani-533a08322/" },
+        { name: "Sejal Mittal", role: "Director of Partnerships", image: sejal, email: "f20240161@hyderabad.bits-pilani.ac.in", phone: "+91 98216 89504", linkedin: "https://www.linkedin.com/in/sejal-mittal-496458326/" },
+        { name: "Divvij Chichra", role: "Technical Head", image: divvij, email: "f20240298@hyderabad.bits-pilani.ac.in", phone: "+91 93131 35129", linkedin: "https://www.linkedin.com/in/divvij-chichra-3ab7b4327/" },
     ];
 
     const slabs = [

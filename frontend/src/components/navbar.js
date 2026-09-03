@@ -37,6 +37,13 @@ const Navbar = ({ onToggleMenu, isOpen, isLaunchpad }) => {
                   Events
                 </NavLink>
                 <NavLink
+                  to="/launchpad/team"
+                  className={({ isActive }) => `nav-link-new ${isActive ? "active" : ""}`}
+                >
+                  Team
+                </NavLink>
+                {/* Temporarily hidden from public:
+                <NavLink
                   to="/launchpad/passes"
                   className={({ isActive }) => `nav-link-new ${isActive ? "active" : ""}`}
                 >
@@ -54,6 +61,7 @@ const Navbar = ({ onToggleMenu, isOpen, isLaunchpad }) => {
                 >
                   Schedule
                 </NavLink>
+                */}
               </>
             ) : (
               <>
@@ -83,14 +91,6 @@ const Navbar = ({ onToggleMenu, isOpen, isLaunchpad }) => {
               <>
                 <div className="nav-cell-bottom border-right">
                   <NavLink
-                    to="/launchpad/team"
-                    className={({ isActive }) => `nav-link-new ${isActive ? "active" : ""}`}
-                  >
-                    Team
-                  </NavLink>
-                </div>
-                <div className="nav-cell-bottom border-right">
-                  <NavLink
                     to="/"
                     className={({ isActive }) => `nav-link-new launchpad-link ${isActive ? "active" : ""}`}
                   >
@@ -103,6 +103,7 @@ const Navbar = ({ onToggleMenu, isOpen, isLaunchpad }) => {
                     to="/launchpad/contact"
                     className={({ isActive }) => `nav-link-new ${isActive ? "active" : ""}`}
                   >
+                    <Phone size={14} className="nav-icon-phone" />
                     Contact Us
                   </NavLink>
                 </div>

@@ -14,6 +14,7 @@ import ss3 from '../../assets/Speaker_session.png';
 
 import st1 from '../../assets/startup.JPG';
 import mt1 from '../../assets/MT.png';
+import cm2 from '../../assets/community_meet/community_meet_2.jpg';
 
 import na1 from '../../assets/class.jpg';
 import na2 from '../../assets/auction.jpg';
@@ -111,13 +112,13 @@ const List = () => {
       className: "md:col-span-1 md:row-span-2",
     },
     {
-      title: "STARTUP SPOTLIGHT",
-      subtitle: "Showcasing groundbreaking innovation",
+      title: "COMMUNITY MEET",
+      subtitle: "Ideas Into Impact",
       type: "single",
-      image: st1,
+      image: cm2,
       color: "#6F66FF",
       textColor: "white",
-      link: "#",
+      link: "/community-meet",
       className: "md:col-span-1 md:row-span-1",
     },
     {

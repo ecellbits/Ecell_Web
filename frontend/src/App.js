@@ -145,10 +145,10 @@ function MainContent() {
   const launchpadMenuItems = [
     { label: 'Home', ariaLabel: 'Go to Launchpad home', link: '/launchpad' },
     { label: 'Links', ariaLabel: 'All Launchpad links', link: '/launchpad/links' },
-    { label: 'Schedule', ariaLabel: 'View schedule', link: '/launchpad/schedules' },
+    // { label: 'Schedule', ariaLabel: 'View schedule', link: '/launchpad/schedules' },
     { label: 'Events', ariaLabel: 'View events', link: '/launchpad/events' },
-    { label: 'Passes', ariaLabel: 'Buy passes', link: '/launchpad/passes' },
-    { label: 'Accoms', ariaLabel: 'View accommodation', link: '/launchpad/accommodation' },
+    // { label: 'Passes', ariaLabel: 'Buy passes', link: '/launchpad/passes' },
+    // { label: 'Accoms', ariaLabel: 'View accommodation', link: '/launchpad/accommodation' },
     { label: 'Speakers', ariaLabel: 'View speakers', link: '/launchpad/speakers' },
     { label: 'Sponsors', ariaLabel: 'View sponsors', link: '/launchpad/sponsor' },
     { label: 'Gallery', ariaLabel: 'View gallery', link: '/launchpad/gallery' },

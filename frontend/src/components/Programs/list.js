@@ -12,7 +12,6 @@ import ss1 from '../../assets/ss.JPG';
 import ss2 from '../../assets/speaker2.jpg';
 import ss3 from '../../assets/Speaker_session.png';
 
-import st1 from '../../assets/startup.JPG';
 import mt1 from '../../assets/MT.png';
 import cm2 from '../../assets/community_meet/community_meet_2.jpg';
 

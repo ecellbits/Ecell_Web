@@ -2,17 +2,20 @@ import React from "react";
 import { motion } from "framer-motion";
 import ChromaGrid from "../Teams/ChromaGrid";
 
-import shihab from "../../assets/por_photos/shihab.jpg";
-import darsh from "../../assets/por_photos/darsh.jpg";
+import sampooran from "../../assets/por_photos/p Sampooran Sinha.jpeg";
+import dhaanvi from "../../assets/por_photos/p Dhaanvi Bhadani.jpeg";
+import aditya from "../../assets/por_photos/p Aditya Maheshwari.jpg";
+import anshul from "../../assets/por_photos/p Anshul Nanwani .jpeg";
+import sejal from "../../assets/por_photos/p Sejal Mittal.jpeg";
+import divvij from "../../assets/por_photos/p Divvij Chichra.jpeg";
+import shreya from "../../assets/por_photos/p Shreya Jhavar.jpg";
+import hussain from "../../assets/por_photos/p_hussain.jpg";
+import aryan from "../../assets/por_photos/p_aryan_saini.jpg";
+import defaultAvatar from "../../assets/navbarlogo.png";
+
 import hamaid from "../../assets/por_photos/hamaid.jpg";
-import manas from "../../assets/por_photos/manas.jpg";
-import raungta from "../../assets/por_photos/raungta.jpg";
-import akshaye from "../../assets/por_photos/akshaye.jpg";
-import ayush from "../../assets/por_photos/ayush.jpg";
-import akshat_ajmera from "../../assets/por_photos/akshat_ajmera.jpeg";
 import akshat_kumar from "../../assets/por_photos/akshat_kumar.jpeg";
 import priyansh from "../../assets/por_photos/priyansh.jpeg";
-import mitesh from "../../assets/por_photos/mitesh.jpeg";
 import dhruv from "../../assets/por_photos/dhruv.jpeg";
 import shaan from "../../assets/por_photos/shaan.jpeg";
 import gunabhirup from "../../assets/por_photos/guna.jpeg";
@@ -20,75 +23,83 @@ import sriniketh from "../../assets/por_photos/sriniketh_mulagada.jpeg";
 import shahil from "../../assets/por_photos/shahil.jpeg";
 import rounak from "../../assets/por_photos/rounak.jpeg";
 import harshit from "../../assets/por_photos/harshit.jpeg";
+
 const teams = [
   {
     title: "Launchpad Executives",
     members: [
       {
-        name: "Shihab Saiyad",
-        role: "Chairman",
-        image: shihab,
-        linkedin: "https://www.linkedin.com/in/shihab-saiyad/",
-        email: "f20230223@hyderabad.bits-pilani.ac.in",
-        phone: "+91 9347270686",
+        name: "Sampooran Sinha",
+        role: "President",
+        image: sampooran,
+        linkedin: "https://www.linkedin.com/in/sampooran-sinha/",
+        email: "f20240997@hyderabad.bits-pilani.ac.in",
+        phone: "+91 70037 12277",
       },
       {
-        name: "Akshay Srivastava",
-        role: "Vice Chairman",
-        image: akshaye,
-        linkedin: "https://www.linkedin.com/in/akshay-srivastava-389ba92b4/",
-        email: "f20230810@hyderabad.bits-pilani.ac.in",
-        phone: "+91 7905668214",
+        name: "Dhaanvi Bhadani",
+        role: "Chairwoman Launchpad",
+        image: dhaanvi,
+        linkedin: "https://www.linkedin.com/in/dhaanvi-bhadani-533a08322/",
+        email: "f20240762@hyderabad.bits-pilani.ac.in",
+        phone: "+91 63618 03120",
       },
       {
-        name: "Manas Tripathi",
-        role: "Vice President",
-        image: manas,
-        linkedin: "https://www.linkedin.com/in/tripathi-manas/",
-        email: "f20230129@hyderabad.bits-pilani.ac.in",
-        phone: "+91 8756113381",
+        name: "Aditya Maheshwari",
+        role: "Vice-President",
+        image: aditya,
+        linkedin: "https://www.linkedin.com/in/aditya-maheshwari-bits/",
+        email: "f20240261@hyderabad.bits-pilani.ac.in",
+        phone: "+91 70231 61401",
       },
       {
-        name: "Divyansh Rungta",
-        role: "Director of Patnerships",
-        image: raungta,
-        linkedin: "https://www.linkedin.com/in/divyansh-rungta-4923752b5/",
-        email: "f20230241@hyderabad.bits-pilani.ac.in",
-        phone: "+91 9182002030",
+        name: "Anshul Nanwani",
+        role: "Vice-Chairman Launchpad",
+        image: anshul,
+        linkedin: "https://www.linkedin.com/in/anshul-nanwani-040559322/",
+        email: "f20241126@hyderabad.bits-pilani.ac.in",
+        phone: "+91 95525 86398",
       },
       {
-        name: "Aayush Jain",
+        name: "Sejal Mittal",
+        role: "Director of Partnerships",
+        image: sejal,
+        linkedin: "https://www.linkedin.com/in/sejal-mittal-496458326/",
+        email: "f20240161@hyderabad.bits-pilani.ac.in",
+        phone: "+91 98216 89504",
+      },
+      {
+        name: "Divvij Chichra",
+        role: "Technical Head",
+        image: divvij,
+        linkedin: "https://www.linkedin.com/in/divvij-chichra-3ab7b4327/",
+        email: "f20240298@hyderabad.bits-pilani.ac.in",
+        phone: "+91 93131 35129",
+      },
+      {
+        name: "Shreya Jhavar",
+        role: "Digital Outreach and Collaborations Head",
+        image: shreya,
+        linkedin: "https://www.linkedin.com/in/shreya-jhavar-b2136428b/",
+        email: "f20241113@hyderabad.bits-pilani.ac.in",
+        phone: "+91 83799 20920",
+      },
+      {
+        name: "Hussain Kagalwala",
         role: "Treasurer",
-        image: ayush,
-        linkedin: "https://www.linkedin.com/in/aayush-jain-56a6a9225/",
-        email: "f20230507@hyderabad.bits-pilani.ac.in",
-        phone: "+91 9098658361",
+        image: hussain,
+        linkedin: "https://www.linkedin.com/in/hussain-kagalwala-467a77328/",
+        email: "f20240945@hyderabad.bits-pilani.ac.in",
+        phone: "+91 83203 75491",
       },
       {
-        name: "Darsh Saxena",
-        role: "Director of Initiatives & Strategy",
-        image: darsh,
-        linkedin: "https://www.linkedin.com/in/darsh-saxena-2a1610201/",
-        email: "f20230508@hyderabad.bits-pilani.ac.in",
-        phone: "+91 8619338664",
+        name: "Aryan Saini",
+        role: "Director of Media and Marketing",
+        image: aryan,
+        linkedin: "https://www.linkedin.com/in/aryan-saini-96a180324/",
+        email: "f20241154@hyderabad.bits-pilani.ac.in",
+        phone: "+91 96858 40060",
       },
-      {
-        name: "Akshat Ajmera",
-        role: "Tech Head",
-        image: akshat_ajmera,
-        linkedin: "https://www.linkedin.com/in/akshatajmera07/",
-        email: "f20230141@hyderabad.bits-pilani.ac.in",
-        phone: "+91 9636211800",
-      },
-      {
-        name: "Mitesh Agrawal",
-        role: "Media Head",
-        image: mitesh,
-        linkedin: "https://www.linkedin.com/in/mitesh-agrawal-2a3949327/",
-        email: "f20230749@hyderabad.bits-pilani.ac.in",
-        phone: "+91 8308936341",
-      },
-
     ],
   },
   {
@@ -203,16 +214,16 @@ const ContactSection = () => {
                 let gradient = "linear-gradient(135deg, rgba(107,95,255,0.2), rgba(212,255,0,0.2))";
                 let borderColor = "#6b5fff";
 
-                if (role.includes("chairman") || role.includes("president") || role.includes("chairman")) {
+                if (role.includes("chairman") || role.includes("chairwoman") || role.includes("president")) {
                   gradient = "linear-gradient(135deg, rgba(212,255,0,0.28), rgba(107,95,255,0.24))";
                   borderColor = "#d4ff00";
                 } else if (role.includes("tech") || role.includes("technical") || role.includes("design") || role.includes("videography")) {
                   gradient = "linear-gradient(135deg, rgba(107,95,255,0.26), rgba(212,255,0,0.18))";
                   borderColor = "#8b7fff";
-                } else if (role.includes("media") || role.includes("publicity")) {
+                } else if (role.includes("media") || role.includes("publicity") || role.includes("digital") || role.includes("outreach") || role.includes("marketing")) {
                   gradient = "linear-gradient(135deg, rgba(107,95,255,0.22), rgba(212,255,0,0.22))";
                   borderColor = "#6b5fff";
-                } else if (role.includes("treasurer") || role.includes("operations") || role.includes("hospitality")) {
+                } else if (role.includes("treasurer") || role.includes("partner") || role.includes("operations") || role.includes("hospitality")) {
                   gradient = "linear-gradient(135deg, rgba(212,255,0,0.22), rgba(107,95,255,0.18))";
                   borderColor = "#a1ff33";
                 }
@@ -228,6 +239,9 @@ const ContactSection = () => {
                   gradient,
                   borderColor,
                   imgStyle: (() => {
+                    if (m.image === defaultAvatar) {
+                      return { objectFit: "contain", padding: "30px", background: "rgba(255,255,255,0.03)" };
+                    }
                     const name = m.name.toLowerCase();
 
                     // Hamaid: zoom in to reduce background
@@ -245,8 +259,12 @@ const ContactSection = () => {
                       return { transform: "scale(1.4)", objectPosition: "center 20%" };
                     }
 
-                    // Ayush, Harshit, Shaan: Align top to show face
-                    if (name.includes("ayush") || name.includes("harshit") || name.includes("shaan")) {
+                    if (name.includes("sampooran")) {
+                      return { objectPosition: "center 20%" };
+                    }
+
+                    // Harshit, Shaan, Aditya, Dhaanvi, Anshul, Sejal, Divvij, Shreya, Hussain, Aryan: Align top
+                    if (name.includes("harshit") || name.includes("shaan") || name.includes("aditya") || name.includes("dhaanvi") || name.includes("anshul") || name.includes("sejal") || name.includes("divvij") || name.includes("shreya") || name.includes("hussain") || name.includes("aryan")) {
                       return { objectPosition: "top" };
                     }
 

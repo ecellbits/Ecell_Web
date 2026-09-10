@@ -27,7 +27,7 @@ const teamMembers = [
   },
   {
     name: "Dhaanvi Bhadani",
-    role: "Chairwoman Launchpad",
+    role: "Launchpad Chairwoman",
     image: dhaanvi,
     linkedin: "https://www.linkedin.com/in/dhaanvi-bhadani-533a08322/",
     email: "f20240762@hyderabad.bits-pilani.ac.in",
@@ -36,7 +36,7 @@ const teamMembers = [
   },
   {
     name: "Aditya Maheshwari",
-    role: "Vice-President",
+    role: "Vice President",
     image: aditya,
     linkedin: "https://www.linkedin.com/in/aditya-maheshwari-bits/",
     email: "f20240261@hyderabad.bits-pilani.ac.in",
@@ -45,39 +45,12 @@ const teamMembers = [
   },
   {
     name: "Anshul Nanwani",
-    role: "Vice-Chairman Launchpad",
+    role: "Launchpad Vice Chairman",
     image: anshul,
     linkedin: "https://www.linkedin.com/in/anshul-nanwani-040559322/",
     email: "f20241126@hyderabad.bits-pilani.ac.in",
     phone: "+91 95525 86398",
     bio: "Dedicated to building high-impact entrepreneurial platforms",
-  },
-  {
-    name: "Sejal Mittal",
-    role: "Director of Partnerships",
-    image: sejal,
-    linkedin: "https://www.linkedin.com/in/sejal-mittal-496458326/",
-    email: "f20240161@hyderabad.bits-pilani.ac.in",
-    phone: "+91 98216 89504",
-    bio: "Forging strategic alliances and industry connections",
-  },
-  {
-    name: "Divvij Chichra",
-    role: "Technical Head",
-    image: divvij,
-    linkedin: "https://www.linkedin.com/in/divvij-chichra-3ab7b4327/",
-    email: "f20240298@hyderabad.bits-pilani.ac.in",
-    phone: "+91 93131 35129",
-    bio: "Technology enthusiast driving digital transformation",
-  },
-  {
-    name: "Shreya Jhavar",
-    role: "Digital Outreach and Collaborations Head",
-    image: shreya,
-    linkedin: "https://www.linkedin.com/in/shreya-jhavar-b2136428b/",
-    email: "f20241113@hyderabad.bits-pilani.ac.in",
-    phone: "+91 83799 20920",
-    bio: "Expanding digital presence and brand collaborations",
   },
   {
     name: "Hussain Kagalwala",
@@ -90,12 +63,39 @@ const teamMembers = [
   },
   {
     name: "Aryan Saini",
-    role: "Director of Media and Marketing",
+    role: "Director of Media & Marketing",
     image: aryan,
     linkedin: "https://www.linkedin.com/in/aryan-saini-96a180324/",
     email: "f20241154@hyderabad.bits-pilani.ac.in",
     phone: "+91 96858 40060",
     bio: "Crafting narratives and steering marketing campaigns",
+  },
+  {
+    name: "Sejal Mittal",
+    role: "Director of Partnerships",
+    image: sejal,
+    linkedin: "https://www.linkedin.com/in/sejal-mittal-496458326/",
+    email: "f20240161@hyderabad.bits-pilani.ac.in",
+    phone: "+91 98216 89504",
+    bio: "Forging strategic alliances and industry connections",
+  },
+  {
+    name: "Shreya Jhavar",
+    role: "Digital Outreach & Collaborations Head",
+    image: shreya,
+    linkedin: "https://www.linkedin.com/in/shreya-jhavar-b2136428b/",
+    email: "f20241113@hyderabad.bits-pilani.ac.in",
+    phone: "+91 83799 20920",
+    bio: "Expanding digital presence and brand collaborations",
+  },
+  {
+    name: "Divvij Chichra",
+    role: "Technical Head",
+    image: divvij,
+    linkedin: "https://www.linkedin.com/in/divvij-chichra-3ab7b4327/",
+    email: "f20240298@hyderabad.bits-pilani.ac.in",
+    phone: "+91 93131 35129",
+    bio: "Technology enthusiast driving digital transformation",
   },
 ];
 
@@ -148,7 +148,7 @@ const OurTeam = () => {
             variants={fadeIn}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            E - Cell 25-26
+            E - Cell 26-27
           </motion.p>
         </div>
 

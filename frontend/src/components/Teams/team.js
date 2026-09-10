@@ -7,7 +7,7 @@ function Team() {
     <div>
       <SEO
         title="Our Team"
-        description="Meet the core organizing team behind E-Cell BITS Hyderabad for the 2025–2026 tenure."
+        description="Meet the core organizing team behind E-Cell BITS Hyderabad for the 2026–2027 tenure."
         keywords={['E-Cell Team', 'E-Cell BITS Hyderabad', 'PORs', 'Entrepreneurship Cell', 'Core Team', 'Leadership']}
         url="https://ecellbphc.in/team"
       />

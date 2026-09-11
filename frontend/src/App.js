@@ -16,6 +16,7 @@ const Footer = lazy(() => import("./components/footer"));
 const GlobalBackground = lazy(() => import('./components/GlobalBackground'));
 const Team = lazy(() => import("./components/Teams/team"));
 const Program = lazy(() => import("./components/Programs/program"));
+const CommunityMeet = lazy(() => import("./components/Programs/CommunityMeet"));
 const Contact = lazy(() => import("./components/contact"));
 const Gallery = lazy(() => import("./components/Gallery/gallery"));
 const LaunchpadGallery = lazy(() => import("./components/Gallery/launchpadgallery"));
@@ -214,6 +215,8 @@ function MainContent() {
               <Route path="/" element={<Home />} />
               <Route path="/team" element={<Team />} />
               <Route path="/program" element={<Program />} />
+              <Route path="/community-meet" element={<CommunityMeet />} />
+              <Route path="/program/community-meet" element={<CommunityMeet />} />
               <Route path="/gallery" element={<Gallery />} />
               <Route path="/launchpad/gallery" element={<LaunchpadGallery />} />
               <Route path="/contact" element={<Contact />} />

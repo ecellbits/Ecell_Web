@@ -48,6 +48,8 @@ const PaymentSuccess = lazy(() => import("./components/paymentsuccess"));
 const PaymentFailed = lazy(() => import("./components/paymentfailed"));
 const PaymentCancel = lazy(() => import("./components/paymentcancel"));
 const StartupConnectForm = lazy(() => import("./components/StartupConnectForm"));
+const MentorConnectForm = lazy(() => import("./components/MentorConnectForm"));
+const StartupMentorship = lazy(() => import("./components/StartupMentorship"));
 const EventDemo = lazy(() => import("./components/lpevents/EventTemplate/EventDemo"));
 const Passes = lazy(() => import("./components/passes"));
 const PassesSoon = lazy(() => import("./components/PassesSoon"));
@@ -260,6 +262,10 @@ function MainContent() {
 
               {/* startup connect form route */}
               <Route path="/startup-connect" element={<StartupConnectForm />} />
+              {/* startup mentorship cohort route */}
+              <Route path="/mentor-connect" element={<MentorConnectForm />} />
+              {/* Startup Mentorship Program landing page */}
+              <Route path="/startup-mentorship" element={<StartupMentorship />}/>
             </Routes>
           </div>
         </Suspense>

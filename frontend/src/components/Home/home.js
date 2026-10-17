@@ -4,6 +4,7 @@ import Startup from './startups';
 import Initiatives from './initiatives';
 import Launchpad from './launchpad';
 import Hero from './hero';
+import BlogShortcut from './BlogShortcut';
 import GradientBackground from '../GradientBackground';
 import SEO from '../common/SEO';
 
@@ -28,12 +29,13 @@ function Home() {
       <SEO
         title="Home"
         description="E-Cell BITS Pilani Hyderabad Campus - Fostering Entrepreneurship and Innovation. Join our events and programs like Launchpad to grow your startup."
-        keywords={['E-Cell', 'BITS Pilani', 'Hyderabad', 'Entrepreneurship', 'Startups', 'Launchpad']}
+        keywords={['E-Cell', 'BITS Pilani', 'Hyderabad', 'Entrepreneurship', 'Startups', 'Launchpad', 'Blog']}
         schemaData={jsonLd}
       />
       <Hero />
       <GradientBackground>
         <Startup />
+        <BlogShortcut />
         <Launchpad />
         <Initiatives />
       </GradientBackground>

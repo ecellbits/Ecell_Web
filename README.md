@@ -6,6 +6,9 @@ npm i <br>
 npm start <br>
 
 <h5> Version 2 Launched @ 2025 </h5>
+
+Made founder's first button and connected it to the page
+
  
   
 

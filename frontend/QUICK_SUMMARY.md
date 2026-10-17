@@ -1,4 +1,4 @@
-# Quick Summary - Team Page & Footer Fixes
+ # Quick Summary - Team Page & Footer Fixes
 
 ## What Was Done ✅
 

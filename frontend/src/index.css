@@ -416,7 +416,8 @@ main {
   /* Adjust this value based on your navbar height */
 }
 
-.main-content.no-padding {
+.main-content.no-padding 
+{
   padding-top: 0;
 }
 

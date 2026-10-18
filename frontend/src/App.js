@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, Suspense, lazy } from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { SpeedInsights } from "@vercel/speed-insights/react"
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -48,6 +48,8 @@ const PaymentSuccess = lazy(() => import("./components/paymentsuccess"));
 const PaymentFailed = lazy(() => import("./components/paymentfailed"));
 const PaymentCancel = lazy(() => import("./components/paymentcancel"));
 const StartupConnectForm = lazy(() => import("./components/StartupConnectForm"));
+const MentorConnectForm = lazy(() => import("./components/MentorConnectForm"));
+const StartupMentorship = lazy(() => import("./components/StartupMentorship"));
 const EventDemo = lazy(() => import("./components/lpevents/EventTemplate/EventDemo"));
 const Passes = lazy(() => import("./components/passes"));
 const PassesSoon = lazy(() => import("./components/PassesSoon"));
@@ -164,6 +166,22 @@ function MainContent() {
       <ScrollToTop />
       {(location.pathname === '/' || location.pathname === '/launchpad') && !isLoaderActive && <LaunchpadTimer />}
 
+      {/* Floating Vertical Badge for Founder's First Mentorship on Front Page */}
+      {location.pathname === '/' && !isLoaderActive && (
+        <Link
+          to="/startup-mentorship"
+          className="fixed left-0 top-1/2 -translate-y-1/2 z-50 flex items-center justify-center py-3 px-2 md:py-3.5 md:px-2.5 bg-[#080b12]/90 hover:bg-[#0c101c] border-y border-r border-[#d4ff00]/30 hover:border-[#d4ff00] rounded-r-xl shadow-[0_4px_20px_rgba(0,0,0,0.6),0_0_15px_rgba(212,255,0,0.12)] hover:shadow-[0_4px_25px_rgba(212,255,0,0.3)] backdrop-blur-xl font-outfit text-[11px] md:text-xs font-medium tracking-wide transition-all duration-300 hover:translate-x-1 group no-underline"
+          style={{ writingMode: 'vertical-rl' }}
+          title="Founder's First Mentorship"
+        >
+          <div className="rotate-180 flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#d4ff00] shadow-[0_0_8px_#d4ff00] animate-pulse group-hover:scale-125 transition-transform shrink-0" />
+            <span className="whitespace-nowrap text-neutral-300 group-hover:text-white transition-colors">
+              Founder's First <span className="text-[#d4ff00] font-semibold">Mentorship</span>
+            </span>
+          </div>
+        </Link>
+      )}
 
       <Navbar onToggleMenu={toggleMenu} isOpen={isMenuOpen} isLaunchpad={isLaunchpadRoute} />
 
@@ -260,6 +278,10 @@ function MainContent() {
 
               {/* startup connect form route */}
               <Route path="/startup-connect" element={<StartupConnectForm />} />
+              {/* startup mentorship cohort route */}
+              <Route path="/mentor-connect" element={<MentorConnectForm />} />
+              {/* Startup Mentorship Program landing page */}
+              <Route path="/startup-mentorship" element={<StartupMentorship />}/>
             </Routes>
           </div>
         </Suspense>

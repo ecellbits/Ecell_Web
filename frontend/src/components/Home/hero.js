@@ -44,6 +44,27 @@ const Hero = () => {
             >
                 <div className="flex flex-col items-start w-full max-w-fit mx-auto">
 
+                    {/* Blog Shortcut Pill */}
+                    <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.2 }}
+                        className="mb-4 sm:mb-6 self-start pointer-events-auto"
+                    >
+                        <a
+                            href="/blog"
+                            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.08] hover:bg-white/[0.15] border border-white/15 text-xs font-semibold text-white backdrop-blur-md transition-all hover:scale-[1.03] group shadow-lg"
+                        >
+                            <span className="flex h-2 w-2 relative">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d4ff00] opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#d4ff00]"></span>
+                            </span>
+                            <span className="text-[#d4ff00] font-bold uppercase tracking-wider text-[11px]">New Blog</span>
+                            <span className="text-zinc-300">| Entrepreneurship & Founder Playbook</span>
+                            <span className="text-white/60 group-hover:text-white transition-colors">→</span>
+                        </a>
+                    </motion.div>
+
                     {/* IDEATE */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}

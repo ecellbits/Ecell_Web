@@ -7,8 +7,7 @@ import {
   CheckCircle2, 
   Rocket,
   Compass,
-  Zap,
-  Quote
+  Zap
 } from 'lucide-react';
 import BlogNavbar from './BlogNavbar';
 import StartupStagesAnimation from './StartupStagesAnimation';
@@ -160,7 +159,7 @@ const BlogPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
           {/* Left Column: Sticky "ON THIS PAGE" Navigation */}
-          <aside className="hidden lg:block lg:col-span-3 xl:col-span-2">
+          <aside className="hidden lg:block lg:col-span-2">
             <div className="sticky top-24 space-y-5">
               
               <div className={`p-4 rounded-2xl border transition-all ${
@@ -180,7 +179,7 @@ const BlogPage = () => {
                       <button
                         key={item.id}
                         onClick={() => scrollToSection(item.id)}
-                        className={`w-full text-left text-xs font-semibold py-1.5 px-2.5 rounded-xl transition-all duration-200 flex items-center justify-between ${
+                        className={`w-full text-left text-xs font-semibold py-1.5 px-2 rounded-xl transition-all duration-200 flex items-center justify-between ${
                           isActive
                             ? isDarkMode
                               ? 'bg-white/10 text-white font-bold border-l-2 border-[#d4ff00]'
@@ -230,40 +229,38 @@ const BlogPage = () => {
           </aside>
 
           {/* Center Column: Extended Horizontally */}
-          <main className="lg:col-span-6 xl:col-span-7 space-y-10">
+          <main className="lg:col-span-7 space-y-10">
             
             {/* 1. START WITH E-CELL & ENTREPRENEURSHIP IN THE VERY START */}
-            <article id="intro" className="space-y-5">
-              <div className="prose prose-lg dark:prose-invert max-w-none">
-                <p className={`text-base sm:text-lg leading-relaxed font-medium ${
+            <article id="intro" className="space-y-6">
+              {/* Lead Statement */}
+              <p className={`text-lg sm:text-xl md:text-2xl font-normal leading-relaxed tracking-tight ${
+                isDarkMode ? 'text-zinc-100' : 'text-slate-900'
+              }`}>
+                Entrepreneurship is not merely about launching a commercial entity; it is the deliberate discipline of identifying acute human friction, designing scalable solutions under radical uncertainty, and having the conviction to bring something new into existence.
+              </p>
+
+              {/* Secondary context */}
+              <p className={`text-lg sm:text-xl md:text-2xl font-normal leading-relaxed tracking-tight ${
+                isDarkMode ? 'text-zinc-100' : 'text-slate-900'
+              }`}>
+                At <span className={isDarkMode ? 'text-white font-semibold' : 'text-slate-900 font-semibold'}>E-Cell BITS Pilani Hyderabad Campus</span>, our foundational mission is to cultivate an uncompromising culture of innovation. We bridge the gap between technical brilliance and commercial reality — guiding student founders from hostel-room prototypes to institutional venture capital.
+              </p>
+
+              {/* Minimalist Editorial Pull-Quote (No bulky card box, generous breathing room) */}
+              <div className={`my-6 pl-5 sm:pl-6 py-2 border-l-2 ${
+                isDarkMode ? 'border-[#d4ff00]' : 'border-indigo-600'
+              }`}>
+                <p className={`text-base sm:text-lg italic font-normal leading-relaxed ${
                   isDarkMode ? 'text-zinc-200' : 'text-slate-800'
                 }`}>
-                  <span className="text-3xl font-black float-left mr-3 mt-1 leading-none font-syne text-[#d4ff00]">E</span>
-                  ntrepreneurship is not merely about launching a commercial entity; it is the deliberate discipline of identifying acute human friction, designing scalable solutions under radical uncertainty, and having the conviction to bring something new into existence.
-                </p>
-
-                <p className={`text-sm sm:text-base leading-relaxed ${
-                  isDarkMode ? 'text-zinc-300' : 'text-slate-700'
-                }`}>
-                  At <strong>E-Cell BITS Pilani Hyderabad Campus</strong>, our foundational mission is to cultivate an uncompromising culture of innovation. We bridge the gap between technical brilliance and commercial reality. Whether you are hacking a prototype in your hostel room or pitching to institutional venture capitalists, understanding the structured anatomy of a startup's journey is the prerequisite to enduring success.
-                </p>
-              </div>
-
-              {/* Editorial Highlight Quote Box */}
-              <div className={`p-5 rounded-2xl border-l-4 my-6 transition-all ${
-                isDarkMode 
-                  ? 'bg-white/[0.03] border-[#d4ff00] text-zinc-200' 
-                  : 'bg-slate-50 border-indigo-600 text-slate-800'
-              }`}>
-                <Quote className="w-5 h-5 mb-1.5 opacity-50" />
-                <p className="text-sm sm:text-base italic font-medium leading-relaxed">
                   "Most startups fail not because they couldn't build their product, but because they built something nobody actually wanted. Knowing your lifecycle stage protects you from premature scaling and fatal dilution."
                 </p>
-                <span className={`block text-xs font-bold uppercase tracking-wider mt-2.5 ${
+                <div className={`text-xs uppercase tracking-wider font-semibold mt-2.5 ${
                   isDarkMode ? 'text-[#d4ff00]' : 'text-indigo-600'
                 }`}>
                   — E-Cell BPHC Venture Principles
-                </span>
+                </div>
               </div>
             </article>
 
@@ -318,77 +315,43 @@ const BlogPage = () => {
 
           </main>
 
-          {/* 3) Right Sidebar: "Connect & Subscribe" placed at the top (replacing About the author) */}
-          <aside className="lg:col-span-3 xl:col-span-3 space-y-5">
-            
-            {/* Connect & Subscribe (Now at top of right sidebar) */}
-            <div className={`p-4 sm:p-5 rounded-2xl border transition-all ${
-              isDarkMode ? 'bg-[#0a0a0f] border-white/10' : 'bg-white border-slate-200 shadow-sm'
-            }`}>
-              <h4 className={`text-xs font-bold uppercase tracking-widest mb-2 ${
-                isDarkMode ? 'text-zinc-400' : 'text-slate-500'
+          {/* 3) Right Sidebar: "Connect & Subscribe" */}
+          <aside className="lg:col-span-3 xl:col-span-3">
+            <div className="sticky top-24 space-y-5">
+              {/* Connect & Subscribe */}
+              <div className={`p-4 sm:p-5 rounded-2xl border transition-all ${
+                isDarkMode ? 'bg-[#0a0a0f] border-white/10' : 'bg-white border-slate-200 shadow-sm'
               }`}>
-                Connect & Subscribe
-              </h4>
-              <p className={`text-xs leading-relaxed mb-3.5 ${isDarkMode ? 'text-zinc-400' : 'text-slate-600'}`}>
-                Join over 5,000+ founders and innovators in the BITS Pilani entrepreneurship network.
-              </p>
-              <div className="space-y-2">
-                <a
-                  href="https://chat.whatsapp.com/GRGDBbVBNiV6WvTpw1g182"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between p-2.5 rounded-xl border text-xs font-semibold transition-all bg-emerald-500/10 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20"
-                >
-                  <span>Join WhatsApp Community</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
-                </a>
-                <a
-                  href="https://www.instagram.com/ecell_bphc"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between p-2.5 rounded-xl border text-xs font-semibold transition-all bg-pink-500/10 border-pink-500/30 text-pink-400 hover:bg-pink-500/20"
-                >
-                  <span>Follow @ecell_bphc</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
-                </a>
-              </div>
-            </div>
-
-            {/* Entrepreneurial Topic Tags */}
-            <div className={`p-4 sm:p-5 rounded-2xl border transition-all ${
-              isDarkMode ? 'bg-[#0a0a0f] border-white/10' : 'bg-white border-slate-200 shadow-sm'
-            }`}>
-              <h4 className={`text-xs font-bold uppercase tracking-widest mb-2.5 ${
-                isDarkMode ? 'text-zinc-400' : 'text-slate-500'
-              }`}>
-                Related Topics
-              </h4>
-              <div className="flex flex-wrap gap-1.5">
-                {[
-                  'Bootstrapping',
-                  'Pre-Seed',
-                  'Seed Round',
-                  'VC Funding',
-                  'Exit & IPO',
-                  'Founder Mindset',
-                  'BITSian Founders',
-                  'Launchpad 2026'
-                ].map((tag, idx) => (
-                  <span
-                    key={idx}
-                    className={`text-[11px] font-semibold px-2 py-1 rounded-lg border transition-all ${
-                      isDarkMode 
-                        ? 'bg-white/5 border-white/10 text-zinc-300 hover:border-white/20' 
-                        : 'bg-slate-100 border-slate-200 text-slate-700 hover:border-slate-300'
-                    }`}
+                <h4 className={`text-xs font-bold uppercase tracking-widest mb-2 ${
+                  isDarkMode ? 'text-zinc-400' : 'text-slate-500'
+                }`}>
+                  Connect & Subscribe
+                </h4>
+                <p className={`text-xs leading-relaxed mb-3.5 ${isDarkMode ? 'text-zinc-400' : 'text-slate-600'}`}>
+                  Join over 5,000+ founders and innovators in the BITS Pilani entrepreneurship network.
+                </p>
+                <div className="space-y-2">
+                  <a
+                    href="https://chat.whatsapp.com/GRGDBbVBNiV6WvTpw1g182"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between p-2.5 rounded-xl border text-xs font-semibold transition-all bg-emerald-500/10 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20"
                   >
-                    #{tag}
-                  </span>
-                ))}
+                    <span>Join WhatsApp Community</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </a>
+                  <a
+                    href="https://www.instagram.com/ecell_bphc"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between p-2.5 rounded-xl border text-xs font-semibold transition-all bg-pink-500/10 border-pink-500/30 text-pink-400 hover:bg-pink-500/20"
+                  >
+                    <span>Follow @ecell_bphc</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </a>
+                </div>
               </div>
             </div>
-
           </aside>
 
         </div>

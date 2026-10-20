@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion,useReducedMotion } from 'framer-motion';
 import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
 import BlurImage from '../BlurImage';
 
@@ -10,78 +10,133 @@ import img6 from '../../assets/lp_pitchers_pilot.png';
 import img7 from '../../assets/lp_ground_reality.png';
 import imgSEED from '../../assets/lpevents/seed.png';
 
-const EventCard = ({ event, index }) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      viewport={{ once: true }}
-      className="group relative overflow-hidden rounded-[2rem] bg-[#1a1a1a] flex flex-col h-full border border-white/5 transition-all duration-500 hover:border-ecell-primary/30"
+const ActionButtons = ({ event, compact = false }) => (
+  <div className="flex flex-col sm:flex-row gap-3 mt-auto">
+    {event.registerLink && (
+      <a
+        href={event.registerLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`flex-1 rounded-full bg-ecell-primary text-black font-bold text-center font-manrope flex items-center justify-center gap-2 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(212,255,0,0.4)] active:scale-[0.98] ${
+          compact ? 'py-2.5 px-4 text-sm' : 'py-3 md:py-4 px-4 md:px-6 text-sm md:text-base'
+        }`}
+      >
+        Register <ArrowUpRight size={16} />
+      </a>
+    )}
+    <a
+      href={event.exploreLink}
+      className={`flex-1 rounded-full border border-white/10 text-white font-bold text-center font-manrope flex items-center justify-center gap-2 transition-all duration-300 hover:bg-white/5 hover:border-white/20 active:scale-[0.98] ${
+        compact ? 'py-2.5 px-4 text-sm' : 'py-3 md:py-4 px-4 md:px-6 text-sm md:text-base'
+      }`}
     >
-      {/* Top Image Section */}
-      <div className="relative h-64 overflow-hidden">
-        <BlurImage
-          src={event.images[0]}
-          alt={event.title}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] via-transparent to-transparent opacity-60" />
-      </div>
+      Details <ArrowDownRight size={16} />
+    </a>
+  </div>
+);
 
-      {/* Content Section */}
-      <div className="p-6 md:p-8 flex flex-col flex-grow bg-gradient-to-b from-[#1a1a1a] to-[#141414]">
-        <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 font-syne group-hover:text-ecell-primary transition-colors">
-          {event.title}
-        </h3>
-        <p className="text-gray-400 text-sm leading-relaxed mb-6 md:mb-8 flex-grow font-manrope">
-          {event.description}
-        </p>
+const pad = (n) => String(n + 1).padStart(2, '0');
 
-        <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mt-auto">
-          {event.registerLink && (
-            <a
-              href={event.registerLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 py-3 md:py-4 px-4 md:px-6 rounded-xl bg-ecell-primary text-black font-bold text-center transform transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(212,255,0,0.4)] active:scale-[0.98] font-manrope flex items-center justify-center gap-2 text-sm md:text-base"
-            >
-              Register <ArrowUpRight size={16} />
-            </a>
-          )}
-          <a
-            href={event.exploreLink}
-            className="flex-1 py-3 md:py-4 px-4 md:px-6 rounded-xl border border-white/10 text-white font-bold text-center transition-all duration-300 hover:bg-white/5 hover:border-white/20 active:scale-[0.98] font-manrope flex items-center justify-center gap-2 text-sm md:text-base"
-          >
-            Details <ArrowDownRight size={16} />
-          </a>
-        </div>
+const OverlayCard = ({ event, index }) => (
+  <SlideIn
+    direction={index % 2 === 0 ? 'left' : 'right'}
+    className="group relative overflow-hidden rounded-[2rem] h-[460px] border-[3px] border-[#ddd]/40 transition-colors duration-500 hover:border-ecell-primary/40"
+  >
+    <BlurImage
+      src={event.images[0]}
+      alt={event.title}
+      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+    />
+    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
+    <div className="absolute inset-0 bg-ecell-primary/0 group-hover:bg-ecell-primary/5 transition-colors duration-500" />
+
+    <span className="absolute top-5 right-6 text-5xl font-syne font-extrabold text-white/20 group-hover:text-ecell-primary/60 transition-colors">
+      {pad(index)}
+    </span>
+
+    <div className="absolute bottom-0 inset-x-0 p-6 md:p-8 flex flex-col">
+      <h3 className="text-3xl md:text-5xl font-bold text-white mb-3 font-syne">
+        {event.title}
+      </h3>
+      <p className="text-gray-300 max-w-2xl leading-relaxed mb-6 font-manrope line-clamp-2 md:line-clamp-3">
+        {event.description}
+      </p>
+      <div className="md:max-w-md">
+        <ActionButtons event={event} compact />
       </div>
-    </motion.div>
+    </div>
+  </SlideIn>
+);
+
+/**
+ * SlideIn: reusable "comes in from left/right" animation.
+ * Triggers when the element scrolls into view.
+ *
+ * @param {'left' | 'right'} direction - side the element slides FROM
+ * @param {number} delay    - delay in seconds
+ * @param {number} distance - starting offset in px
+ * @param {number} duration - animation length in seconds
+ * @param {boolean} once    - animate only the first time it enters view
+ * @param {string} as       - any HTML tag ('div', 'section', 'li', ...)
+ *
+ * Usage:
+ *   <SlideIn direction="left"><div>...</div></SlideIn>
+ *   <SlideIn direction="right" delay={0.2} className="p-4">...</SlideIn>
+ */
+const SlideIn = ({
+  children,
+  direction = 'left',
+  delay = 0,
+  distance = 150,
+  duration = 0.8,
+  once = true,
+  as = 'div',
+  className = '',
+  ...rest
+}) => {
+  const reduceMotion = useReducedMotion();
+  const MotionTag = motion[as] || motion.div;
+  const startX = reduceMotion ? 0 : direction === 'left' ? -distance : distance;
+
+  return (
+    <MotionTag
+      initial={{ opacity: 0, x: startX }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once, amount: 0.2 }}
+      transition={{ duration, delay, ease: [0.22, 1, 0.36, 1] }}
+      className={className}
+      {...rest}
+    >
+      {children}
+    </MotionTag>
   );
 };
 
-const EventsPage = () => {
-  const events = [
-    { id: 1, title: "Startup Expo", description: "Unleash innovation and connect with industry leaders at the ultimate Startup Expo!", images: [img1], registerLink: "https://unstop.com/competitions/startup-expo-launchpad-26-bits-1631560", exploreLink: "/launchpad/startup_expo" },
-    { id: 5, title: "Teen Tycoons", description: "Shaping the next generation of entrepreneurs through dynamic challenges and expert mentorship.", images: [img5], registerLink: "https://unstop.com/competitions/teen-tycoons-launchpad-26-bits-1631539", exploreLink: "/launchpad/teen_tycoons" },
-    { id: 6, title: "Pitcher's Pilot", description: "A dynamic platform for entrepreneurs to showcase their ventures, gain valuable feedback, and connect with investors for growth.", images: [img6], registerLink: "https://unstop.com/competitions/pitchers-pilot-launchpad-26-bits-1631551", exploreLink: "/launchpad/pitchers_pilot" },
-    { id: 7, title: "Ground Reality", description: "Pitch your startup to top investors and win Rs. 2 Lakhs with mentorship and resources for growth!", images: [img7], registerLink: "https://unstop.com/competitions/ground-reality-business-plan-competition-launchpad-26-bits-1631135", exploreLink: "/launchpad/ground_reality" },
-    { id: 3, title: "Internship Drive", description: "Launch your career with the Internship Drive – connect, learn, and grow with top startups!", images: [img3], registerLink: "", exploreLink: "/launchpad/internship_drive" },
-    { id: 8, title: "SEED", description: "A national initiative to bring together E-Cells from across India to share ideas and best practices in building campus startup ecosystems.", images: [imgSEED], registerLink: "", exploreLink: "/launchpad/seed" }
-  ];
+const EventCard = ({ event, index }) => {
+  return <OverlayCard event={event} index={index} />;
+};
 
+const events = [
+  { id: 1, title: 'Startup Expo', description: 'Unleash innovation and connect with industry leaders at the ultimate Startup Expo!', images: [img1], registerLink: 'https://unstop.com/competitions/startup-expo-launchpad-26-bits-1631560', exploreLink: '/launchpad/startup_expo' },
+  { id: 5, title: 'Teen Tycoons', description: 'Shaping the next generation of entrepreneurs through dynamic challenges and expert mentorship.', images: [img5], registerLink: 'https://unstop.com/competitions/teen-tycoons-launchpad-26-bits-1631539', exploreLink: '/launchpad/teen_tycoons' },
+  { id: 6, title: "Pitcher's Pilot", description: 'A dynamic platform for entrepreneurs to showcase their ventures, gain valuable feedback, and connect with investors for growth.', images: [img6], registerLink: 'https://unstop.com/competitions/pitchers-pilot-launchpad-26-bits-1631551', exploreLink: '/launchpad/pitchers_pilot' },
+  { id: 7, title: 'Ground Reality', description: 'Pitch your startup to top investors and win Rs. 2 Lakhs with mentorship and resources for growth!', images: [img7], registerLink: 'https://unstop.com/competitions/ground-reality-business-plan-competition-launchpad-26-bits-1631135', exploreLink: '/launchpad/ground_reality' },
+  { id: 3, title: 'Internship Drive', description: 'Launch your career with the Internship Drive - connect, learn, and grow with top startups!', images: [img3], registerLink: '', exploreLink: '/launchpad/internship_drive' },
+  { id: 8, title: 'SEED', description: 'A national initiative to bring together E-Cells from across India to share ideas and best practices in building campus startup ecosystems.', images: [imgSEED], registerLink: '', exploreLink: '/launchpad/seed' },
+];
+
+const EventsPage = () => {
   return (
-    <div className="min-h-screen bg-ecell-bg px-6 py-20 relative">
+    <div className="min-h-screen bg-ecell-bg px-6 py-20 relative overflow-x-hidden">
       {/* Background Decorative Elements */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
         <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-ecell-primary/5 blur-[120px] rounded-full"></div>
         <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-ecell-secondary/5 blur-[120px] rounded-full"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 gap-8 relative z-10">
         {events.map((event, index) => (
-          <EventCard key={event.id} event={event} index={index} />
+          <EventCard key={event.id} event={event} index={index}/>
         ))}
       </div>
     </div>

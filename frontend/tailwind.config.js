@@ -38,6 +38,8 @@ module.exports = {
         'syne': ['Syne', 'sans-serif'],
         'hypebuzz': ['Hypebuzz', 'sans-serif'],
         'poppins': ['Poppins', 'sans-serif'],
+        // Homepage body copy
+        'copy': ['Manrope', 'Inter', 'sans-serif'],
       },
       letterSpacing: {
         'startup-header': '0.02em',
@@ -59,6 +61,10 @@ module.exports = {
         'ecell-text': '#ffffff', // Pure White
         'ecell-text-muted': '#f7fafc', // Off-white for secondary text
         'ecell-dark': '#000000', // Deep Black
+        // Brand palette (logo guidelines)
+        'brand-cream': '#FEF8E6',
+        'brand-navy': '#0F1754',
+        'brand-ink': '#000000',
       },
       animation: {
         'gradient-x': 'gradient-x 6s ease infinite',

@@ -1,210 +1,64 @@
-import React, { useRef, useEffect } from 'react';
-import { motion, useScroll, useTransform, useMotionValue, useMotionTemplate } from 'framer-motion';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { Container } from './ui';
 
 const Hero = () => {
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
-    const containerRef = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ["start start", "end start"]
-    });
+  return (
+    <section className="relative min-h-[100svh] flex flex-col justify-center overflow-hidden bg-brand-navy text-brand-cream">
+      <Container className="pt-32 pb-20">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+          className="max-w-5xl"
+        >
+          <Link
+            to="/blog"
+            className="group inline-flex items-center gap-2 mb-8 pl-1.5 pr-3.5 py-1.5 rounded-full border border-brand-cream/20 bg-brand-cream/10 backdrop-blur-md font-copy text-[11px] sm:text-sm text-brand-cream/85 no-underline hover:bg-brand-cream/20 hover:text-brand-cream transition-colors"
+          >
+            <span className="shrink-0 whitespace-nowrap px-2 py-0.5 rounded-full bg-brand-cream text-brand-navy text-[10px] sm:text-[11px] font-bold uppercase tracking-wider">
+              New Blog
+            </span>
+            Entrepreneurship & Founder Playbook
+            <ArrowRight className="w-3.5 h-3.5 shrink-0 transition-transform group-hover:translate-x-0.5" />
+          </Link>
 
-    const yMove = useTransform(scrollYProgress, [0, 1], [0, 150]);
-    const opacityFade = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
+          <p className="mb-5 font-copy text-xs sm:text-sm font-semibold uppercase tracking-[0.25em] text-brand-cream/70">
+            Ideate · Innovate · Incubate
+          </p>
 
-    useEffect(() => {
-        const updateMousePosition = (ev) => {
-            mouseX.set(ev.clientX);
-            mouseY.set(ev.clientY);
-        };
-        window.addEventListener('mousemove', updateMousePosition);
-        return () => window.removeEventListener('mousemove', updateMousePosition);
-    }, [mouseX, mouseY]);
+          <h1 className="m-0 text-[1.9rem] leading-[1.1] sm:text-5xl md:text-6xl lg:text-[4.25rem] font-bold tracking-tight text-brand-cream">
+            Entrepreneurship Cell,{' '}
+            <span className="text-brand-cream/60">BITS Pilani Hyderabad Campus.</span>
+          </h1>
 
-    const maskImage = useMotionTemplate`radial-gradient(400px circle at ${mouseX}px ${mouseY}px, black, transparent)`;
+          <p className="mt-7 mb-0 max-w-2xl font-copy text-base sm:text-lg md:text-xl leading-relaxed text-brand-cream/80">
+            Fostering entrepreneurship and innovation through our events and programs, including
+            Launchpad, the largest E-Summit of South India.
+          </p>
 
-    return (
-        <div ref={containerRef} className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden bg-black text-white">
-
-            {/* Grid & Glow */}
-            <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:50px_50px] pointer-events-none"></div>
-            <motion.div
-                className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)] bg-[size:50px_50px] pointer-events-none"
-                style={{
-                    maskImage,
-                    WebkitMaskImage: maskImage
-                }}
-            ></motion.div>
-
-            {/* Main Content */}
-            <motion.div
-                className="relative z-10 w-full flex flex-col items-center justify-center select-none px-4"
-                style={{ y: yMove, opacity: opacityFade }}
+          <div className="mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4">
+            <Link
+              to="/program"
+              className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-brand-cream text-brand-navy font-copy font-bold text-sm sm:text-base no-underline hover:bg-white transition-colors"
             >
-                <div className="flex flex-col items-start w-full max-w-fit mx-auto">
-
-                    {/* Blog Shortcut Pill */}
-                    <motion.div
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.2 }}
-                        className="mb-4 sm:mb-6 self-start pointer-events-auto"
-                    >
-                        <a
-                            href="/blog"
-                            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.08] hover:bg-white/[0.15] border border-white/15 text-xs font-semibold text-white backdrop-blur-md transition-all hover:scale-[1.03] group shadow-lg"
-                        >
-                            <span className="flex h-2 w-2 relative">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d4ff00] opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#d4ff00]"></span>
-                            </span>
-                            <span className="text-[#d4ff00] font-bold uppercase tracking-wider text-[11px]">New Blog</span>
-                            <span className="text-zinc-300">| Entrepreneurship & Founder Playbook</span>
-                            <span className="text-white/60 group-hover:text-white transition-colors">→</span>
-                        </a>
-                    </motion.div>
-
-                    {/* IDEATE */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
-                    >
-                        <h1 className="text-[7.3vw] sm:text-[6.9vw] md:text-[6.5vw] font-black font-syne leading-[0.8] tracking-tighter uppercase gradient-text grad-1">
-                            IDEATE
-                        </h1>
-                    </motion.div>
-
-                    {/* INNOVATE */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1, delay: 1.5, ease: "easeOut" }}
-                        className="mt-2 md:mt-6 ml-[10vw] sm:ml-[12vw] md:ml-[15vw]"
-                    >
-                        <h1 className="text-[9.5vw] sm:text-[9vw] md:text-[8.5vw] font-black font-syne leading-[0.8] tracking-tighter uppercase gradient-text grad-2">
-                            INNOVATE
-                        </h1>
-                    </motion.div>
-
-                    {/* INCUBATE */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1, delay: 2.5, ease: "easeOut" }}
-                        className="mt-2 md:mt-6 ml-[25vw] sm:ml-[30vw] md:ml-[35vw]"
-                    >
-                        <h1 className="text-[7.8vw] sm:text-[7.4vw] md:text-[7vw] font-black font-syne leading-[0.8] tracking-tighter uppercase gradient-text grad-3">
-                            INCUBATE
-                        </h1>
-                    </motion.div>
-
-                </div>
-            </motion.div>
-
-            {/* Bottom Scroll Animation */}
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 6.5, duration: 1 }}
-                className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-6 cursor-pointer group z-20"
-                onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
+              Explore our programs
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              to="/launchpad"
+              className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full border border-brand-cream/30 text-brand-cream font-copy font-semibold text-sm sm:text-base no-underline hover:bg-brand-cream hover:text-brand-navy transition-colors"
             >
-                <div className="relative flex flex-col items-center">
-                    <div className="w-[2px] h-20 bg-white/10 relative overflow-hidden rounded-full">
-                        <motion.div
-                            className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-[#BCFF2F] to-transparent shadow-[0_0_15px_#BCFF2F]"
-                            animate={{
-                                y: ["100%", "-200%"]
-                            }}
-                            transition={{
-                                duration: 2,
-                                repeat: Infinity,
-                                ease: "easeInOut"
-                            }}
-                        />
-                    </div>
-
-                    <div className="absolute -top-10 flex flex-col items-center">
-                        {[0, 1].map((i) => (
-                            <motion.div
-                                key={i}
-                                animate={{
-                                    opacity: [0, 1, 0],
-                                    y: [15, -25],
-                                }}
-                                transition={{
-                                    duration: 2,
-                                    repeat: Infinity,
-                                    delay: i * 0.5,
-                                    ease: "easeOut"
-                                }}
-                                className="absolute"
-                            >
-                                <svg width="24" height="14" viewBox="0 0 24 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M2 12L12 2L22 12" stroke="#BCFF2F" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
-            </motion.div>
-
-            <style>{`
-                .gradient-text {
-                    background: linear-gradient(
-                        90deg, 
-                        #6F66FF 0%, 
-                        #A5B6FF 25%, 
-                        #BCFF2F 50%, 
-                        #A5B6FF 75%, 
-                        #6F66FF 100%
-                    );
-                    background-size: 200% auto;
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    background-clip: text;
-                    display: inline-block;
-                    white-space: nowrap;
-                    animation: gradient-flow 12s linear infinite;
-                }
-
-                .grad-1 { animation-delay: 0s; }
-                .grad-2 { animation-delay: 4s; }
-                .grad-3 { animation-delay: 8s; }
-
-                @keyframes gradient-flow {
-                    0% {
-                        background-position: 0% center;
-                    }
-                    100% {
-                        background-position: 200% center;
-                    }
-                }
-                
-                @media (max-width: 768px) {
-                    .gradient-text {
-                        background: linear-gradient(
-                            135deg, 
-                            #6F66FF 0%, 
-                            #A5B6FF 50%, 
-                            #BCFF2F 100%
-                        );
-                        background-size: 200% auto;
-                        -webkit-background-clip: text;
-                        -webkit-text-fill-color: transparent;
-                        background-clip: text;
-                        animation: gradient-flow 8s linear infinite;
-                    }
-                    .grad-1 { animation-delay: 0s; }
-                    .grad-2 { animation-delay: 2.6s; }
-                    .grad-3 { animation-delay: 5.2s; }
-                }
-            `}</style>
-        </div >
-    );
+              Launchpad '26
+              <ArrowUpRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </motion.div>
+      </Container>
+    </section>
+  );
 };
 
 export default Hero;
-

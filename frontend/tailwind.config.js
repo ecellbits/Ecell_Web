@@ -40,6 +40,8 @@ module.exports = {
         'poppins': ['Poppins', 'sans-serif'],
         // Homepage body copy
         'copy': ['Manrope', 'Inter', 'sans-serif'],
+        // Homepage hero heading
+        'display': ['"Inter Tight"', 'Inter', 'sans-serif'],
       },
       letterSpacing: {
         'startup-header': '0.02em',

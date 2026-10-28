@@ -31,7 +31,7 @@ const Card = ({ item }) => (
   <motion.div {...fadeUp} className={item.tall ? 'h-full' : ''}>
     <Link
       to={item.link}
-      className="group flex flex-col h-full rounded-2xl overflow-hidden border border-black/10 bg-white no-underline text-brand-ink shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_32px_-12px_rgba(15,23,84,0.25)] hover:border-brand-navy/30 transition-all"
+      className="group flex flex-col h-full rounded-2xl overflow-hidden border border-black/10 bg-white no-underline text-brand-ink shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_32px_-12px_rgba(15,23,84,0.25)] hover:border-brand-navy/30 hover:-translate-y-1 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
     >
       <div className={`relative overflow-hidden ${item.tall ? 'flex-1 min-h-[280px] md:min-h-[420px]' : 'h-[200px] md:h-[260px]'}`}>
         <div className={`absolute inset-0 grid gap-0.5 ${item.images.length > 1 ? 'grid-cols-3' : 'grid-cols-1'}`}>

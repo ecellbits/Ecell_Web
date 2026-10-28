@@ -1,4 +1,5 @@
 import React from 'react';
+import { MotionConfig } from 'framer-motion';
 import Hero from './hero';
 import Startups from './startups';
 import BlogShortcut from './BlogShortcut';
@@ -23,6 +24,7 @@ function Home() {
   };
 
   return (
+    <MotionConfig reducedMotion="user">
     <div className="relative bg-brand-cream">
       <SEO
         title="Home"
@@ -36,6 +38,7 @@ function Home() {
       <Initiatives />
       <Launchpad />
     </div>
+    </MotionConfig>
   );
 }
 

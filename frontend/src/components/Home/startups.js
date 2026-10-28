@@ -67,30 +67,34 @@ const Startups = () => (
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
         {startups.map((s, i) => (
-          <motion.article
+          <motion.div
             key={s.name}
             {...fadeUp}
             transition={{ ...fadeUp.transition, delay: (i % 3) * 0.08 }}
-            className="flex flex-col rounded-2xl border border-black/10 bg-white overflow-hidden shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_32px_-12px_rgba(15,23,84,0.25)] hover:border-brand-navy/30 transition-all"
+            className="flex"
           >
-            <div
-              className="h-28 md:h-32 flex items-center justify-center p-6 border-b border-black/5"
-              style={{ backgroundColor: s.tile }}
+            <article
+              className="flex-1 flex flex-col rounded-2xl border border-black/10 bg-white overflow-hidden shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_32px_-12px_rgba(15,23,84,0.25)] hover:border-brand-navy/30 hover:-translate-y-1 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
             >
-              <img
-                src={s.logo}
-                alt={s.name}
-                loading="lazy"
-                className={`${s.square ? 'max-h-16 md:max-h-20' : 'max-h-12 md:max-h-14'} max-w-[70%] object-contain`}
-              />
-            </div>
-            <div className="flex flex-col flex-1 p-6">
-              <p className="m-0 font-copy text-sm text-black/50">
-                Founded By <span className="font-bold text-brand-navy">{s.foundedBy}</span>
-              </p>
-              <p className="mt-3 mb-0 font-copy text-sm leading-relaxed text-black/70">{s.description}</p>
-            </div>
-          </motion.article>
+              <div
+                className="h-28 md:h-32 flex items-center justify-center p-6 border-b border-black/5"
+                style={{ backgroundColor: s.tile }}
+              >
+                <img
+                  src={s.logo}
+                  alt={s.name}
+                  loading="lazy"
+                  className={`${s.square ? 'max-h-16 md:max-h-20' : 'max-h-12 md:max-h-14'} max-w-[70%] object-contain`}
+                />
+              </div>
+              <div className="flex flex-col flex-1 p-6">
+                <p className="m-0 font-copy text-sm text-black/50">
+                  Founded By <span className="font-bold text-brand-navy">{s.foundedBy}</span>
+                </p>
+                <p className="mt-3 mb-0 font-copy text-sm leading-relaxed text-black/70">{s.description}</p>
+              </div>
+            </article>
+          </motion.div>
         ))}
       </div>
     </Container>

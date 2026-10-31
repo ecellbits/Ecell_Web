@@ -31,7 +31,7 @@ const Card = ({ item }) => (
   <motion.div {...fadeUp} className={item.tall ? 'h-full' : ''}>
     <Link
       to={item.link}
-      className="group flex flex-col h-full rounded-2xl overflow-hidden border border-black/10 bg-white no-underline text-brand-ink shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_32px_-12px_rgba(15,23,84,0.25)] hover:border-brand-navy/30 hover:-translate-y-1 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+      className="group flex flex-col h-full rounded-2xl overflow-hidden border border-black/10 bg-white no-underline text-brand-ink shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_32px_-12px_rgba(15,23,84,0.25)] hover:border-brand-maroon/30 hover:-translate-y-1 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
     >
       <div className={`relative overflow-hidden ${item.tall ? 'flex-1 min-h-[280px] md:min-h-[420px]' : 'h-[200px] md:h-[260px]'}`}>
         <div className={`absolute inset-0 grid gap-0.5 ${item.images.length > 1 ? 'grid-cols-3' : 'grid-cols-1'}`}>
@@ -51,7 +51,7 @@ const Card = ({ item }) => (
           <h3 className="m-0 text-2xl md:text-4xl font-bold tracking-tight leading-tight">{item.title}</h3>
           <p className="mt-2 mb-0 font-copy text-sm md:text-base text-black/60">{item.subtitle}</p>
         </div>
-        <span className="shrink-0 w-11 h-11 md:w-12 md:h-12 rounded-full border border-brand-navy/20 text-brand-navy flex items-center justify-center group-hover:bg-brand-navy group-hover:text-brand-cream transition-colors">
+        <span className="shrink-0 w-11 h-11 md:w-12 md:h-12 rounded-full border border-brand-navy/20 text-brand-navy flex items-center justify-center group-hover:bg-brand-maroon group-hover:text-brand-cream transition-colors">
           <ArrowUpRight className="w-5 h-5" />
         </span>
       </div>
@@ -64,7 +64,7 @@ const Initiatives = () => (
     <Container>
       <SectionHeading
         align="center"
-        title={<>Programs & <span className="text-brand-navy">Initiatives</span></>}
+        title={<>Programs & <span className="text-brand-maroon">Initiatives</span></>}
         description="Fostering innovation through our curated programs designed to support and accelerate your entrepreneurial journey."
       />
 
@@ -81,10 +81,10 @@ const Initiatives = () => (
           <motion.div {...fadeUp}>
             <Link
               to="/program"
-              className="group flex flex-col justify-between min-h-[220px] md:min-h-[260px] rounded-2xl p-8 md:p-10 bg-brand-navy text-brand-cream no-underline hover:bg-brand-ink transition-colors"
+              className="group flex flex-col justify-between min-h-[220px] md:min-h-[260px] rounded-2xl p-8 md:p-10 bg-brand-maroon text-brand-cream no-underline hover:bg-brand-ink transition-colors"
             >
               <div className="flex justify-end">
-                <span className="w-12 h-12 rounded-full bg-brand-cream text-brand-navy flex items-center justify-center transition-transform group-hover:rotate-45">
+                <span className="w-12 h-12 rounded-full bg-brand-cream text-brand-maroon flex items-center justify-center transition-transform group-hover:rotate-45">
                   <ArrowUpRight className="w-5 h-5" />
                 </span>
               </div>

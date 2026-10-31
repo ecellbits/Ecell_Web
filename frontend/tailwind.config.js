@@ -66,6 +66,7 @@ module.exports = {
         // Brand palette (logo guidelines)
         'brand-cream': '#FEF8E6',
         'brand-navy': '#0F1754',
+        'brand-maroon': '#510609',
         'brand-ink': '#000000',
       },
       animation: {

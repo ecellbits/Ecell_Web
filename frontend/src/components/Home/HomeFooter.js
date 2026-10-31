@@ -22,7 +22,7 @@ const socials = [
 const MAP_EMBED = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.6449362741447!2d78.5701715!3d17.5453898!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb83594a86132d:0xc3e06e9e76cebf3d!2sBirla%20Institute%20of%20Technology%20%26%20Science%20Pilani%2C%20Hyderabad%20Campus!5e0!3m2!1sen!2sin!4v1709730000000!5m2!1sen!2sin';
 const MAP_LINK = 'https://www.google.com/maps/place/Birla+Institute+of+Technology+%26+Science+Pilani,+Hyderabad+Campus/@17.5453898,78.5701715,18.08z/data=!3m1!5s0x3bcb9cb2ec082bcf:0x1985b4ad5caaad3b!4m22!1m15!4m14!1m5!1m1!1s0x3bcb83594a86132d:0xc3e06e9e76cebf3d!2m2!1d78.571838!2d17.5448888!1m6!1m2!1s0x3bcb83594a86132d:0xc3e06e9e76cebf3d!2sBirla+Institute+of+Technology+%26+Science+Pilani,+Hyderabad+Campus,+BITS+Pilani+Hyderabad+Campus,+Secunderabad,+Telangana+500078!2m2!1d78.571838!2d17.5448888!3e0!3m5!1s0x3bcb83594a86132d:0xc3e06e9e76cebf3d!8m2!3d17.5448888!4d78.571838!16s%2Fm%2F09k5fsf?entry=ttu&g_ep=EgoyMDI1MTAyOS4yIKXMDSoASAFQAw%3D%3D';
 
-const linkClass = 'text-black/65 no-underline hover:text-brand-navy transition-colors';
+const linkClass = 'text-black/65 no-underline hover:text-brand-maroon transition-colors';
 
 const ColumnTitle = ({ children }) => (
   <h3 className="m-0 mb-5 !font-copy text-xs font-bold uppercase tracking-[0.2em] text-brand-navy">{children}</h3>
@@ -47,7 +47,7 @@ const HomeFooter = () => (
                 rel="noopener noreferrer"
                 aria-label={label}
                 title={label}
-                className="w-10 h-10 rounded-full border border-black/10 flex items-center justify-center text-brand-navy hover:bg-brand-navy hover:border-brand-navy hover:text-brand-cream transition-colors"
+                className="w-10 h-10 rounded-full border border-black/10 flex items-center justify-center text-brand-navy hover:bg-brand-maroon hover:border-brand-maroon hover:text-brand-cream transition-colors"
               >
                 <Icon size={17} />
               </a>
@@ -87,7 +87,7 @@ const HomeFooter = () => (
                 href="https://chat.whatsapp.com/GRGDBbVBNiV6WvTpw1g182"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-bold text-brand-navy no-underline hover:underline"
+                className="font-bold text-brand-maroon no-underline hover:underline"
               >
                 WhatsApp Group
               </a>
@@ -121,11 +121,14 @@ const HomeFooter = () => (
         </div>
       </div>
 
-      {/* Bottom Bar */}
-      <div className="mt-14 py-6 border-t border-black/10 font-copy text-xs text-black/55">
-        © 2026 Copyright: E-Cell BITS Pilani Hyderabad
-      </div>
     </Container>
+
+    {/* Bottom Bar */}
+    <div className="mt-14 bg-brand-ink">
+      <Container className="py-5 font-copy text-xs text-brand-cream/65">
+        © 2026 Copyright: E-Cell BITS Pilani Hyderabad
+      </Container>
+    </div>
   </footer>
 );
 

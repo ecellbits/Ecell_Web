@@ -137,7 +137,7 @@ const Hero = () => {
       </Container>
 
       {/* Alumni startups strip */}
-      <motion.div {...rise(afterHeadline + 0.3)} className="relative border-t border-brand-cream/10">
+      <motion.div {...rise(afterHeadline + 0.3)} className="relative bg-brand-ink">
         <Container className="py-7 md:py-8 flex flex-col lg:flex-row lg:items-center gap-5 lg:gap-12">
           <p className="m-0 shrink-0 font-copy text-xs font-semibold uppercase tracking-[0.2em] text-brand-cream/50">
             Founded by BITSians

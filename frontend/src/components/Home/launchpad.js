@@ -55,31 +55,33 @@ const Launchpad = () => {
         </div>
 
         {/* Our Events */}
-        <div className="py-14 md:py-20">
-          <motion.div {...fadeUp} className="flex items-center justify-between gap-4 mb-8">
-            <h3 className="m-0 font-copy text-sm font-bold uppercase tracking-[0.2em] text-brand-cream/60">Our Events</h3>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 py-14 md:py-20">
+          <motion.div {...fadeUp} className="lg:col-span-4">
+            <h3 className="m-0 text-3xl md:text-4xl font-bold tracking-tight text-brand-cream">Our Events</h3>
             <Link
               to="/launchpad/events"
-              className="inline-flex items-center gap-1.5 font-copy text-sm font-semibold text-brand-cream no-underline hover:underline"
+              className="group inline-flex items-center gap-1.5 mt-4 font-copy text-sm font-semibold text-brand-cream/70 no-underline hover:text-brand-cream transition-colors"
             >
-              View all <ArrowRight className="w-4 h-4" />
+              View all
+              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </motion.div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-t border-brand-cream/15">
-            {events.map((event, i) => (
-              <Link
-                key={event.name}
-                to={event.link}
-                className="group flex items-center justify-between gap-4 py-5 sm:px-4 border-b border-brand-cream/15 text-brand-cream no-underline hover:bg-brand-cream/5 transition-colors"
-              >
-                <span className="flex items-baseline gap-4">
-                  <span className="font-copy text-xs text-brand-cream/40">0{i + 1}</span>
-                  <span className="font-syne text-xl md:text-2xl font-bold">{event.name}</span>
-                </span>
-                <ArrowUpRight className="w-5 h-5 text-brand-cream/40 group-hover:text-brand-cream transition-colors" />
-              </Link>
+
+          <motion.ul {...fadeUp} className="lg:col-span-8 m-0 p-0 list-none border-t border-brand-cream/15">
+            {events.map((event) => (
+              <li key={event.name} className="border-b border-brand-cream/15">
+                <Link
+                  to={event.link}
+                  className="group flex items-center justify-between gap-4 py-4 md:py-5 text-brand-cream/80 no-underline hover:text-brand-cream transition-colors duration-300"
+                >
+                  <span className="font-syne text-2xl md:text-[2rem] font-bold tracking-tight leading-tight transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-2">
+                    {event.name}
+                  </span>
+                  <ArrowUpRight className="w-5 h-5 shrink-0 text-brand-cream/40 transition-all duration-300 group-hover:text-brand-cream group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </Link>
+              </li>
             ))}
-          </div>
+          </motion.ul>
         </div>
 
         {/* Carousel + Explore More */}
@@ -112,7 +114,7 @@ const Launchpad = () => {
               className="group flex flex-col justify-between h-full min-h-[220px] rounded-2xl p-8 bg-brand-cream text-brand-navy no-underline hover:bg-white transition-colors"
             >
               <div className="flex justify-end">
-                <span className="w-12 h-12 rounded-full bg-brand-navy text-brand-cream flex items-center justify-center transition-transform group-hover:rotate-45">
+                <span className="w-12 h-12 rounded-full bg-brand-maroon text-brand-cream flex items-center justify-center transition-transform group-hover:rotate-45">
                   <ArrowUpRight className="w-5 h-5" />
                 </span>
               </div>

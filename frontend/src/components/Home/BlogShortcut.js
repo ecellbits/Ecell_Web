@@ -19,7 +19,7 @@ const BlogShortcut = () => {
             {/* Left Text Column */}
             <div className="lg:col-span-7">
               <div className="flex flex-wrap items-center gap-x-3 gap-y-2 font-copy">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-brand-navy/10 text-brand-navy">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-brand-maroon/10 text-brand-maroon">
                   <Compass className="w-3.5 h-3.5" /> Featured Editorial
                 </span>
                 <span className="inline-flex items-center gap-1 text-xs text-black/50 font-medium">
@@ -35,7 +35,7 @@ const BlogShortcut = () => {
 
               <p className="mt-4 mb-0 font-copy text-sm sm:text-base text-black/65 leading-relaxed max-w-xl">
                 From personal savings and MVP validation to Series A-C and public exit. Explore our interactive roadmap paired with candid founder realities from{' '}
-                <span className="text-brand-ink font-semibold underline decoration-brand-navy underline-offset-4">E-Cell Conversations EP-01</span>.
+                <span className="text-brand-ink font-semibold underline decoration-brand-maroon underline-offset-4">E-Cell Conversations EP-01</span>.
               </p>
 
               <div className="mt-5 flex flex-wrap items-center gap-2">
@@ -60,7 +60,7 @@ const BlogShortcut = () => {
                 </Link>
                 <Link
                   to="/blog#video-box"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-black/15 text-brand-ink font-copy font-semibold text-sm no-underline hover:border-brand-navy hover:text-brand-navy transition-colors"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-black/15 text-brand-ink font-copy font-semibold text-sm no-underline hover:border-brand-maroon hover:text-brand-maroon transition-colors"
                 >
                   <Play className="w-4 h-4" />
                   Watch Ep-01 Stream

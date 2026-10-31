@@ -175,14 +175,14 @@ function MainContent() {
       {location.pathname === '/' && !isLoaderActive && (
         <Link
           to="/startup-mentorship"
-          className="fixed left-0 top-1/2 -translate-y-1/2 z-50 flex items-center justify-center py-3 px-2 md:py-3.5 md:px-2.5 bg-[#080b12]/90 hover:bg-[#0c101c] border-y border-r border-[#d4ff00]/30 hover:border-[#d4ff00] rounded-r-xl shadow-[0_4px_20px_rgba(0,0,0,0.6),0_0_15px_rgba(212,255,0,0.12)] hover:shadow-[0_4px_25px_rgba(212,255,0,0.3)] backdrop-blur-xl font-outfit text-[11px] md:text-xs font-medium tracking-wide transition-all duration-300 hover:translate-x-1 group no-underline"
+          className="fixed left-0 top-1/2 -translate-y-1/2 z-50 flex items-center justify-center py-3 px-2 md:py-3.5 md:px-2.5 bg-brand-maroon hover:bg-brand-ink border-y border-r border-brand-cream/20 rounded-r-xl shadow-[0_8px_24px_-8px_rgba(0,0,0,0.5)] font-copy text-[11px] md:text-xs font-semibold tracking-wide transition-all duration-300 hover:translate-x-1 group no-underline"
           style={{ writingMode: 'vertical-rl' }}
           title="Founder's First Mentorship"
         >
           <div className="rotate-180 flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#d4ff00] shadow-[0_0_8px_#d4ff00] animate-pulse group-hover:scale-125 transition-transform shrink-0" />
-            <span className="whitespace-nowrap text-neutral-300 group-hover:text-white transition-colors">
-              Founder's First <span className="text-[#d4ff00] font-semibold">Mentorship</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-brand-cream animate-pulse group-hover:scale-125 transition-transform shrink-0" />
+            <span className="whitespace-nowrap text-brand-cream">
+              Founder's First Mentorship
             </span>
           </div>
         </Link>

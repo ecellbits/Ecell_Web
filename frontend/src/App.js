@@ -21,6 +21,8 @@ const Contact = lazy(() => import("./components/contact"));
 const Gallery = lazy(() => import("./components/Gallery/gallery"));
 const LaunchpadGallery = lazy(() => import("./components/Gallery/launchpadgallery"));
 const Navbar = lazy(() => import("./components/navbar"));
+const HomeNavbar = lazy(() => import("./components/Home/HomeNavbar"));
+const HomeFooter = lazy(() => import("./components/Home/HomeFooter"));
 const BlogPage = lazy(() => import("./components/Blog/BlogPage"));
 
 
@@ -118,6 +120,7 @@ function App() {
 function MainContent() {
   const location = useLocation();
   const isLaunchpadRoute = location.pathname.startsWith("/launchpad");
+  const isHome = location.pathname === "/";
 
   const menuRef = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -185,7 +188,13 @@ function MainContent() {
         </Link>
       )}
 
-      <Navbar onToggleMenu={toggleMenu} isOpen={isMenuOpen} isLaunchpad={isLaunchpadRoute} />
+      <Suspense fallback={null}>
+        {isHome ? (
+          <HomeNavbar onToggleMenu={toggleMenu} isOpen={isMenuOpen} />
+        ) : (
+          <Navbar onToggleMenu={toggleMenu} isOpen={isMenuOpen} isLaunchpad={isLaunchpadRoute} />
+        )}
+      </Suspense>
 
       {isLaunchpadRoute ? (
         <StaggeredMenu
@@ -218,9 +227,10 @@ function MainContent() {
           menuButtonColor="#fff"
           openMenuButtonColor="#fff"
           changeMenuColorOnOpen={false}
-          colors={['#1a1a1a', '#2a2a2a']}
+          className={isHome ? 'home-menu' : ''}
+          colors={isHome ? ['#000000', '#0F1754'] : ['#1a1a1a', '#2a2a2a']}
           logoUrl="/navbarlogo.png"
-          accentColor="#d4ff00"
+          accentColor={isHome ? '#FEF8E6' : '#d4ff00'}
           isFixed={true}
           onMenuOpen={() => setIsMenuOpen(true)}
           onMenuClose={() => setIsMenuOpen(false)}
@@ -291,7 +301,9 @@ function MainContent() {
       </AnimatePresence>
 
       {/* Global Footer */}
-      <Footer />
+      <Suspense fallback={null}>
+        {isHome ? <HomeFooter /> : <Footer />}
+      </Suspense>
       <SpeedInsights />
     </div>
   );

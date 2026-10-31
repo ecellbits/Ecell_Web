@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowUpRight, ArrowRight } from 'lucide-react';
 import lpLogo from '../../assets/ecell/lp_logo_new.png';
 import memory1 from '../../assets/lpevents/pitcherspilot/memory1.png';
@@ -88,19 +88,15 @@ const Launchpad = () => {
             {...fadeUp}
             className="md:col-span-3 relative rounded-2xl overflow-hidden border border-brand-cream/15 h-[280px] md:h-[400px] bg-black"
           >
-            <AnimatePresence mode="wait">
-              <motion.img
-                key={currentImg}
-                src={carouselImages[currentImg]}
-                alt="Launchpad memories"
-                initial={{ opacity: 0, scale: 1.05 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 1, ease: 'easeInOut' }}
-                className="absolute inset-0 w-full h-full object-cover"
-                loading="lazy"
+            {/* All slides stay mounted so the next one is loaded and they crossfade */}
+            {carouselImages.map((img, i) => (
+              <img
+                key={img}
+                src={img}
+                alt={i === currentImg ? 'Launchpad memories' : ''}
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${i === currentImg ? 'opacity-100' : 'opacity-0'}`}
               />
-            </AnimatePresence>
+            ))}
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
             <Link
               to="/launchpad/events"

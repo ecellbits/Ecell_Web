@@ -2,12 +2,29 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import sandiskLogo from '../../assets/Bitsian startups/SanDisk Logo.png';
+import mplLogo from '../../assets/Bitsian startups/MPL_Logo 1.png';
+import bbLogo from '../../assets/Bitsian startups/mono/bb.png';
+import redbusLogo from '../../assets/Bitsian startups/mono/redbus.png';
+import swiggyLogo from '../../assets/Bitsian startups/Swiggy.png';
+import growwLogo from '../../assets/Bitsian startups/groww.png';
 import { Container, EASE } from './ui';
 
 // Headline is revealed word by word from behind a mask.
 const headline = [
   { text: 'Entrepreneurship Cell,', muted: false },
   { text: 'BITS Pilani Hyderabad Campus.', muted: true },
+];
+
+// Shown as single-colour marks along the bottom of the hero.
+// Heights are tuned per logo so they read at a similar visual weight.
+const alumniLogos = [
+  { name: 'Swiggy', src: swiggyLogo, h: 'h-7 md:h-8' },
+  { name: 'redBus', src: redbusLogo, h: 'h-7 md:h-8' },
+  { name: 'Groww', src: growwLogo, h: 'h-6 md:h-7' },
+  { name: 'bigbasket', src: bbLogo, h: 'h-7 md:h-8' },
+  { name: 'MPL', src: mplLogo, h: 'h-6 md:h-7' },
+  { name: 'SanDisk', src: sandiskLogo, h: 'h-3.5 md:h-4' },
 ];
 
 const HEADLINE_DELAY = 0.25;
@@ -50,7 +67,7 @@ const Headline = () => {
 
 const Hero = () => {
   return (
-    <section className="relative min-h-[100svh] flex flex-col justify-center overflow-hidden bg-brand-navy text-brand-cream">
+    <section className="relative min-h-[100svh] flex flex-col overflow-hidden bg-brand-navy text-brand-cream">
       {/* Slowly drifting gradient, built only from cream and black tints over navy */}
       <div className="hero-mesh absolute inset-0 pointer-events-none" aria-hidden="true">
         <span className="hero-blob hero-blob-1" />
@@ -71,7 +88,7 @@ const Hero = () => {
         </Container>
       </div>
 
-      <Container className="pt-32 pb-20">
+      <Container className="flex-1 flex items-center pt-32 pb-16">
         <div className="max-w-5xl">
           <motion.div {...rise(0.05)}>
             <Link
@@ -118,6 +135,31 @@ const Hero = () => {
           </motion.div>
         </div>
       </Container>
+
+      {/* Alumni startups strip */}
+      <motion.div {...rise(afterHeadline + 0.3)} className="relative border-t border-brand-cream/10">
+        <Container className="py-7 md:py-8 flex flex-col lg:flex-row lg:items-center gap-5 lg:gap-12">
+          <p className="m-0 shrink-0 font-copy text-xs font-semibold uppercase tracking-[0.2em] text-brand-cream/50">
+            Founded by BITSians
+          </p>
+          <ul className="m-0 p-0 list-none grid grid-cols-3 sm:flex sm:flex-wrap items-center gap-x-8 gap-y-6 lg:flex-1 lg:justify-between">
+            {alumniLogos.map((logo, i) => (
+              <motion.li
+                key={logo.name}
+                {...rise(afterHeadline + 0.4 + i * 0.07)}
+                className="flex items-center"
+              >
+                <img
+                  src={logo.src}
+                  alt={logo.name}
+                  loading="lazy"
+                  className={`${logo.h} w-auto max-w-full object-contain brightness-0 invert opacity-60 hover:opacity-100 transition-opacity duration-300`}
+                />
+              </motion.li>
+            ))}
+          </ul>
+        </Container>
+      </motion.div>
 
       <style>{`
         .hero-blob {

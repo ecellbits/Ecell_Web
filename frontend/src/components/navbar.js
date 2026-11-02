@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { Phone, BookOpen } from "lucide-react";
+import { Phone, BookOpen, Newspaper } from "lucide-react";
 import "./Navbar.css";
 import logo from "../assets/navbarlogo.png";
 import lplogo from "../assets/ecell/lp_logo_new.png";
@@ -83,6 +83,13 @@ const Navbar = ({ onToggleMenu, isOpen, isLaunchpad }) => {
               >
                 <BookOpen size={13} className="inline mr-1 opacity-80" />
                 Blog
+              </NavLink>
+              <NavLink
+                to="/magazine"
+                className={({ isActive }) => `nav-link-new ${isActive ? "active" : ""}`}
+              >
+                <Newspaper size={13} className="inline mr-1 opacity-80" />
+                Magazine
               </NavLink>
               <NavLink
                 to="/launchpad"

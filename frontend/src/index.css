@@ -1,10 +1,13 @@
-.no-scrollbar {
+.no-scrollbar 
+
+{
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
-.no-scrollbar::-webkit-scrollbar {
+.no-scrollbar::-webkit-scrollbar 
+{
   display: none;
 }
 
@@ -12,7 +15,8 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
+@font-face 
+{
   font-family: 'Hypebuzz';
   src: url('./assets/fonts/HypebuzzDemo.otf') format('opentype');
   font-weight: 400;
@@ -571,7 +575,8 @@ h4,
   z-index: 0;
 }
 
-.hs-glow--l {
+.hs-glow--l
+ {
   top: -40px;
   left: -40px;
   width: 240px;
@@ -828,7 +833,8 @@ h4,
   }
 
   /* Row layout */
-  .hs-body {
+  .hs-body 
+  {
     flex-direction: row;
     align-items: flex-end;
     /* Changed from center to move contents lower */
@@ -836,7 +842,8 @@ h4,
     gap: 2.5rem;
   }
 
-  .hs-left {
+  .hs-left 
+  {
     align-items: flex-start;
     text-align: left;
   }
@@ -1195,16 +1202,19 @@ h4,
     text-align: left;
   }
 
-  .hackathon-description {
+  .hackathon-description 
+   {
     margin-left: 0;
     margin-right: 0;
   }
 
-  .hackathon-badge {
+  .hackathon-badge
+   {
     font-size: 0.7rem;
   }
 
-  .hackathon-title {
+  .hackathon-title 
+  {
     font-size: 3.5rem;
   }
 
@@ -1213,7 +1223,8 @@ h4,
   }
 
   /* Divider visible on desktop */
-  .hackathon-divider {
+  .hackathon-divider 
+  {
     display: block;
     width: 1px;
     align-self: stretch;
@@ -1225,7 +1236,8 @@ h4,
     flex-shrink: 0;
   }
 
-  .hackathon-prize {
+  .hackathon-prize
+   {
     padding: 3rem 3.5rem;
     border-radius: 2rem;
     max-width: none;
@@ -1250,12 +1262,14 @@ h4,
     border-radius: 2.5rem;
   }
 
-  .hackathon-corner {
+  .hackathon-corner 
+  {
     width: 44px;
     height: 44px;
   }
 
-  .hackathon-corner--tl {
+  .hackathon-corner--tl
+  {
     border-top-left-radius: 2.5rem;
   }
 
@@ -1271,20 +1285,24 @@ h4,
     border-bottom-right-radius: 2.5rem;
   }
 
-  .hackathon-title {
+  .hackathon-title 
+  {
     font-size: 4.25rem;
   }
 
-  .hackathon-description {
+  .hackathon-description 
+  {
     font-size: 1.05rem;
   }
 
-  .hackathon-prize {
+  .hackathon-prize 
+  {
     padding: 3.5rem 4rem;
     min-width: 320px;
   }
 
-  .hackathon-prize__amount {
+  .hackathon-prize__amount 
+  {
     font-size: 5rem;
   }
 }

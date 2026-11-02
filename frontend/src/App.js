@@ -22,6 +22,7 @@ const Gallery = lazy(() => import("./components/Gallery/gallery"));
 const LaunchpadGallery = lazy(() => import("./components/Gallery/launchpadgallery"));
 const Navbar = lazy(() => import("./components/navbar"));
 const BlogPage = lazy(() => import("./components/Blog/BlogPage"));
+const Magazine = lazy(() => import("./components/Magazine/Magazine"));
 
 
 const Lteam = lazy(() => import("./components/team/team"));
@@ -128,6 +129,7 @@ function MainContent() {
   };
 
   // Menu items for StaggeredMenu
+  //this is for the slideout animated hamburger menu
   const menuItems = [
     { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
     { label: 'Programs', ariaLabel: 'View our programs', link: '/program' },
@@ -135,7 +137,8 @@ function MainContent() {
     { label: 'Gallery', ariaLabel: 'View our gallery', link: '/gallery' },
     { label: 'Blog', ariaLabel: 'Read our entrepreneurial blog', link: '/blog' },
     { label: 'Launchpad', ariaLabel: 'Explore Launchpad', link: '/launchpad' },
-    { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' }
+    { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' },
+    { label: 'Magazine', ariaLabel: 'Read our magazine', link: '/magazine' }
   ];
 
   const socialItems = [
@@ -234,6 +237,7 @@ function MainContent() {
               {/* Normal Routes */}
               <Route path="/" element={<Home />} />
               <Route path="/blog" element={<BlogPage />} />
+              <Route path="/magazine" element={<Magazine />} />
               <Route path="/team" element={<Team />} />
               <Route path="/program" element={<Program />} />
               <Route path="/community-meet" element={<CommunityMeet />} />

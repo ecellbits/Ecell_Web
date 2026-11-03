@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": "pnpm --filter @ecell/marketing build",
+  "outputDirectory": "dist/client",
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/_shell.html" }
+  ]
+}

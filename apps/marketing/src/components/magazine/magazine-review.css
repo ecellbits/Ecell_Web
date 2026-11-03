@@ -1,0 +1,14 @@
+.review-dialog::backdrop {
+  background: rgb(4 6 28 / 0.7);
+  backdrop-filter: blur(3px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root), ::view-transition-new(root) {
+    animation-duration: 180ms;
+  }
+  ::view-transition-group(*) {
+    animation-duration: 320ms;
+    animation-timing-function: ease-in-out;
+  }
+}

@@ -2,24 +2,23 @@
   "name": "ecell_web",
   "version": "1.0.0",
   "description": "<h1>Official Repository for E - Cell BITS Pilani Hyderabad Campus</h1>",
-  "main": "index.js",
+  "private": true,
+  "packageManager": "pnpm@11.17.0",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "pnpm --filter @ecell/marketing dev",
+    "dev:internship-drive": "pnpm --filter internship-drive dev",
+    "build": "pnpm -r run build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://akshatajmera7@github.com/akshatajmera7/Ecell_Web.git"
+    "url": "git+https://github.com/thedamod/Ecell_Web.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/akshatajmera7/Ecell_Web/issues"
+    "url": "https://github.com/thedamod/Ecell_Web/issues"
   },
-  "homepage": "https://github.com/akshatajmera7/Ecell_Web#readme",
-  "dependencies": {
-    "fs-extra": "^11.3.3",
-    "sharp": "^0.34.5"
-  }
+  "homepage": "https://github.com/thedamod/Ecell_Web#readme"
 }

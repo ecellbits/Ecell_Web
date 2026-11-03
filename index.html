@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Magazine · E-CELL BITS Hyderabad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#111111;
+  --surface:#141414;
+  --raised:#1a1a1a;
+  --input:#1e1e1e;
+  --blue-deep:#12202b;
+  --text:#e7dfc6;
+  --muted:#8a8a80;
+  --border:#191919;
+  --border-strong:#262626;
+  --hover:#3a3a3a;
+  --lava:#a31d2b;
+  --lava-bright:#e0424f;
+  --blue:#1d6ba8;
+  --blue-bright:#5fa3d6;
+  --ghost-soft:rgba(231,223,198,.14);
+  --ghost-strong:rgba(231,223,198,.32);
+  --radius:4px;
+}
+body.light{
+  --bg:#fcfcfc;
+  --surface:#ffffff;
+  --raised:#f4f4f5;
+  --input:#ffffff;
+  --blue-deep:#eaf1fb;
+  --text:#27272a;
+  --muted:#71717b;
+  --border:#e4e4e7;
+  --border-strong:#d4d4d8;
+  --hover:#c9c9cf;
+  --lava:#a31d2b;
+  --lava-bright:#9a1020;
+  --blue:#1b4ed8;
+  --blue-bright:#1b4ed8;
+  --ghost-soft:rgba(39,39,42,.1);
+  --ghost-strong:rgba(39,39,42,.3);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:"Archivo",sans-serif;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--lava);color:var(--text)}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+/* ---------- nav ---------- */
+nav{
+  position:sticky;top:0;z-index:50;
+  background:color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  height:60px;
+}
+.nav-brand{
+  font-weight:900;letter-spacing:-.03em;font-size:17px;text-transform:uppercase;
+}
+.nav-brand b{color:var(--lava-bright)}
+.nav-links{display:flex;gap:24px;font-size:13px;font-weight:500;color:var(--muted)}
+.nav-links span{cursor:pointer;transition:color .2s}
+.nav-links span:hover{color:var(--text)}
+@media(max-width:640px){.nav-links{display:none}}
+.theme-btn{
+  background:var(--surface);border:1px solid var(--border-strong);border-radius:var(--radius);
+  color:var(--text);
+  height:34px;width:34px;padding:0;cursor:pointer;
+  display:inline-grid;place-items:center;transition:border-color .2s,background .2s;
+}
+.theme-btn svg{width:15px;height:15px;display:block}
+.theme-btn:hover{border-color:var(--hover);background:var(--raised)}
+
+/* ---------- header ---------- */
+header{padding:88px 0 56px}
+.head-kicker{
+  font-size:12px;font-weight:600;letter-spacing:.08em;
+  color:var(--lava-bright);margin-bottom:20px;
+}
+.head-title{
+  font-size:clamp(56px,10vw,118px);
+  font-weight:900;letter-spacing:-.045em;line-height:.9;text-transform:uppercase;
+}
+.head-title .ghost{color:var(--ghost-soft)}
+.head-sub{
+  display:flex;align-items:flex-end;justify-content:space-between;gap:32px;
+  margin-top:28px;flex-wrap:wrap;
+}
+.head-sub p{
+  color:var(--muted);max-width:400px;font-size:14.5px;line-height:1.65;
+}
+.head-sub strong{color:var(--text);font-weight:600}
+.head-stats{display:flex;gap:36px}
+.stat b{display:block;font-size:28px;font-weight:800;letter-spacing:-.02em}
+.stat span{font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* ---------- timeline ---------- */
+.timeline{position:relative;padding:56px 0 24px}
+.tl-line{
+  position:absolute;left:50%;top:0;bottom:0;width:1px;transform:translateX(-50%);
+  background:var(--border-strong);overflow:hidden;
+}
+.tl-fill{
+  position:absolute;top:0;left:0;right:0;height:0%;
+  background:linear-gradient(180deg,var(--lava-bright),var(--blue-bright));
+  transition:height .12s linear;
+}
+@media(max-width:900px){.tl-line{left:16px}}
+
+/* month marker */
+.month-marker{
+  position:relative;display:flex;align-items:center;gap:16px;
+  margin:44px 0 4px;
+}
+.month-marker .lbl{
+  font-size:12.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--muted);
+}
+.month-marker .rule{flex:1;height:1px;background:var(--border)}
+
+/* event row */
+.tl-item{
+  position:relative;
+  display:grid;grid-template-columns:1fr 80px 1fr;
+  margin:20px 0;
+}
+.tl-item .node{
+  grid-column:2;grid-row:1;justify-self:center;align-self:start;
+  margin-top:22px;
+  width:34px;height:34px;border-radius:2px;
+  border:1px solid var(--border-strong);
+  background:var(--surface);
+  display:flex;align-items:center;justify-content:center;
+  font-family:"JetBrains Mono",monospace;font-size:10.5px;font-weight:500;
+  color:var(--muted);
+  transition:border-color .3s,color .3s;
+}
+.tl-item.in .node.acc-red{color:var(--lava-bright);border-color:var(--lava)}
+.tl-item.in .node.acc-blue{color:var(--blue-bright);border-color:var(--blue)}
+.card{
+  background:var(--surface);
+  border:1px solid var(--border-strong);
+  border-radius:var(--radius);
+  padding:22px 24px 20px;
+  position:relative;
+  transition:border-color .25s ease,background .25s ease;
+}
+.card:hover{border-color:var(--hover);background:var(--raised)}
+.tl-item.right .card{grid-column:3}
+.tl-item.left .card{grid-column:1;grid-row:1}
+@media(max-width:900px){
+  .tl-item{grid-template-columns:52px 1fr}
+  .tl-item .node{grid-column:1;justify-self:start;margin-top:18px}
+  .tl-item .card{grid-column:2 !important;grid-row:1}
+}
+.card .when{
+  font-size:12px;font-weight:400;color:var(--muted);margin-bottom:10px;
+}
+.card h3{
+  font-size:19px;font-weight:700;letter-spacing:-.015em;line-height:1.2;margin-bottom:8px;
+}
+.card p{
+  color:var(--muted);font-size:13.5px;line-height:1.65;
+}
+.card.spot{border-color:var(--lava)}
+.card.spot h3{color:var(--blue-bright)}
+
+/* reveal animation */
+.reveal{
+  opacity:0;transform:translateY(24px);
+  transition:opacity .6s cubic-bezier(.22,.8,.3,1),transform .6s cubic-bezier(.22,.8,.3,1);
+}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- section head ---------- */
+.section-head{margin:88px 0 28px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.section-head h2{
+  font-size:clamp(32px,4.5vw,46px);font-weight:900;letter-spacing:-.03em;line-height:1;text-transform:uppercase;
+}
+.section-head .kicker{
+  font-size:12px;font-weight:600;letter-spacing:.08em;
+  color:var(--lava-bright);margin-bottom:10px;
+}
+
+/* ---------- podcast ---------- */
+.podcast-box{
+  display:grid;grid-template-columns:1.1fr 1fr;gap:32px;
+  padding:40px 0;
+}
+@media(max-width:860px){.podcast-box{grid-template-columns:1fr;padding:8px 0}}
+.pod-left{display:flex;flex-direction:column;justify-content:center;gap:18px}
+.pod-left .cta{align-self:flex-start}
+.pod-left h2{
+  font-size:clamp(30px,4vw,44px);font-weight:900;letter-spacing:-.03em;
+  line-height:1.05;text-transform:uppercase;
+}
+.pod-left h2 b{color:var(--blue-bright);font-weight:900}
+.pod-left .kicker{
+  font-size:12px;font-weight:600;letter-spacing:.08em;
+  color:var(--blue-bright);
+}
+.pod-inner{
+  border:1px solid var(--border-strong);border-radius:6px;
+  background:var(--surface);
+  overflow:hidden;
+  align-self:center;width:100%;
+  box-shadow:none;
+}
+.track-list{overflow:hidden}
+.track-head{
+  display:flex;align-items:center;gap:14px;padding:14px 20px;
+  border-bottom:1px solid var(--border-strong);
+  background:var(--blue-deep);
+}
+.track-head .name{font-size:13.5px;font-weight:700}
+.track-head .name small{display:block;color:var(--muted);font-weight:400;font-size:11.5px}
+.track{
+  display:flex;align-items:center;gap:14px;padding:13px 20px;
+  border-bottom:1px solid var(--border);
+  transition:background .2s;cursor:pointer;
+}
+.track:last-child{border-bottom:none}
+.track:hover{background:var(--raised)}
+.track .num{
+  font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--muted);
+  min-width:24px;
+}
+.track .name{flex:1;font-size:13.5px;font-weight:600}
+.track .name small{display:block;color:var(--muted);font-weight:400;font-size:11.5px;margin-top:2px}
+.track .dur{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--muted)}
+.track .play{
+  width:26px;height:26px;border-radius:2px;border:1px solid var(--border-strong);
+  display:grid;place-items:center;font-size:9px;color:var(--blue-bright);flex-shrink:0;
+}
+
+/* ---------- events carousel ---------- */
+.carousel-wrap{position:relative}
+.carousel{
+  display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;
+  scrollbar-width:none;padding-bottom:6px;
+}
+.carousel::-webkit-scrollbar{display:none}
+.event-tile{
+  background:var(--surface);border:1px solid var(--border-strong);border-radius:var(--radius);
+  padding:20px;display:flex;flex-direction:column;gap:8px;
+  transition:border-color .25s,background .25s;
+  flex:0 0 clamp(240px,29vw,310px);
+  scroll-snap-align:start;
+}
+.event-tile:hover{border-color:var(--hover);background:var(--raised)}
+.event-tile .ev-kicker{
+  font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.1em;
+  color:var(--muted);
+}
+.event-tile h3{font-size:17px;font-weight:700;letter-spacing:-.01em}
+.event-tile p{color:var(--muted);font-size:12.5px;line-height:1.6;flex:1}
+.event-tile .go{
+  font-size:12px;font-weight:600;color:var(--blue-bright);
+}
+.car-btn{
+  width:34px;height:34px;border-radius:var(--radius);
+  border:1px solid var(--border-strong);background:var(--surface);
+  color:var(--text);font-size:14px;cursor:pointer;
+  display:inline-grid;place-items:center;
+  transition:border-color .2s,background .2s;
+}
+.car-btn:hover{border-color:var(--hover);background:var(--raised)}
+.car-btn.lava:hover{border-color:var(--lava);color:var(--lava-bright)}
+
+/* ---------- newsletter ---------- */
+.newsletter{
+  margin-top:88px;
+  background:var(--surface);
+  border:1px solid var(--border-strong);border-radius:var(--radius);
+  padding:44px 40px;
+  display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center;
+}
+@media(max-width:760px){.newsletter{grid-template-columns:1fr;padding:32px 24px}}
+.newsletter h2{
+  font-size:clamp(26px,3.5vw,38px);font-weight:900;letter-spacing:-.03em;
+  line-height:1.05;text-transform:uppercase;
+}
+.newsletter p{color:var(--muted);font-size:13.5px;line-height:1.7;margin-top:12px;max-width:400px}
+.nl-form{display:flex;flex-direction:column;gap:10px}
+.nl-input{
+  background:var(--input);border:1px solid var(--border-strong);border-radius:var(--radius);
+  padding:13px 16px;font-family:inherit;font-size:13.5px;color:var(--text);
+  outline:none;transition:border-color .2s;width:100%;
+}
+.nl-input::placeholder{color:var(--muted)}
+.nl-input:focus{border-color:var(--lava)}
+.nl-form .cta{justify-content:center;border:none;cursor:pointer;font-family:inherit}
+.nl-note{font-size:11.5px;color:var(--muted)}
+
+/* ---------- buttons ---------- */
+.cta{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--lava);color:#fff;
+  font-weight:600;font-size:13px;letter-spacing:.01em;
+  padding:11px 20px;border-radius:var(--radius);
+  transition:background .2s;
+}
+.cta:hover{background:var(--lava-bright)}
+.cta.blue{background:var(--blue);color:#fff}
+.cta.blue:hover{background:var(--blue-bright);color:#fff}
+.cta.ghost{background:transparent;border:1px solid var(--border-strong);color:var(--text)}
+.cta.ghost:hover{border-color:var(--hover);background:var(--raised)}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--border);margin-top:88px;background:var(--surface)}
+.foot-inner{padding:48px 0 36px}
+.foot-title{
+  font-size:clamp(40px,7vw,80px);font-weight:900;letter-spacing:-.04em;
+  text-transform:uppercase;line-height:.95;margin-bottom:24px;
+}
+.foot-title .ghost{color:var(--ghost-strong)}
+.foot-note{color:var(--muted);max-width:420px;font-size:13.5px;line-height:1.7;margin-bottom:24px}
+.foot-bottom{
+  border-top:1px solid var(--border);
+  padding:20px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  font-size:12px;color:var(--muted);
+}
+.foot-bottom .links{display:flex;gap:20px}
+.foot-bottom a:hover{color:var(--text)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a class="nav-brand" href="#">E-CELL <b>/</b> Magazine</a>
+    <div class="nav-links">
+      <span onclick="document.getElementById('timeline').scrollIntoView()">Timeline</span>
+      <span onclick="document.getElementById('podcast').scrollIntoView()">Podcast</span>
+      <span onclick="document.getElementById('allEvents').scrollIntoView()">Events</span>
+    </div>
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"></button>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <div class="head-kicker">E-Cell, BITS Pilani Hyderabad Campus</div>
+    <h1 class="head-title">The<br /><span class="ghost">Magazine</span></h1>
+    <div class="head-sub">
+      <p>
+        See what <strong>a year at E-CELL</strong> looks like, from
+        <strong>Community Meets to Launchpad and beyond</strong> — every event
+        that shaped the cell, logged as it happened.
+      </p>
+      <div class="head-stats">
+        <div class="stat"><b id="statEvents">0</b><span>Events</span></div>
+        <div class="stat"><b id="statMonths">0</b><span>Months</span></div>
+        <div class="stat"><b>365</b><span>Days</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="timeline" class="timeline">
+  <div class="tl-line"><div class="tl-fill" id="tlFill"></div></div>
+  <div class="wrap" id="tlRoot"></div>
+</section>
+
+<section id="podcast">
+  <div class="wrap">
+    <div class="podcast-box reveal">
+      <div class="pod-left">
+        <div class="kicker">E-Cell Conversations</div>
+        <h2>Haven't heard<br />our <b>podcast</b> yet?</h2>
+        <a class="cta blue" id="podcastCta" href="#" target="_blank" rel="noopener">Listen on YouTube →</a>
+      </div>
+      <div class="pod-inner">
+        <div class="track-list" id="trackList"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="allEvents">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="kicker">The full roster</div>
+        <h2>All our events</h2>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="car-btn" id="carPrev" aria-label="Previous">&#8592;</button>
+        <button class="car-btn lava" id="carNext" aria-label="Next">&#8594;</button>
+        <a class="cta ghost" href="https://www.ecellbits.com/" target="_blank" rel="noopener" style="margin-left:8px">Explore on ecellbits.com</a>
+      </div>
+    </div>
+    <div class="carousel reveal" id="eventsGrid"></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="newsletter reveal">
+      <div>
+        <h2>Get the dispatch before anyone else</h2>
+        <p>
+          Event drops, speaker line-ups, competition deadlines and internship lists —
+          straight to your inbox, never more than a read a month.
+        </p>
+      </div>
+      <form class="nl-form" id="nlForm">
+        <input class="nl-input" id="nlEmail" type="email" placeholder="reader@bits-hyderabad.ac.in" required />
+        <button class="cta blue" type="submit">Sign Up</button>
+        <span class="nl-note" id="nlNote"></span>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer id="foot">
+  <div class="wrap foot-inner">
+    <h2 class="foot-title">See you at <span class="ghost">the next one.</span></h2>
+    <p class="foot-note">
+      The Magazine is maintained by the E-CELL team — one scroll through everything
+      the cell did this year. Missed something? One entry keeps it current.
+    </p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a class="cta" href="https://www.ecellbits.com/" target="_blank" rel="noopener">Official Site</a>
+      <a class="cta ghost" id="igCta" href="#" target="_blank" rel="noopener">Instagram</a>
+      <a class="cta ghost" id="liCta" href="#" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>E-Cell, BITS Pilani Hyderabad Campus · Hyderabad, Telangana 500078</span>
+    <div class="links">
+      <a href="mailto:ecell@hyderabad.bits-pilani.ac.in">ecell@hyderabad.bits-pilani.ac.in</a>
+      <span>&copy; 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ==== MAGAZINE DATA — edit this array to keep the timeline up to date.
+   confirmed: real events listed on ecellbits.com · placeholder: from club notes ==== */
+const EVENTS = [
+  {
+    month: "August",
+    title: "Comm Meet",
+    when: "Aug 2026 · Start of semester",
+    text: "The year's opening whistle. A new wave of members walks in, teams are formed, plans for the year are laid out and responsibilities get handed over. Everything that follows starts here.",
+    source: "placeholder",
+  },
+  {
+    month: "October",
+    title: "Teen Tycoons",
+    when: "Oct 2026 · Competition",
+    text: "E-CELL's student-competition pipeline in full swing — teams build business acumen through problem rounds that reward bold thinking over safe answers.",
+    source: "confirmed",
+  },
+  {
+    month: "November",
+    title: "SEED",
+    when: "Nov 2026 · Program",
+    text: "The nurturing round of the calendar. Early sparks of ideas are refined through mentoring sessions before anyone pitches anything to a judge.",
+    source: "confirmed",
+  },
+  {
+    month: "January",
+    title: "Internship Drive",
+    when: "Jan 2027 · Pipeline",
+    text: "E-CELL partner startups open their doors for summer internships. A curated list goes out members-first, with priority fast-tracks for the most active contributors.",
+    source: "confirmed",
+  },
+  {
+    month: "February",
+    title: "Pitchers Pilot",
+    when: "Feb 2027 · Qualifiers",
+    text: "The pitch-fight that feeds Launchpad. Teams climb through qualifiers with their decks sharpened round after round — survivors headline the main stage in April.",
+    source: "confirmed",
+  },
+  {
+    month: "March",
+    title: "Ground Reality",
+    when: "Mar 2027 · Conclave",
+    text: "The annual start-up challenge and entrepreneurship conclave — E-CELL members sit across high-profile founders, VCs and angel investors and put the real questions on the table.",
+    source: "confirmed",
+  },
+  {
+    month: "April",
+    title: "Launchpad '27",
+    when: "Apr 3–5, 2027 · Flagship summit",
+    text: "The big one — the largest E-Summit of South India. Three days of speakers, workshops and Startup Expo that pull crowds from every campus in the country. The whole year orbits around this weekend.",
+    spotlight: true,
+    source: "confirmed",
+  },
+  {
+    month: "May",
+    title: "Review & Handover",
+    when: "May 2027 · Year close",
+    text: "The year gets closed like a book. Metrics are presented, the new core team is announced, and the outgoing batch writes the first chapter of next year's Magazine before they leave.",
+    source: "placeholder",
+  },
+];
+
+/* ==== LINKS ==== */
+const CONFIG = {
+  podcastName: "E-Cell Conversations",
+  podcastLink: "https://www.youtube.com/@e-cellbitspilanihyderabad",
+  podcastBlurb: "The founders, investors and operators who come through E-CELL get long-form conversations — first failures, messy pivots and all. Live on the E-Cell YouTube channel.",
+  email: "ecell@hyderabad.bits-pilani.ac.in",
+  instagram: "https://www.instagram.com/ecell_bphc",
+  linkedin: "https://linkedin.com/company/e-cell-bphc",
+  website: "https://www.ecellbits.com/",
+  x: "https://x.com/ecell_bphc",
+};
+
+/* ==== RENDER TIMELINE ==== */
+const tlRoot = document.getElementById("tlRoot");
+const monthOrder = [];
+EVENTS.forEach(e => { if (monthOrder[monthOrder.length - 1] !== e.month) monthOrder.push(e.month); });
+
+let leftNext = true;
+let html = "";
+monthOrder.forEach((m, mi) => {
+  html += `<div class="month-marker reveal">
+    <span class="lbl">${m}</span>
+    <span class="rule"></span>
+  </div>`;
+  EVENTS.filter(e => e.month === m).forEach(e => {
+    const idx = EVENTS.indexOf(e);
+    const side = e.spotlight ? "right" : leftNext;
+    leftNext = !leftNext;
+    html += `<div class="tl-item ${side ? "left" : "right"}">
+      <div class="node acc-${idx % 2 ? "blue" : "red"}">${String(idx + 1).padStart(2, "0")}</div>
+      <article class="card ${e.spotlight ? "spot" : ""} reveal">
+        <div class="when">${e.when}</div>
+        <h3>${e.title}</h3>
+        <p>${e.text}</p>
+      </article>
+    </div>`;
+  });
+});
+tlRoot.innerHTML = html;
+
+document.getElementById("statEvents").textContent = EVENTS.length;
+document.getElementById("statMonths").textContent = monthOrder.length;
+
+/* ==== RENDER PODCAST ==== */
+const EPISODES = [
+  ["E-Cell: what it actually takes", "Coordinators on the cell's year, unfiltered"],
+  ["What happens when funding dries up", "A founder caught between the runway and the fan"],
+  ["The first client that never pays", "Surviving the first normal quarter of any startup"],
+  ["Drop-out or not: BITS and beyond", "Whether the degree dead-weight is real or not"],
+];
+document.getElementById("trackList").innerHTML =
+  `<div class="track-head">
+    <span class="name">${CONFIG.podcastName}<small id="podNote"></small></span>
+  </div>` +
+  EPISODES.map((ep, i) => `
+    <div class="track">
+      <span class="num">${String(i + 1).padStart(2, "0")}</span>
+      <span class="name">${ep[0]}<small>${ep[1]}</small></span>
+      <span class="dur">${45 + i * 3} min</span>
+      <span class="play">&#9654;</span>
+    </div>`).join("");
+
+const pCta = document.getElementById("podcastCta");
+pCta.href = CONFIG.podcastLink || CONFIG.website;
+pCta.textContent = "Listen on YouTube →";
+document.getElementById("podNote").textContent = CONFIG.podcastLink
+  ? "Now live — new episodes on the E-Cell channel"
+  : "Paste your Spotify/YouTube podcast URL in the CONFIG object";
+document.getElementById("igCta").href = CONFIG.instagram;
+document.getElementById("liCta").href = CONFIG.linkedin;
+
+/* ==== EVENTS CAROUSEL ==== */
+const ALL_EVENTS = [
+  ["Pitchers Pilot", "The pitching war that qualifies teams to the Launchpad main stage."],
+  ["Internship Drive", "Partner startups open summer roles with E-CELL fast-tracks."],
+  ["Ground Reality", "The annual challenge-conclave: members across founders, VCs and angels."],
+  ["Startup Expo", "Innovators' battlefield at Launchpad — 1,000+ startups under one roof."],
+  ["Teen Tycoons", "Student competition rewarding bold thinking from the youngest builders."],
+  ["SEED", "Ideation-and-mentoring program that preps ideas before their first pitch."],
+];
+const car = document.getElementById("eventsGrid");
+car.innerHTML = ALL_EVENTS.map((ev, i) => `
+  <a class="event-tile" href="${CONFIG.website}" target="_blank" rel="noopener">
+    <span class="ev-kicker">${String(i + 1).padStart(2, "0")} / E-Cell BPHC</span>
+    <h3>${ev[0]}</h3>
+    <p>${ev[1]}</p>
+    <span class="go">Event page →</span>
+  </a>`).join("");
+
+const tileStep = () => car.querySelector(".event-tile").offsetWidth + 14;
+document.getElementById("carPrev").addEventListener("click", () => car.scrollBy({ left: -tileStep() * 2, behavior: "smooth" }));
+document.getElementById("carNext").addEventListener("click", () => car.scrollBy({ left: tileStep() * 2, behavior: "smooth" }));
+
+/* ==== NEWSLETTER ==== */
+document.getElementById("nlForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const email = document.getElementById("nlEmail").value.trim();
+  document.getElementById("nlNote").textContent = email
+    ? `Saved locally in this demo — hook ${email} up to your newsletter service here.`
+    : "";
+  document.getElementById("nlEmail").value = "";
+});
+
+/* ==== THEME TOGGLE ==== */
+const themeBtn = document.getElementById("themeBtn");
+const ICONS = {
+  sun: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
+  moon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>',
+};
+const applyTheme = () => {
+  const light = localStorage.getItem("mag-theme") === "light";
+  document.body.classList.toggle("light", light);
+  themeBtn.innerHTML = light ? ICONS.moon : ICONS.sun;
+};
+applyTheme();
+themeBtn.addEventListener("click", () => {
+  const next = document.body.classList.toggle("light") ? "light" : "dark";
+  localStorage.setItem("mag-theme", next);
+  applyTheme();
+});
+
+/* ==== SCROLL ANIMATIONS ==== */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if (en.isIntersecting) {
+      en.target.classList.add("in");
+      io.unobserve(en.target);
+    }
+  });
+}, { threshold: 0.15, rootMargin: "0px 0px -30px 0px" });
+document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+/* ==== TIMELINE FILL ==== */
+const tlSection = document.getElementById("timeline");
+const fill = document.getElementById("tlFill");
+function updateFill() {
+  const r = tlSection.getBoundingClientRect();
+  const total = r.height - window.innerHeight * 0.4;
+  const scrolled = Math.min(Math.max(window.innerHeight * 0.4 - r.top, 0), total);
+  fill.style.height = (total > 0 ? scrolled / total * 100 : 0) + "%";
+}
+window.addEventListener("scroll", updateFill, { passive: true });
+updateFill();
+</script>
+
+</body>
+</html>

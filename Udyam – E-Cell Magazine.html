@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--for the magazin name one i thought was entre-printeneur it is big but for now keeping it 
+The main idea of mine is one issue per year of e cell and then we can make it better-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Udyama – The E-Cell BPHC Magazine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F2F4FB;
+      --surface: #FFFFFF;
+      --ink: #10142E;
+      --muted: #555B7A;
+      --blue: #2230E0;
+      --gold: #FFB61E;
+      --line: #D5D9EC;
+      --onblue: #FFFFFF;
+      --display: 'Bricolage Grotesque', 'Trebuchet MS', sans-serif;
+      --body: 'Source Serif 4', Georgia, serif;
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    @media (prefers-color-scheme:dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0C1026;
+        --surface: #161B3D;
+        --ink: #EEF0FF;
+        --muted: #A3A9CC;
+        --blue: #7B86FF;
+        --gold: #FFC53D;
+        --line: #2A3166;
+        --onblue: #0C1026
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #0C1026;
+      --surface: #161B3D;
+      --ink: #EEF0FF;
+      --muted: #A3A9CC;
+      --blue: #7B86FF;
+      --gold: #FFC53D;
+      --line: #2A3166;
+      --onblue: #0C1026
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: inherit
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 18px/1.65 var(--body)
+    }
+
+    a 
+    {
+      color: inherit
+    }
+
+    :focus-visible /*this applies for all elements in which on focus we can get the outline  */
+    {
+      outline: 3px solid var(--gold);
+      outline-offset: 3px
+    }
+
+    .wrap 
+    {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 20px
+    }
+
+   
+   h1,h2, h3 
+   {
+      font-family: var(--display);
+      line-height: 1.05;
+      margin: 0
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 0;
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 15px
+    }
+
+    nav .logo {
+      font-weight: 800;
+      font-size: 22px;
+      text-decoration: none
+    }
+
+    nav ul {
+      display: flex;
+      gap: 22px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      overflow-x: auto
+    }
+
+    nav a {
+      text-decoration: none;
+      white-space: nowrap
+    }
+
+    nav a:hover {
+      color: var(--blue)
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 40px;
+      align-items: center;
+      padding: 28px 0 64px
+    }
+
+    .masthead {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(76px, 15vw, 176px);
+      letter-spacing: -.05em;
+      line-height: .85;
+      color: var(--blue);
+      margin: 0 0 18px
+    }
+
+    .hero p.lead {
+      font-size: 21px;
+      max-width: 30em;
+      margin: 0 0 26px;
+      color: var(--muted)
+    }
+
+    .btn {
+      display: inline-block;
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 16px;
+      background: var(--ink);
+      color: var(--bg);
+      padding: 14px 24px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: 0;
+      cursor: pointer
+    }
+
+    .btn.alt {
+      background: var(--gold);
+      color: #10142E
+    }
+
+    .btn:hover {
+      transform: translateY(+2px)
+    }
+
+    .cover {
+      position: relative;
+      aspect-ratio: 3/4;
+      background: var(--blue);
+      color: var(--onblue);
+      border-radius: 6px;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 14px 14px 0 var(--gold);
+      overflow: hidden;
+      transform: rotate(2deg);
+      animation: settle .9s cubic-bezier(.2, .8, .2, 1) both
+    }
+
+    @keyframes settle {
+      from {
+        transform: rotate(9deg) translateY(30px);
+        opacity: 0
+      }
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+      .cover {
+        animation: none
+      }
+
+      html {
+        scroll-behavior: auto
+      }
+    }
+
+    .cover small {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 14px
+    }
+
+    .cover h2 {
+      color: #fff;
+      /* this will make it white*/
+      line-height: 1.05;
+      font-size: clamp(32px, 4.6vw, 50px);
+      position: relative;
+      z-index: 1
+    }
+
+    .cover svg {
+      position: absolute;
+      right: -30px;
+      bottom: -30px;
+      width: 78%;
+      opacity: .95
+    }
+
+    section {
+      padding: 56px 0;
+      border-top: 2px solid var(--ink)
+    }
+
+    .sec-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 28px
+    }
+
+    .sec-head h2 {
+      font-size: clamp(34px, 5vw, 56px);
+      letter-spacing: -.03em
+    }
+
+    .sec-head p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 26em
+    }
+
+    .filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 26px
+    }
+
+    .chip {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 15px;
+      color: var(--ink);
+      background: transparent;
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      padding: 7px 18px;
+      cursor: pointer
+    }
+
+    .chip[aria-pressed="true"] {
+      background: var(--ink);
+      color: var(--bg)
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 22px
+    }
+
+    .card {
+      grid-column: span 4;
+      background: var(--surface);
+      border: 2px solid var(--ink);
+      border-radius: 4px;
+      padding: 0;
+      text-align: left;
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden
+    }
+
+    .card:first-child {
+      grid-column: span 8
+    }
+
+    .card .art {
+      height: 150px;
+      display: block
+    }
+
+    .card:first-child .art {
+      height: 210px
+    }
+
+    .card .txt {
+      padding: 18px 20px 22px;
+      display: block
+    }
+
+    .tag {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 14px;
+      color: var(--blue)
+    }
+
+    .card h3 {
+      font-size: 26px;
+      margin: 6px 0 10px;
+      letter-spacing: -.02em
+    }
+
+    .card:first-child h3 {
+      font-size: 38px
+    }
+
+    .card .by {
+      font-size: 15px;
+      color: var(--muted)
+    }
+
+    .card:hover h3 {
+      text-decoration: underline;
+      text-decoration-color: var(--gold);
+      text-decoration-thickness: 4px
+    }
+
+    .card[hidden] {
+      display: none
+    }
+
+    .spot {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center
+    }
+
+    .spot blockquote {
+      margin: 0;
+      font-size: clamp(24px, 3vw, 34px);
+      line-height: 1.3;
+      font-style: italic
+    }
+
+    .spot cite {
+      display: block;
+      margin-top: 16px;
+      font: 500 16px var(--display);
+      font-style: normal;
+      color: var(--muted)
+    }
+
+    .facts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px
+    }
+
+    .fact {
+      background: var(--surface);
+      border: 2px solid var(--ink);
+      padding: 18px;
+      border-radius: 4px
+    }
+
+    .fact b {
+      display: block;
+      font: 800 40px/1 var(--display);
+      color: var(--blue)
+    }
+
+    .fact span {
+      font-size: 15px;
+      color: var(--muted)
+    }
+
+    .events {
+      list-style: none;
+      margin: 0;
+      padding: 0
+    }
+
+    .events li {
+      display: grid;
+      grid-template-columns: 110px 1fr auto;
+      gap: 18px;
+      align-items: center;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .events .d {
+      font: 800 26px/1 var(--display);
+      color: var(--blue)
+    }
+
+    .events h3 {
+      font-size: 22px
+    }
+
+    .events p {
+      margin: 2px 0 0;
+      font-size: 16px;
+      color: var(--muted)
+    }
+
+    .issues {
+      display: flex;
+      gap: 18px;
+      overflow-x: auto;
+      padding-bottom: 12px
+    }
+
+    .issue {
+      flex: 0 0 150px;
+      aspect-ratio: 3/4;
+      border-radius: 4px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      font-family: var(--display);
+      color: #10142E;
+      border: 2px solid var(--ink)
+    }
+
+    .issue b {
+      font-size: 26px;
+      line-height: 1
+    }
+
+    .issue span {
+      font-size: 13px;
+      font-weight: 500
+    }
+
+    .sub {
+      background: var(--blue);
+      color: var(--onblue);
+      border-radius: 6px;
+      padding: 44px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      align-items: center
+    }
+
+    .sub h2 {
+      font-size: clamp(30px, 4vw, 44px)
+    }
+
+    .sub form {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap
+    }
+
+    .sub input {
+      flex: 1 1 200px;
+      font: inherit;
+      font-size: 17px;
+      padding: 13px 16px;
+      border-radius: 999px;
+      border: 2px solid var(--onblue);
+      background: transparent;
+      color: var(--onblue)
+    }
+
+    .sub input::placeholder {
+      color: inherit;
+      opacity: .7
+    }
+
+    .sub .btn {
+      background: var(--gold);
+      color: #10142E
+    }
+
+    #msg {
+      flex-basis: 100%;
+      margin: 4px 0 0;
+      font-size: 16px;
+      min-height: 1.4em
+    }
+
+    footer {
+      padding: 36px 0 48px;
+      font-size: 15px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap
+    }
+
+    dialog {
+      width: min(680px, 92vw);
+      max-height: 88vh;
+      border: 2px solid var(--ink);
+      border-radius: 6px;
+      background: var(--surface);
+      color: var(--ink);
+      padding: 0
+    }
+
+    dialog::backdrop {
+      background: rgba(10, 12, 35, .6)
+    }
+
+    dialog .in {
+      padding: 32px 30px
+    }
+
+    dialog h2 {
+      font-size: clamp(30px, 5vw, 44px);
+      margin: 8px 0 6px;
+      letter-spacing: -.02em
+    }
+
+    dialog p {
+      margin: 14px 0
+    }
+
+    dialog .x {
+      float: right;
+      background: var(--ink);
+      color: var(--bg);
+      border: 0;
+      border-radius: 999px;
+      width: 38px;
+      height: 38px;
+      font-size: 18px;
+      cursor: pointer
+    }
+
+    @media (max-width:820px) {
+
+      .hero,
+      .spot,
+      .sub {
+        grid-template-columns: 1fr
+      }
+
+      .cover {
+        max-width: 360px;
+        margin: 0 auto 20px
+      }
+
+      .card,
+      .card:first-child {
+        grid-column: span 12
+      }
+
+      .events li {
+        grid-template-columns: 70px 1fr
+      }
+
+      .events li .btn {
+        grid-column: 2
+      }
+
+      .sub {
+        padding: 28px
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="#top">Udyama</a>
+      <ul>
+        <li><a href="#stories">Stories</a></li>
+        <li><a href="#spotlight">Spotlight</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#archive">Archive</a></li>
+        <li><a href="#join">Subscribe</a></li>
+      </ul>
+    </nav>
+
+    <header class="hero" id="top">
+      <div>
+        <h1 class="masthead">Udyama</h1>
+        <p class="lead">The annual magazine of the E Cell Bits Pilani Hyderabad Campus. Student founders, hard lessons, and the ideas
+          that started in hostel rooms.</p>
+        <a class="btn" href="#stories">Read Issue 12</a>
+        <a class="btn alt" href="#join">Get the next issue</a>
+      </div>
+      <div class="cover" aria-label="Issue 12 cover">
+        <small>Issue 12 · Launchpad 2026</small>
+        <h2>       ECELL 2026-27       </h2>
+        <svg viewBox="0 0 200 200" aria-hidden="true">
+          <circle cx="120" cy="120" r="80" fill="#FFB61E" />
+          <path d="M20 190 L100 60 L140 120 L170 80 L200 190Z" fill="#10142E" />
+          <circle cx="60" cy="60" r="16" fill="#fff" />
+        </svg>
+      </div>
+    </header>
+
+    <section id="stories">
+      <div class="sec-head">
+        <h2>This issue</h2>
+        <p>Pick a topic, then open a story to read it.</p>
+      </div>
+      <div class="filters" id="filters" role="group" aria-label="Filter stories">
+        <button class="chip" aria-pressed="true" data-f="all">All</button>
+        <button class="chip" aria-pressed="false" data-f="Founders">Founders</button>
+        <button class="chip" aria-pressed="false" data-f="Funding">Funding</button>
+        <button class="chip" aria-pressed="false" data-f="Campus">Campus</button>
+        <button class="chip" aria-pressed="false" data-f="Playbook">Playbook</button>
+      </div>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <section id="spotlight">
+      <div class="sec-head">
+        <h2>Startup spotlight</h2>
+        <p>One alumni venture, covered in depth every issue.</p>
+      </div>
+      <div class="spot">
+        <div>
+          <blockquote>“We sold our first order before we had a company name. The name came when the invoice needed one.”
+          </blockquote>
+          <cite>Ananya Rao, co-founder of KhetiLink, Class of 2021</cite>
+        </div>
+        <div class="facts">
+          <div class="fact"><b>38</b><span>startups incubated since 2019</span></div>
+          <div class="fact"><b>₹14 Cr</b><span>raised by campus founders</span></div>
+          <div class="fact"><b>120+</b><span>mentors in the alumni network</span></div>
+          <div class="fact"><b>6,400</b><span>students at our events last year</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="events">
+      <div class="sec-head">
+        <h2>Coming up</h2>
+        <p>Open to every department and every year.</p>
+      </div>
+      <ul class="events">
+        <li><span class="d">23rd Oct</span>
+          <div>
+            <h3>Buil2Base</h3>
+            <p>Eight teams, five minutes each, three investors on the panel. Main auditorium.</p>
+          </div><a class="btn" href="#join">Register</a>
+        </li>
+        <li><span class="d">22 Nov</span>
+          <div>
+            <!--we will mention here other events the main idea here is one issue of magazine per one year of e cell-->
+            <h3>Founder Fireside</h3>
+            <p>An alumnus who shut down a startup explains what the post-mortem taught them.</p>
+          </div><a class="btn" href="#join">Register</a>
+        </li>
+        <li><span class="d">13 Dec</span>
+          <div>
+            <h3>48-hour Build Weekend</h3>
+            <p>Form a team on Friday night, demo a working product on Sunday evening.</p>
+          </div><a class="btn" href="#join">Register</a>
+        </li>
+      </ul>
+    </section>
+
+    <section id="archive">
+      <div class="sec-head">
+        <h2>Past issues</h2>
+        <p>Every Launchpad Story since 2016</p>
+      </div>
+      <div class="issues" id="issues"></div>
+    </section>
+
+    <section id="join">
+      <div class="sub">
+        <div>
+          <h2>One email when each issue goes live</h2>
+        </div>
+        <form id="form" novalidate>
+          <input id="email" type="email" placeholder="Your college email" aria-label="Email address" required>
+          <button class="btn" type="submit">Subscribe</button>
+          <p id="msg" role="status"></p>
+        </form>
+      </div>
+    </section>
+
+    <footer>
+      <span>Udyama is published by the E Cell Bits Pilani Hyderabad Campus.Sample Page let's see if this is finalized.</span>
+      <span>© 2026 E-Cell</span>
+    </footer>
+  </div>
+
+  <dialog id="dlg" aria-labelledby="dt">
+    <div class="in">
+      <button class="x" id="close" aria-label="Close story">✕</button>
+      <span class="tag" id="dg"></span>
+      <h2 id="dt"></h2>
+      <div class="by" id="db" style="color:var(--muted);font-size:15px"></div>
+      <div id="dbody"></div>
+    </div>
+  </dialog>
+
+  <script>
+    //this is for the dialogs we can modift them
+    //in after versions we can put something such as highest number of votes on 
+    //the top to make it look better
+    const stories = [
+      { t: "The last-bench startup that hit ₹1 Cr in revenue", g: "Founders", a: "Riya Menon", c: "#FFB61E", b: ["Three second-years began by reselling lab notes. Eighteen months later the same team runs a study-material business with paying customers in nine cities.", "Their advice for newcomers is plain: talk to ten buyers before writing a single line of code, and keep a record of every refusal."] },
+      { t: "How we raised our first cheque without a pitch deck", g: "Funding", a: "Karan Iyer", c: "#9FA8FF", b: ["The first investor said yes after a working demo and a one-page summary. No slides were involved.", "Karan explains how to find angels inside your own alumni network and what to ask for in the first meeting."] },
+      { t: "Inside the incubator: a day with Cohort 7", g: "Campus", a: "Meera Nair", c: "#FF8A7A", b: ["Twelve teams share one floor, one whiteboard wall, and a weekly review where ideas get cut.", "We followed three of them from a Monday standup to a Friday customer call."] },
+      { t: "A 30-day plan to validate any idea", g: "Playbook", a: "Dev Malhotra", c: "#7BE0B0", b: ["Week one: write down the problem and who has it. Week two: interview fifteen of them. Week three: sell a fake version. Week four: decide.", "The plan has been used by 40 campus teams, and a third of them dropped their first idea by day 21."] },
+      { t: "Co-founder breakups and how to survive them", g: "Founders", a: "Sana Qureshi", c: "#FFB61E", b: ["Most student teams never write down who owns what. That gap turns into a fight the first time money arrives.", "Sana speaks to four founders who split and a lawyer who has drawn up the papers."] },
+      { t: "Grants, scholarships and other money that isn’t equity", g: "Funding", a: "Arjun Pillai", c: "#9FA8FF", b: ["A short guide to government schemes, corporate grants and competition prizes open to students.", "Includes a table of deadlines and what each programme actually expects from you."] }
+    ];
+
+    //t here is title
+    //g is the group such as Founders Funding etc;
+    //a is Author
+    //c is color used in the SVG
+    //b is the body paragraphs
+
+    const grid = document.getElementById('grid');
+    const dlg = document.getElementById('dlg');//these are the dialog boxes
+    stories.forEach((s, i) => 
+    {
+      const b = document.createElement('button');
+      b.className = 'card'; 
+      b.dataset.g = s.g;
+      b.innerHTML = `<svg class="art" viewBox="0 0 400 210" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="210" fill="${s.c}"/><circle cx="${90 + i * 45}" cy="${60 + (i % 3) * 35}" r="${50 + (i % 2) * 20}" fill="#10142E" opacity=".9"/><rect x="${200 + i * 20}" y="${30 + i * 10}" width="130" height="130" fill="#fff" opacity=".55" transform="rotate(${12 + i * 9} 300 100)"/></svg><span class="txt"><span class="tag">${s.g}</span><h3>${s.t}</h3><span class="by">By ${s.a}</span></span>`;
+      b.addEventListener('click', () => 
+      {
+        document.getElementById('dg').textContent = s.g;
+        document.getElementById('dt').textContent = s.t;
+        document.getElementById('db').textContent = 'By ' + s.a;
+        document.getElementById('dbody').innerHTML = s.b.map(p => '<p>' + p + '</p>').join('');
+        dlg.showModal();
+      });
+      grid.appendChild(b);
+    });
+    document.getElementById('close').onclick = () => dlg.close();
+
+    dlg.addEventListener('click', e => 
+    { 
+      if (e.target === dlg) dlg.close() 
+    });
+
+    document.getElementById('filters').addEventListener('click', e => 
+    {
+      const c = e.target.closest('.chip'); 
+      if (!c) return;
+
+      document.querySelectorAll('.chip').forEach(x => x.setAttribute('aria-pressed', x === c));
+      const f = c.dataset.f; 
+      let first = true;
+      document.querySelectorAll('.card').forEach(card => 
+      {
+        card.hidden = !(f === 'all' || card.dataset.g === f);
+      });
+    });
+    const cols = ['#FFB61E', '#9FA8FF', '#FF8A7A', '#7BE0B0'];
+    const iss = document.getElementById('issues');
+    for (let n = 12; n >= 7; n--) 
+    {
+      iss.insertAdjacentHTML('beforeend', `<div class="issue" style="background:${cols[n % 4]}"><span>${2026 - (12 - n)-1}</span><b>Issue ${n}</b></div>`);
+    } //this code is for achives we can leave this thing and renew it afterwards
+    //cols picks four any one color from it's for colors
+
+    document.getElementById('form').addEventListener('submit', e => 
+    {
+      e.preventDefault();
+      const v = document.getElementById('email').value.trim();
+      const m = document.getElementById('msg');
+      if (!/^\S+@hyderabad.bits-pilani.ac.in$/.test(v)) //this is the regex matcher will for now make it specific for bits pilani hyderabad students
+      {
+        m.textContent = 'Enter a valid email address, for example name@college.edu.';
+        e.target.reset();
+        return 
+      }
+      m.textContent = 'Subscribed. The next issue will arrive at ' + v + '.';
+      //this will be then connected to the database and weekly newsletters/magazines will be sent
+      e.target.reset();
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "@ecell/tsconfig",
+  "version": "1.0.0",
+  "private": true,
+  "files": [
+    "base.json",
+    "react.json",
+    "next.json"
+  ],
+  "exports": {
+    "./base.json": "./base.json",
+    "./react.json": "./react.json",
+    "./next.json": "./next.json"
+  }
+}

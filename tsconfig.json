@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolvePackageJsonImports": true,
+    "skipLibCheck": true
+  },
+  "files": [],
+  "references": [
+    { "path": "apps/marketing" },
+    { "path": "apps/internship_drive" }
+  ]
+}

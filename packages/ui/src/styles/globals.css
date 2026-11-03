@@ -1,0 +1,162 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/*
+ * Shared theme for the E-Cell monorepo (components imported from @ecell/ui).
+ * Palette comes from the magazine design (root ./index.html):
+ * dark by default, toggle a `.light` class on <body> (or any container).
+ */
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --radius: 4px;
+
+  /* dark palette (default) */
+  --background: #111111;
+  --foreground: #e7dfc6;
+  --card: #141414;
+  --card-foreground: #e7dfc6;
+  --popover: #141414;
+  --popover-foreground: #e7dfc6;
+  --primary: #a31d2b;
+  --primary-foreground: #f5f0de;
+  --secondary: #262626;
+  --secondary-foreground: #e7dfc6;
+  --muted: #1a1a1a;
+  --muted-foreground: #8a8a80;
+  --accent: #262626;
+  --accent-foreground: #e7dfc6;
+  --destructive: #a31d2b;
+  --destructive-foreground: #f5f0de;
+  --border: #191919;
+  --input: #1e1e1e;
+  --ring: #a31d2b;
+
+  --chart-1: #a31d2b;
+  --chart-2: #e0424f;
+  --chart-3: #1d6ba8;
+  --chart-4: #5fa3d6;
+  --chart-5: #e7dfc6;
+
+  /* brand extras from index.html */
+  --lava: #a31d2b;
+  --lava-bright: #e0424f;
+  --blue: #1d6ba8;
+  --blue-bright: #5fa3d6;
+  --hover: #3a3a3a;
+  --ghost-soft: rgba(231, 223, 198, 0.14);
+}
+
+.light {
+  --background: #fcfcfc;
+  --foreground: #27272a;
+  --card: #ffffff;
+  --card-foreground: #27272a;
+  --popover: #ffffff;
+  --popover-foreground: #27272a;
+  --primary: #a31d2b;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f1f3;
+  --secondary-foreground: #27272a;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717b;
+  --accent: #ececef;
+  --accent-foreground: #27272a;
+  --destructive: #9a1020;
+  --destructive-foreground: #ffffff;
+  --border: #e4e4e7;
+  --input: #e4e4e7;
+  --ring: #1b4ed8;
+
+  --chart-1: #a31d2b;
+  --chart-2: #9a1020;
+  --chart-3: #1b4ed8;
+  --chart-4: #3b82f6;
+  --chart-5: #27272a;
+
+  --lava: #a31d2b;
+  --lava-bright: #9a1020;
+  --blue: #1b4ed8;
+  --blue-bright: #3b82f6;
+  --hover: #c9c9cf;
+  --ghost-soft: rgba(39, 39, 42, 0.1);
+}
+
+.dark {
+  /* identical to :root — dark is the default everywhere */
+  --background: #111111;
+  --foreground: #e7dfc6;
+  --card: #141414;
+  --card-foreground: #e7dfc6;
+  --popover: #141414;
+  --popover-foreground: #e7dfc6;
+  --primary: #a31d2b;
+  --primary-foreground: #f5f0de;
+  --secondary: #262626;
+  --secondary-foreground: #e7dfc6;
+  --muted: #1a1a1a;
+  --muted-foreground: #8a8a80;
+  --accent: #262626;
+  --accent-foreground: #e7dfc6;
+  --destructive: #a31d2b;
+  --destructive-foreground: #f5f0de;
+  --border: #191919;
+  --input: #1e1e1e;
+  --ring: #a31d2b;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* brand extras as utilities: bg-lava, text-blue-bright, ... */
+  --color-lava: var(--lava);
+  --color-lava-bright: var(--lava-bright);
+  --color-ecell-blue: var(--blue);
+  --color-ecell-blue-bright: var(--blue-bright);
+  --color-ghost-soft: var(--ghost-soft);
+
+  --font-sans: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 8px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@source "../../../../apps/internship_drive/src";
+@source "../../../../apps/marketing/src";

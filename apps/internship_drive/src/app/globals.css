@@ -1,0 +1,184 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* Component tree from the shared package must be scanned for utilities */
+@source "../../../../packages/ui/src";
+
+/* ============================================================
+   E-Cell BPHC Internship Drive — Design System
+   Extracted from the live Launchpad site + extended
+   ============================================================ */
+
+@theme inline {
+  /* — Color Palette — */
+  --color-bg-primary: #000000;
+  --color-bg-secondary: #0a0a0a;
+  --color-bg-card: #1a1a1a;
+  --color-bg-card-hover: #222222;
+  --color-bg-elevated: #111111;
+  --color-bg-glass: rgba(255, 255, 255, 0.05);
+
+  --color-accent-lime: #d4ff00;
+  --color-accent-lime-hover: #c2eb00;
+  --color-accent-lime-soft: #bcff2f;
+  --color-accent-purple: #6b5fff;
+  --color-accent-purple-hover: #5a4ee6;
+  --color-accent-purple-soft: rgba(107, 95, 255, 0.2);
+
+  --color-text-primary: #ffffff;
+  --color-text-secondary: rgba(255, 255, 255, 0.7);
+  --color-text-muted: rgba(255, 255, 255, 0.4);
+  --color-text-on-lime: #000000;
+
+  --color-border-default: rgba(255, 255, 255, 0.1);
+  --color-border-hover: rgba(255, 255, 255, 0.2);
+  --color-border-purple: rgba(107, 95, 255, 0.3);
+  --color-border-lime: rgba(212, 255, 0, 0.3);
+
+  --color-success: #22c55e;
+  --color-success-soft: rgba(34, 197, 94, 0.15);
+  --color-warning: #eab308;
+  --color-warning-soft: rgba(234, 179, 8, 0.15);
+  --color-error: #ef4444;
+  --color-error-soft: rgba(239, 68, 68, 0.15);
+  --color-info: #3b82f6;
+  --color-info-soft: rgba(59, 130, 246, 0.15);
+
+  /* — Typography — */
+  --font-heading: "Syne", sans-serif;
+  --font-body: "Manrope", sans-serif;
+  --font-ui: "Inter", sans-serif;
+  --font-cta: "Poppins", sans-serif;
+  --font-display: "Outfit", sans-serif;
+
+  /* — Spacing — */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  --radius-3xl: 2.5rem;
+  --radius-full: 9999px;
+
+  /* — Shadows — */
+  --shadow-glow-lime: 0 0 30px rgba(212, 255, 0, 0.15);
+  --shadow-glow-lime-strong: 0 0 40px rgba(212, 255, 0, 0.3);
+  --shadow-glow-purple: 0 0 30px rgba(107, 95, 255, 0.2);
+  --shadow-glow-purple-strong: 0 0 40px rgba(107, 95, 255, 0.5);
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
+  --shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.6);
+
+  /* — Animations — */
+  --animate-fade-in: fade-in 0.5s ease-out;
+  --animate-slide-up: slide-up 0.5s ease-out;
+  --animate-slide-down: slide-down 0.3s ease-out;
+  --animate-scale-in: scale-in 0.3s ease-out;
+  --animate-pulse-glow: pulse-glow 2s infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-gradient-x: gradient-x 6s ease infinite;
+
+  /* — shadcn semantic tokens (consumed by @ecell/ui primitives) — */
+  --color-background: #000000;
+  --color-foreground: #ffffff;
+  --color-card: var(--color-bg-card);
+  --color-card-foreground: var(--color-text-primary);
+  --color-popover: var(--color-bg-elevated);
+  --color-popover-foreground: var(--color-text-primary);
+  --color-primary: var(--color-accent-lime);
+  --color-primary-foreground: var(--color-text-on-lime);
+  --color-secondary: var(--color-accent-purple);
+  --color-secondary-foreground: #ffffff;
+  --color-muted: var(--color-bg-elevated);
+  --color-muted-foreground: var(--color-text-muted);
+  --color-accent: var(--color-bg-glass);
+  --color-accent-foreground: var(--color-text-primary);
+  --color-destructive: var(--color-error);
+  --color-destructive-foreground: #ffffff;
+  --color-border: var(--color-border-default);
+  --color-input: var(--color-border-default);
+  --color-ring: var(--color-accent-lime);
+}
+
+/* — Keyframes — */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(212, 255, 0, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(212, 255, 0, 0.6); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes gradient-x {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* — Base Styles — */
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--color-border-default);
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* — Scrollbar — */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* — Selection — */
+::selection {
+  background: rgba(212, 255, 0, 0.3);
+  color: white;
+}
+
+/* — Focus — */
+*:focus-visible {
+  outline: 2px solid var(--color-accent-lime);
+  outline-offset: 2px;
+}

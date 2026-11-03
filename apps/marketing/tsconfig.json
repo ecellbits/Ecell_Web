@@ -1,0 +1,20 @@
+{
+  "extends": "@ecell/tsconfig/react.json",
+  "compilerOptions": {
+    "allowJs": false,
+    "types": ["vite/client", "node"],
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "strict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "vite.config.ts"
+  ],
+  "references": [],
+  "exclude": ["node_modules", "dist", ".tanstack"]
+}

@@ -21,10 +21,10 @@ const Contact = lazy(() => import("./components/contact"));
 const Gallery = lazy(() => import("./components/Gallery/gallery"));
 const LaunchpadGallery = lazy(() => import("./components/Gallery/launchpadgallery"));
 const Navbar = lazy(() => import("./components/navbar"));
-const HomeNavbar = lazy(() => import("./components/Home/HomeNavbar"));
 const HomeFooter = lazy(() => import("./components/Home/HomeFooter"));
 const BlogPage = lazy(() => import("./components/Blog/BlogPage"));
 const Magazine = lazy(() => import("./components/Magazine/Magazine"));
+const UdyamaVolume1 = lazy(() => import("./components/Magazine/UdyamaVolume1"));
 
 
 const Lteam = lazy(() => import("./components/team/team"));
@@ -192,11 +192,7 @@ function MainContent() {
       )}
 
       <Suspense fallback={null}>
-        {isHome ? (
-          <HomeNavbar onToggleMenu={toggleMenu} isOpen={isMenuOpen} />
-        ) : (
-          <Navbar onToggleMenu={toggleMenu} isOpen={isMenuOpen} isLaunchpad={isLaunchpadRoute} />
-        )}
+        <Navbar onToggleMenu={toggleMenu} isOpen={isMenuOpen} isLaunchpad={isLaunchpadRoute} />
       </Suspense>
 
       {isLaunchpadRoute ? (
@@ -227,13 +223,12 @@ function MainContent() {
           socialItems={socialItems}
           displaySocials={true}
           displayItemNumbering={false}
-          menuButtonColor="#fff"
-          openMenuButtonColor="#fff"
+          menuButtonColor="#0F1754"
+          openMenuButtonColor="#0F1754"
           changeMenuColorOnOpen={false}
-          className={isHome ? 'home-menu' : ''}
-          colors={isHome ? ['#000000', '#0F1754'] : ['#1a1a1a', '#2a2a2a']}
+          colors={['#FEF8E6', '#FBF0D7']}
           logoUrl="/navbarlogo.png"
-          accentColor={isHome ? '#FEF8E6' : '#d4ff00'}
+          accentColor="#510609"
           isFixed={true}
           onMenuOpen={() => setIsMenuOpen(true)}
           onMenuClose={() => setIsMenuOpen(false)}
@@ -242,12 +237,13 @@ function MainContent() {
 
       <AnimatePresence mode="wait">
         <Suspense fallback={<ECellLoader />}>
-          <div className={`main-content ${location.pathname === "/" || location.pathname === "/launchpad" ? "no-padding" : ""}`}>
+          <div className={`main-content ${location.pathname === "/" || location.pathname === "/launchpad" || location.pathname === "/gallery" || location.pathname === "/launchpad/gallery" ? "no-padding" : ""}`}>
             <Routes location={location} key={location.pathname}>
               {/* Normal Routes */}
               <Route path="/" element={<Home />} />
               <Route path="/blog" element={<BlogPage />} />
               <Route path="/magazine" element={<Magazine />} />
+              <Route path="/udyama-volume-1" element={<UdyamaVolume1 />} />
               <Route path="/team" element={<Team />} />
               <Route path="/program" element={<Program />} />
               <Route path="/community-meet" element={<CommunityMeet />} />

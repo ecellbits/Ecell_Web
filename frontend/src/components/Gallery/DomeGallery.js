@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useCallback, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useCallback, useState } from 'react';
 import { useGesture } from '@use-gesture/react';
 import './DomeGallery.css';
 
@@ -79,7 +79,7 @@ function buildItems(pool, seg) {
   });
 
   const totalSlots = coords.length;
-  if (pool.length === 0) {
+  if (!pool || pool.length === 0) {
     return coords.map(c => ({ ...c, src: '', alt: '' }));
   }
 
@@ -126,7 +126,6 @@ export default function DomeGallery({
   minRadius = 600,
   maxRadius = Infinity,
   padFactor = 0.25,
-  overlayBlurColor = '#060010',
   maxVerticalRotationDeg = DEFAULTS.maxVerticalRotationDeg,
   dragSensitivity = DEFAULTS.dragSensitivity,
   enlargeTransitionMs = DEFAULTS.enlargeTransitionMs,
@@ -161,13 +160,13 @@ export default function DomeGallery({
   const lockScroll = useCallback(() => {
     if (scrollLockedRef.current) return;
     scrollLockedRef.current = true;
-    document.body.classList.add('dg-scroll-lock');
+    document.body.classList.add('overflow-hidden');
   }, []);
   const unlockScroll = useCallback(() => {
     if (!scrollLockedRef.current) return;
     if (rootRef.current?.getAttribute('data-enlarging') === 'true') return;
     scrollLockedRef.current = false;
-    document.body.classList.remove('dg-scroll-lock');
+    document.body.classList.remove('overflow-hidden');
   }, []);
 
   const items = useMemo(() => buildItems(images, segments), [images, segments]);
@@ -186,11 +185,11 @@ export default function DomeGallery({
     if (!root) return;
     const ro = new ResizeObserver(entries => {
       const cr = entries[0].contentRect;
-      const w = Math.max(1, cr.width),
-        h = Math.max(1, cr.height);
-      const minDim = Math.min(w, h),
-        maxDim = Math.max(w, h),
-        aspect = w / h;
+      const w = Math.max(1, cr.width);
+      const h = Math.max(1, cr.height);
+      const minDim = Math.min(w, h);
+      const maxDim = Math.max(w, h);
+      const aspect = w / h;
       let basis;
       switch (fitBasis) {
         case 'min':
@@ -217,13 +216,12 @@ export default function DomeGallery({
       const viewerPad = Math.max(8, Math.round(minDim * padFactor));
       root.style.setProperty('--radius', `${lockedRadiusRef.current}px`);
       root.style.setProperty('--viewer-pad', `${viewerPad}px`);
-      root.style.setProperty('--overlay-blur-color', overlayBlurColor);
       root.style.setProperty('--tile-radius', imageBorderRadius);
       root.style.setProperty('--enlarge-radius', openedImageBorderRadius);
       root.style.setProperty('--image-filter', grayscale ? 'grayscale(1)' : 'none');
       applyTransform(rotationRef.current.x, rotationRef.current.y);
 
-      const enlargedOverlay = viewerRef.current?.querySelector('.enlarge');
+      const enlargedOverlay = viewerRef.current?.querySelector('[data-dome="enlarge"]');
       if (enlargedOverlay && frameRef.current && mainRef.current) {
         const frameR = frameRef.current.getBoundingClientRect();
         const mainR = mainRef.current.getBoundingClientRect();
@@ -257,7 +255,6 @@ export default function DomeGallery({
     minRadius,
     maxRadius,
     padFactor,
-    overlayBlurColor,
     grayscale,
     imageBorderRadius,
     openedImageBorderRadius,
@@ -367,9 +364,9 @@ export default function DomeGallery({
       const el = focusedElRef.current;
       if (!el) return;
       const parent = el.parentElement;
-      const overlay = viewerRef.current?.querySelector('.enlarge');
+      const overlay = viewerRef.current?.querySelector('[data-dome="enlarge"]');
       if (!overlay) return;
-      const refDiv = parent.querySelector('.item__image--reference');
+      const refDiv = parent.querySelector('[data-dome="reference"]');
       const originalPos = originalTilePositionRef.current;
       if (!originalPos) {
         overlay.remove();
@@ -399,7 +396,8 @@ export default function DomeGallery({
         height: currentRect.height
       };
       const animatingOverlay = document.createElement('div');
-      animatingOverlay.className = 'enlarge-closing';
+      animatingOverlay.dataset.dome = 'closing';
+      animatingOverlay.className = '[&_img]:[filter:var(--image-filter,none)]';
       animatingOverlay.style.cssText = `position:absolute;left:${overlayRelativeToRoot.left}px;top:${overlayRelativeToRoot.top}px;width:${overlayRelativeToRoot.width}px;height:${overlayRelativeToRoot.height}px;z-index:9999;border-radius: var(--enlarge-radius, 32px);overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.35);transition:all ${enlargeTransitionMs}ms ease-out;pointer-events:none;margin:0;transform:none;`;
       const originalImg = overlay.querySelector('img');
       if (originalImg) {
@@ -441,7 +439,7 @@ export default function DomeGallery({
                 el.style.opacity = '';
                 openingRef.current = false;
                 if (!draggingRef.current && rootRef.current?.getAttribute('data-enlarging') !== 'true')
-                  document.body.classList.remove('dg-scroll-lock');
+                  document.body.classList.remove('overflow-hidden');
               }, 300);
             });
           });
@@ -482,7 +480,9 @@ export default function DomeGallery({
       parent.style.setProperty('--rot-y-delta', `${rotY}deg`);
       parent.style.setProperty('--rot-x-delta', `${rotX}deg`);
       const refDiv = document.createElement('div');
-      refDiv.className = 'item__image item__image--reference';
+      refDiv.dataset.dome = 'reference';
+      refDiv.className =
+        "absolute inset-2.5 block cursor-pointer overflow-hidden rounded-[var(--tile-radius,12px)] bg-transparent [backface-visibility:hidden] [transform-style:preserve-3d] [transform:translate3d(0,0,0)] [-webkit-tap-highlight-color:transparent] touch-manipulation pointer-events-auto transition-transform duration-300 will-change-transform focus:outline-none [&_img]:pointer-events-none [&_img]:size-full [&_img]:object-cover [&_img]:[backface-visibility:hidden] [&_img]:[filter:var(--image-filter,none)]";
       refDiv.style.opacity = '0';
       refDiv.style.transform = `rotateX(${-parentRot.rotateX}deg) rotateY(${-parentRot.rotateY}deg)`;
       parent.appendChild(refDiv);
@@ -505,7 +505,9 @@ export default function DomeGallery({
       el.style.visibility = 'hidden';
       el.style.zIndex = 0;
       const overlay = document.createElement('div');
-      overlay.className = 'enlarge';
+      overlay.dataset.dome = 'enlarge';
+      overlay.className =
+        "absolute z-30 origin-top-left overflow-hidden rounded-[var(--enlarge-radius,32px)] bg-transparent shadow-[0_10px_30px_rgba(0,0,0,0.35)] transition-[transform,opacity] duration-500 ease-[ease] [&_img]:size-full [&_img]:object-contain [&_img]:[filter:var(--image-filter,none)]";
       overlay.style.position = 'absolute';
       overlay.style.left = frameR.left - mainR.left + 'px';
       overlay.style.top = frameR.top - mainR.top + 'px';
@@ -599,30 +601,30 @@ export default function DomeGallery({
 
   useEffect(() => {
     return () => {
-      document.body.classList.remove('dg-scroll-lock');
+      document.body.classList.remove('overflow-hidden');
     };
   }, []);
 
   return (
     <div
       ref={rootRef}
-      className="sphere-root"
+      data-dome="root"
+      className="group/dome relative size-full [--radius:520px] [--viewer-pad:72px] [--circ:calc(var(--radius)*3.14)] [--rot-y:calc((360deg/var(--segments-x))/2)] [--rot-x:calc((360deg/var(--segments-y))/2)] [--item-width:calc(var(--circ)/var(--segments-x))] [--item-height:calc(var(--circ)/var(--segments-y))]"
       style={{
         '--segments-x': segments,
         '--segments-y': segments,
-        '--overlay-blur-color': overlayBlurColor,
         '--tile-radius': imageBorderRadius,
         '--enlarge-radius': openedImageBorderRadius,
         '--image-filter': grayscale ? 'grayscale(1)' : 'none'
       }}
     >
-      <main ref={mainRef} className="sphere-main">
-        <div className="stage">
-          <div ref={sphereRef} className="sphere">
+      <main ref={mainRef} className="absolute inset-0 grid touch-none place-items-center overflow-hidden bg-transparent select-none">
+        <div className="grid size-full place-items-center [perspective:calc(var(--radius)*2)] [perspective-origin:50%_50%] [contain:strict] will-change-transform">
+          <div ref={sphereRef} className="[transform-style:preserve-3d] [transform:translateZ(calc(var(--radius)*-1))] will-change-transform">
             {items.map((it, i) => (
               <div
                 key={`${it.x},${it.y},${i}`}
-                className="item"
+                className="absolute -inset-[999px] m-auto h-[calc(var(--item-height)*var(--item-size-y))] w-[calc(var(--item-width)*var(--item-size-x))] origin-center [backface-visibility:hidden] [transform-style:preserve-3d] [transform:rotateY(calc(var(--rot-y)*(var(--offset-x)+((var(--item-size-x)-1)/2))+var(--rot-y-delta,0deg)))_rotateX(calc(var(--rot-x)*(var(--offset-y)-((var(--item-size-y)-1)/2))+var(--rot-x-delta,0deg)))_translateZ(var(--radius))] transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform"
                 data-src={it.src}
                 data-offset-x={it.x}
                 data-offset-y={it.y}
@@ -636,7 +638,8 @@ export default function DomeGallery({
                 }}
               >
                 <div
-                  className="item__image"
+                  data-dome="image"
+                  className="absolute inset-2.5 block cursor-pointer overflow-hidden rounded-[var(--tile-radius,12px)] bg-transparent [backface-visibility:hidden] [transform-style:preserve-3d] [transform:translate3d(0,0,0)] [-webkit-tap-highlight-color:transparent] touch-manipulation pointer-events-auto transition-transform duration-300 will-change-transform focus:outline-none [&_img]:pointer-events-none [&_img]:size-full [&_img]:object-cover [&_img]:[backface-visibility:hidden] [&_img]:[filter:var(--image-filter,none)]"
                   role="button"
                   tabIndex={0}
                   aria-label={it.alt || 'Open image'}
@@ -650,14 +653,9 @@ export default function DomeGallery({
           </div>
         </div>
 
-        <div className="overlay" />
-        <div className="overlay overlay--blur" />
-        <div className="edge-fade edge-fade--top" />
-        <div className="edge-fade edge-fade--bottom" />
-
-        <div className="viewer" ref={viewerRef}>
-          <div ref={scrimRef} className="scrim" />
-          <div ref={frameRef} className="frame" />
+        <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center p-[var(--viewer-pad)]" ref={viewerRef}>
+          <div ref={scrimRef} className="pointer-events-none absolute inset-0 z-10 bg-black/40 opacity-0 backdrop-blur-[3px] transition-opacity duration-500 ease-[ease] group-data-[enlarging=true]/dome:pointer-events-auto group-data-[enlarging=true]/dome:opacity-100" />
+          <div ref={frameRef} className="flex size-full rounded-[var(--enlarge-radius,32px)]" />
         </div>
       </main>
     </div>

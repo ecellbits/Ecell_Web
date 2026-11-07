@@ -1,535 +1,394 @@
-import React, { useState, useEffect } from 'react';
-import './Magazine.css';
-import SEO from '../common/SEO';
-import { Helmet } from 'react-helmet-async';
-import { useLenis } from '../SmoothScroll';
-import { X } from 'lucide-react';
+import React, { useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { X } from "lucide-react";
+import { flushSync } from "react-dom";
+import "./magazine-review.css";
+import launchpadPhoto from "../../assets/Launchpad1.JPG";
+import communityPhoto from "../../assets/community_meet/community_meet_1.jpg";
+import expoPhoto from "../../assets/lpevents/startup_expo_memories/mem1.png";
+import { useScrollMotion } from "../common/useScrollMotion";
+import { useSectionHash } from "../common/use-section-hash";
+import { MAGAZINE_LINKS } from "./data";
+import SEO from "../common/SEO";
 
-const storiesData = [
+const ISSUE_STORIES = [
   {
-    id: 1,
-    title: "The last-bench startup that hit ₹1 Cr in revenue",
-    category: "Founders",
-    author: "Sanay Shah",
-    color: "#FFB61E",
-    paragraphs: [
-      "Three second-years began by reselling lab notes. Eighteen months later the same team runs a study-material business with paying customers in nine cities.",
-      "Their advice for newcomers is plain: talk to ten buyers before writing a single line of code, and keep a record of every refusal.",
-      "Building during semester exams required relentless prioritization. 'We scheduled customer interviews between practicals and automated our order fulfilment scripts late at night,' Riya recalls. Today, the platform supports over 40,000 active students."
-    ]
+    title: "Udyama Volume 01: A year of ideas in motion",
+    excerpt: "The people, ideas and events that shaped E-Cell’s 2025–26 year.",
+    href: "/udyama-volume-1",
+    linkLabel: "Read the story",
   },
-  {
-    id: 2,
-    title: "How we raised our first cheque without a pitch deck",
-    category: "Funding",
-    author: "Karan Iyer",
-    color: "#9FA8FF",
-    paragraphs: [
-      "The first investor said yes after a working demo and a one-page summary. No slides were involved.",
-      "Karan explains how to find angels inside your own alumni network and what to ask for in the first meeting.",
-      "'Investors back momentum, not formatting,' Karan notes. 'If you can show five people using your buggy MVP every day and paying for it, that signals tenfold more conviction than a thirty-page slide presentation.'"
-    ]
-  },
-  {
-    id: 3,
-    title: "Inside the incubator: a day with Cohort 7",
-    category: "Campus",
-    author: "Meera Nair",
-    color: "#FF8A7A",
-    paragraphs: [
-      "Twelve teams share one floor, one whiteboard wall, and a weekly review where ideas get cut.",
-      "We followed three of them from a Monday standup to a Friday customer call.",
-      "The atmosphere is a blend of intense coding, rapid customer feedback calls, and spontaneous mentor office hours. In the incubator, failures aren't stigmatized—they are accelerated so teams pivot before capital dries up."
-    ]
-  },
-  {
-    id: 4,
-    title: "A 30-day plan to validate any idea",
-    category: "Playbook",
-    author: "Dev Malhotra",
-    color: "#7BE0B0",
-    paragraphs: [
-      "Week one: write down the problem and who has it. Week two: interview fifteen of them. Week three: sell a fake version. Week four: decide.",
-      "The plan has been used by 40 campus teams, and a third of them dropped their first idea by day 21.",
-      "Validating demand early saves months of building things nobody wants. Dev walks through the exact interview scripts and no-code landing page experiments any student can run in a weekend."
-    ]
-  },
-  {
-    id: 5,
-    title: "Co-founder breakups and how to survive them",
-    category: "Founders",
-    author: "Sana Qureshi",
-    color: "#FFB61E",
-    paragraphs: [
-      "Most student teams never write down who owns what. That gap turns into a fight the first time money arrives.",
-      "Sana speaks to four founders who split and a lawyer who has drawn up the papers.",
-      "Clear vesting schedules, founder agreements, and honest conversations on commitment levels before incorporating can turn potential disasters into clean, amicable transitions."
-    ]
-  },
-  {
-    id: 6,
-    title: "Grants, scholarships and other money that isn’t equity",
-    category: "Funding",
-    author: "Arjun Pillai",
-    color: "#9FA8FF",
-    paragraphs: [
-      "A short guide to government schemes, corporate grants and competition prizes open to students.",
-      "Includes a table of deadlines and what each programme actually expects from you.",
-      "From NIDHI-PRAYAS to SISFS and university innovation fellowships, non-dilutive capital gives campus founders the runway they need to build defensible tech without diluting their cap table early."
-    ]
-  }
 ];
 
-const categories = ["all", "Founders", "Funding", "Campus", "Playbook","Startups","Mentorship"];
-
-//have to see these colors should they be matching with the theme of the website or should they be different
-const archiveIssues = [
-  { issue: 12, year: 2025, color: "#FFB61E" },
-  { issue: 11, year: 2024, color: "#9FA8FF" },
-  { issue: 10, year: 2023, color: "#FF8A7A" },
-  { issue: 9, year: 2022, color: "#7BE0B0" },
-  { issue: 8, year: 2021, color: "#FFB61E" },
-  { issue: 7, year: 2020, color: "#9FA8FF" }
-];
-
-const upcomingEvents = [
-  {
-    date: "23rd Oct",
-    title: "Build2Base",
-    description: "Eight teams, five minutes each, three investors on the panel. Main auditorium."
-  },
-  {
-    date: "22 Nov",
-    title: "Founder Fireside",
-    description: "An alumnus who shut down a startup explains what the post-mortem taught them."
-  },
-  {
-    date: "13 Dec",
-    title: "48-hour Build Weekend",
-    description: "Form a team on Friday night, demo a working product on Sunday evening."
-  }
-];
-
-const StoryCardArt = ({ color, index }) => (
-  <svg className="mag-card-art" viewBox="0 0 400 210" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-    <rect width="400" height="210" fill={color} />
-    <circle
-      cx={90 + index * 45}
-      cy={60 + (index % 3) * 35}
-      r={50 + (index % 2) * 20}
-      fill="#10142E"
-      opacity="0.9"
-    />
-    <rect
-      x={200 + index * 20}
-      y={30 + index * 10}
-      width="130"
-      height="130"
-      fill="#ffffff"
-      opacity="0.56"
-      transform={`rotate(${12 + index * 9} 300 100)`}
-    />
-  </svg>
-);
-
-const Magazine = () => {
-  const [activeFilter, setActiveFilter] = useState('all');
-  const [selectedStory, setSelectedStory] = useState(null);
-  const [email, setEmail] = useState('');
-  const [subscribeStatus, setSubscribeStatus] = useState({ text: '', isError: false });
-
-  const lenis = useLenis();
-
-  // Handle ESC key to close modal & lock body scroll
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') {
-        setSelectedStory(null);
-      }
-    };
-
-    if (selectedStory) {
-      document.body.style.overflow = 'hidden';
-      window.addEventListener('keydown', handleKeyDown);
-    } else {
-      document.body.style.overflow = '';
-    }
-
-    return () => {
-      document.body.style.overflow = '';
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [selectedStory]);
-
-
-  const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      if (lenis) {
-        lenis.scrollTo(element, { offset: -90 });
-      } else {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  };
-
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    const cleanEmail = email.trim();
-
-    // Valid email format check
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    //here backend is not connected so only text visible 
-    if (!cleanEmail || !emailRegex.test(cleanEmail)) {
-      setSubscribeStatus({
-        text: 'Enter a valid email address, for example name@college.edu or name@hyderabad.bits-pilani.ac.in',
-        isError: true
-      });
-      return;
-    }
-
-    // Success response
-    setSubscribeStatus({
-      text: `Subscribed! The next issue will arrive at ${cleanEmail}.`,
-      isError: false
-    });
-    setEmail(''); //reloading a new email everytime
-  };
-
-  const filteredStories = storiesData.filter(
-    (story) => activeFilter === 'all' || story.category === activeFilter
-  );
-
-  return (
-    <div className="magazine-page-container">
-      <Helmet>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-        />
-      </Helmet>
-      <SEO
-        title="Udyama Magazine | E-Cell BITS Pilani Hyderabad"
-        description="The official annual magazine of E-Cell BITS Pilani Hyderabad Campus: student founders, hard lessons, startup spotlights, and stories that started in hostel rooms."
-        keywords={["Udyama", "E-Cell Magazine", "BITS Pilani Hyderabad", "Student Startups", "Entrepreneurship"]}
-      />
-
-      <div className="mag-wrap">
-        {/* Magazine Sub-Navigation */}
-        <nav className="mag-nav" aria-label="Magazine Navigation">
-          <div className="mag-nav-brand">
-            <span className="mag-logo">Udyama</span>
-            <span className="mag-issue-badge">Issue 12 · 2026</span>
-          </div>
-
-          <ul>
-            <li>
-              <a
-                href="#stories"
-                onClick={(e) => 
-                {
-                  e.preventDefault();
-                  scrollToSection('stories');
-                }}
-              >
-                Stories
-              </a>
-            </li>
-            <li>
-              <a
-                href="#spotlight"
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToSection('spotlight');
-                }}
-              >
-                Spotlight
-              </a>
-            </li>
-            <li>
-              <a
-                href="#events"
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToSection('events');
-                }}
-              >
-                Events
-              </a>
-            </li>
-            <li>
-              <a
-                href="#archive"
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToSection('archive');
-                }}
-              >
-                Archive
-              </a>
-            </li>
-            <li>
-              <a
-                href="#join"
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToSection('join');
-                }}
-              >
-                Subscribe
-              </a>
-            </li>
-          </ul>
-
-          <div className="mag-nav-actions">
-           
-        
-          </div>
-        </nav>
-
-        {/* Hero Section */}
-        <header className="mag-hero" id="top">
-          <div>
-            <h1 className="mag-masthead">Udyama</h1>
-            <p className="mag-lead">
-              The annual magazine of the E Cell Bits Pilani Hyderabad Campus. Student founders,
-              hard lessons, and the ideas that started in hostel rooms.
-            </p>
-            <div className="mag-btn-row">
-              <button
-                className="mag-btn"
-                onClick={() => scrollToSection('stories')}
-              >
-                Read Issue 12
-              </button>
-              <button
-                className="mag-btn mag-btn-alt"
-                onClick={() => scrollToSection('join')}
-              >
-                Wait for the next issue
-              </button>
-            </div>
-          </div>
-
-          {/* 3D Cover Preview */}
-          <div className="mag-cover" aria-label="Issue 12 cover">
-            <small>Issue 12 · Launchpad 2026</small>
-            <h2>ECELL 2026-27</h2>
-            <svg className="mag-cover-art" viewBox="0 0 200 200" aria-hidden="true">
-              <circle cx="120" cy="120" r="80" fill="#FFB61E" />
-              <path d="M20 190 L100 60 L140 120 L170 80 L200 190Z" fill="#10142E" />
-              <circle cx="60" cy="60" r="16" fill="#fff" />
-            </svg>
-          </div>
-        </header>
-
-        {/* Stories Section */}
-        <section className="mag-section" id="stories">
-          <div className="mag-sec-head">
-            <h2>This issue</h2>
-            {/* <p>Pick a topic, then open a story to read it.</p>  No need for this*/}
-          </div>
-
-          <div className="mag-filters" role="group" aria-label="Filter stories">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                className={`mag-chip ${activeFilter === cat ? 'active' : ''}`}
-                aria-pressed={activeFilter === cat}
-                onClick={() => setActiveFilter(cat)}
-              >
-                {cat === 'all' ? 'All' : cat}
-              </button>
-            ))}
-          </div>
-
-          <div className="mag-grid" id="grid">
-            {filteredStories.map((story, idx) => (
-              <button
-                key={story.id}
-                className={`mag-card ${idx === 0 ? 'featured' : ''}`}
-                onClick={() => setSelectedStory(story)}
-                aria-label={`Open story: ${story.title}`}
-              >
-                <StoryCardArt color={story.color} index={idx} />
-                <span className="mag-card-txt">
-                  <span className="mag-tag">{story.category}</span>
-                  <h3>{story.title}</h3>
-                  <span className="mag-by">By {story.author}</span>
-                </span>
-              </button>
-            ))}
-          </div>
-        </section>
-
-        {/* Startup Spotlight Section */}
-        <section className="mag-section" id="spotlight">
-          <div className="mag-sec-head">
-            <h2>Startup spotlight</h2>
-            <p>One alumni venture, covered in depth every issue.</p>
-          </div>
-          <div className="mag-spot">
-            <div>
-              <blockquote>
-                “We sold our first order before we had a company name. The name came when the
-                invoice needed one.”
-              </blockquote>
-              <cite>Jayant Khatri, CEO of Appolyon Dynamics Class 0f 2023</cite>
-            </div>
-            <div className="mag-facts">
-              <div className="mag-fact">
-                <b>38</b>
-                <span>startups incubated since 2019</span>
-              </div>
-              <div className="mag-fact">
-                <b>₹14 Cr</b>
-                <span>raised by campus founders</span>
-              </div>
-              <div className="mag-fact">
-                <b>120+</b>
-                <span>mentors in the alumni network</span>
-              </div>
-              <div className="mag-fact">
-                <b>6,400</b>
-                <span>students at our events last year</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Coming Up / Events Section */}
-        <section className="mag-section" id="events">
-          <div className="mag-sec-head">
-            <h2>Coming up</h2>
-            <p>Open to every department and every year.</p>
-          </div>
-          <ul className="mag-events-list">
-            {upcomingEvents.map((event, i) => (
-              <li key={i}>
-                <span className="mag-event-date">{event.date}</span>
-                <div>
-                  <h3>{event.title}</h3>
-                  <p>{event.description}</p>
-                </div>
-                <button
-                  className="mag-btn"
-                  onClick={() => scrollToSection('join')}
-                >
-                  Register
-                </button>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        {/* Archive Section */}
-        <section className="mag-section" id="archive">
-          <div className="mag-sec-head">
-            <h2>Past issues</h2>
-            <p>ECell Stories since 2020</p>
-          </div>
-          <div className="mag-issues-scroll" id="issues">
-            {archiveIssues.map((item) => (
-              <div
-                key={item.issue}
-                className="mag-issue-item"
-                style={{ backgroundColor: item.color }}
-                onClick={() => {
-                  setSelectedStory({
-                    title: `Archive: Issue ${item.issue} (${item.year})`,
-                    category: 'Archive',
-                    author: 'E-Cell Editorial Team',
-                    paragraphs: [
-                      `Issue ${item.issue} of Udyama was published in ${item.year} during Launchpad BPHC.`,
-                      `It featured candid interviews with our flagship cohort, in-depth pitch breakdowns, and founder diaries from BITS Pilani alumni who launched high-growth ventures across fintech, agritech, and deeptech.`,
-                      `Full archival PDF copies and retrospective issues can be requested via the subscription box below or directly through the E-Cell library.`
-                    ]
-                  });
-                }}
-              >
-                <span>{item.year}</span>
-                <b>Issue {item.issue}</b>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Subscribe Section */}
-        <section className="mag-section" id="join">
-          <div className="mag-sub-box">
-            <div>
-              <h2>One email when each issue goes live</h2>
-            </div>
-            <form onSubmit={handleSubscribe} noValidate>
-              <input
-                id="email"
-                type="email"
-                placeholder="Your college email"
-                aria-label="Email address"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  if (subscribeStatus.text) setSubscribeStatus({ text: '', isError: false });
-                }}
-                required
-              />
-              <button className="mag-btn" type="submit">
-                Subscribe
-              </button>
-              {subscribeStatus.text && (
-                <p
-                  className="mag-sub-msg"
-                  role="status"
-                  style={{ color: subscribeStatus.isError ? '#ffdddd' : '#ffffff' }}
-                >
-                  {subscribeStatus.text}
-                </p>
-              )}
-            </form>
-          </div>
-        </section>
-
-        {/* Editorial Footer Note */}
-        <footer className="mag-footer-note">
-          <span>Udyama, published by ECell Bits Pilani Hyderabad Campus.</span>
-          <span>© 2026 ECell BPHC</span>
-        </footer>
-      </div>
-
-      {/* Story Reader Modal */}
-      {selectedStory && (
-        <div
-          className="mag-modal-backdrop"
-          onClick={() => setSelectedStory(null)}
-          role="dialog"
-          aria-modal="true"
-        >
-          <div
-            className="mag-modal-dialog"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              className="mag-modal-close"
-              onClick={() => setSelectedStory(null)}
-              aria-label="Close story"
-            >
-              <X size={18} />
-            </button>
-            <span className="mag-tag">{selectedStory.category}</span>
-            <h2>{selectedStory.title}</h2>
-            <div className="mag-by">By {selectedStory.author}</div>
-            <div className="mag-modal-body">
-              {selectedStory.paragraphs.map((p, idx) => (
-                <p key={idx}>{p}</p>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
+const MAGAZINE = {
+  volume: "Volume 01",
+  year: "2025–26",
+  title: "A year at E-Cell",
+  note: "A look back at the people, ideas and events that shaped our year.",
 };
 
-export default Magazine;
+const SECTION_TITLE = "text-[clamp(30px,4vw,42px)] leading-none font-black tracking-[-0.03em] font-sans";
+
+function SectionHead({ id, kicker, title, aside }) {
+  return (
+    <div className="mb-6">
+      <div data-reveal="">
+        {kicker && <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-brand-maroon font-sans">{kicker}</p>}
+        <h2 id={id} className={SECTION_TITLE}>{title}</h2>
+      </div>
+      {aside && <p data-reveal="" data-delay="120" className="mt-3 text-sm leading-6 text-ecell-text-muted">{aside}</p>}
+    </div>
+  );
+}
+
+function StoriesSection() {
+  return (
+    <section id="stories" className="pt-12" aria-labelledby="issue-heading">
+      <div className="mx-auto max-w-[1080px] px-6">
+        <SectionHead id="issue-heading" title="Inside this volume" />
+        <div data-stagger="" className="flex flex-col gap-4">
+          {ISSUE_STORIES.map((story, index) => (
+            <article key={story.title} className="group grid grid-cols-[32px_1fr] items-start gap-3 rounded-2xl border border-hairline-strong bg-surface p-5 sm:grid-cols-[40px_1fr] sm:gap-4 sm:p-6">
+              {ISSUE_STORIES.length > 1 && <span className="pt-1 font-sans text-lg font-extrabold leading-none text-brand-navy">{String(index + 1).padStart(2, "0")}</span>}
+              <div className={ISSUE_STORIES.length === 1 ? "col-span-2" : ""}>
+                <h3 className="text-xl leading-tight font-extrabold tracking-[-0.02em] font-sans sm:text-2xl">{story.title}</h3>
+                <p className="mt-2 max-w-[60ch] text-sm leading-6 text-ecell-text-muted">{story.excerpt}</p>
+                <Link to={story.href} className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-brand-navy underline decoration-brand-navy/40 underline-offset-4 transition-all hover:gap-2.5 hover:decoration-brand-navy focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-navy font-sans">{story.linkLabel} <span aria-hidden="true">→</span></Link>
+              </div>
+            </article>
+          ))}
+        </div>
+        <p className="mt-4 text-sm leading-6 text-ecell-text-muted font-sans">More stories coming in the next issue.</p>
+      </div>
+    </section>
+  );
+}
+
+const REVIEW_SECTIONS = [
+  {
+    heading: "Around the community",
+    items: [
+      ["Community Meet 2025", "Organised with TBIS, the meet brought students and startup ecosystem members together to discuss venture capital, incubation and student entrepreneurship. Vikas Katragadda of Naandi Ventures and Mir Ali of TBI BITS Hyderabad shared their perspectives. Campus founders including Apollyon Dynamics and Slowcialize spoke about their journeys; Apollyon described its path from an idea to a first Indian Army order."],
+      ["Management Temptations", "Students explored management through outlet operations, vendor and crowd interactions, and practical challenges in leadership and decision-making."],
+      ["Founders and investors in Bengaluru", "Launchpad’s Bengaluru edition co-organised Founder’s Investor Connect with CEDAT, bringing builders and investors together for conversations and networking."],
+    ]
+  },
+  {
+    heading: "Launchpad ’26",
+    items: [
+      ["Internship Drive", "Over 650 students connected with around 50 companies; more than 80 secured internships, with stipends reaching ₹60,000 per month."],
+      ["Startup Expo", "25 ventures showcased their ideas and met mentors, with a ₹75,000 prize pool. MakerMasti, Keepmon and Mehak were recognised for innovation, vision and scalability respectively."],
+      ["SEED", "The new Summit for Entrepreneurial Ecosystem Development brought nine E-Cells together for three days of sessions, roundtables and mentorship."],
+      ["Ground Reality", "Around 65 teams developed business plans through a business model canvas round, mentorship and pitching. QwikPrint, Sterilysense and XADS were the winners."],
+      ["Teen Tycoons", "More than 800 school students explored entrepreneurship through a business model round, bootcamp and final presentations."],
+      ["DP World Hackathon", "More than 2,500 student innovators from about 27 institutions worked on challenges in logistics, trade and technology."],
+      ["Pitchers’ Pilot", "50 participants presented their ventures to five investors and 15 mentors, gaining feedback and opportunities to connect."],
+      ["Networking Arena", "Founders, investors and mentors came together for conversations, shared learning and collaboration."],
+    ]
+  },
+  {
+    heading: "Ideas on stage and beyond",
+    items: [
+      ["From Cockpit to Command", "Air Chief Marshal RKS Bhadauria and retired Wing Commander Anish Anthony discussed leadership and decision-making under pressure."],
+      ["Innovation, storytelling and social impact", "Nidhi Saxena, Shanthala Veigas and Shaily Mehrotra discussed creating value through creativity and purpose."],
+      ["From blueprint to market", "Meraj Faheem shared the GTM Canvas and insights on positioning products and bringing ideas to market."],
+      ["Building ecosystems and backing founders", "Speakers and investors discussed the communities, infrastructure and capital that help ventures grow."],
+      ["Smarter minds, healthier futures", "Swati Ganeti and Anant Anand explored the role of AI in education and healthcare."],
+      ["TechGyan and featured workshops", "TechGyan hosted 12 workshops with over 570 registrations, covering topics from full-stack development and AI to design and digital marketing. Featured sessions explored design thinking, visual communication and large language models."],
+      ["Impactus and engagement", "Impactus challenged teams to respond to evolving crises as policymakers and business leaders. GeoGuessr, an IPL mock auction, Corporate Crusades and an open mic brought competition and creative expression to the summit."],
+      ["Ecosystem on tour", "The team connected with founders at Draper Startup House, CoKarma, Startup Party and Global Startups Club, as well as TiE Nizamabad and WE Hub’s Social Impact Award kick-off. Outreach also reached BVRIT Summit and Malla Reddy E-Summit."],
+    ]
+  },
+];
+
+function YearReview() {
+  const [active, setActive] = useState("All");
+  const [selected, setSelected] = useState(null);
+  const dialogRef = useRef(null);
+  const triggerRef = useRef(null);
+  const images = [communityPhoto, launchpadPhoto, expoPhoto];
+  const names = ["Community", "Launchpad", "Ideas"];
+  const summaries = [
+    "Campus founders, practical challenges and conversations beyond Hyderabad.",
+    "Three days of pitches, showcases, careers and connections.",
+    "Leadership, learning and ideas shared on stage and beyond."
+  ];
+
+  const transition = (update) => {
+    if (document.startViewTransition && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.startViewTransition(update);
+    } else {
+      update();
+    }
+  };
+
+  const openStory = (index, trigger) => {
+    triggerRef.current = trigger;
+    transition(() => {
+      flushSync(() => setSelected(index));
+      dialogRef.current?.showModal();
+    });
+  };
+
+  const closeStory = () => {
+    transition(() => {
+      dialogRef.current?.close();
+      flushSync(() => setSelected(null));
+      triggerRef.current?.focus();
+    });
+  };
+
+  return (
+    <section id="year-review" aria-labelledby="review-heading" className="pt-20">
+      <div className="mx-auto max-w-[1080px] px-6">
+        <div className="mt-16 flex flex-wrap items-end justify-between gap-5">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.15em] text-brand-navy">The 2025–26 issue</p>
+            <h2 id="review-heading" className="mt-2 text-4xl font-black tracking-tight sm:text-5xl">Inside this issue</h2>
+          </div>
+          <p className="max-w-xs font-serif text-base leading-relaxed text-ecell-text-muted">The people, ideas and moments that made our year.</p>
+        </div>
+        <div className="my-8 flex flex-wrap gap-2" role="group" aria-label="Filter stories by topic">
+          {["All", ...names].map(name => (
+            <button
+              key={name}
+              type="button"
+              aria-pressed={active === name}
+              onClick={() => setActive(name)}
+              className={`rounded-full border border-hairline-strong px-4 py-2 text-xs font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-navy ${active === name ? "bg-brand-navy text-brand-cream" : "bg-transparent text-ink hover:bg-raised"}`}
+            >
+              {name}
+            </button>
+          ))}
+        </div>
+        <div className="grid auto-rows-auto gap-4 md:grid-cols-3">
+          {REVIEW_SECTIONS.map((section, index) => (active === "All" || active === names[index]) && (
+            <button
+              key={section.heading}
+              type="button"
+              onClick={event => openStory(index, event.currentTarget)}
+              style={selected === null ? { viewTransitionName: `review-${index}` } : undefined}
+              className={`group relative flex min-h-[260px] overflow-hidden rounded-2xl text-left text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-navy ${active === "All" && index === 1 ? "md:col-span-2 md:row-span-2 md:min-h-[540px]" : ""}`}
+            >
+              <img src={images[index]} alt="" className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none" />
+              <span className="absolute inset-0 bg-brand-ink/70" />
+              <span className="relative flex w-full flex-col justify-between p-6 sm:p-8">
+                <span className="text-xs font-bold uppercase tracking-widest">{names[index]} / 0{index + 1}</span>
+                <span>
+                  <span className="block max-w-[16ch] text-3xl font-black leading-tight tracking-tight sm:text-4xl">{section.heading}</span>
+                  <span className="mt-3 block max-w-[35ch] font-serif text-base leading-relaxed text-white/90">{summaries[index]}</span>
+                  <span className="mt-6 block text-xs font-bold uppercase tracking-wider">Read this section ↗</span>
+                </span>
+              </span>
+            </button>
+          ))}
+        </div>
+        <dialog
+          ref={dialogRef}
+          aria-labelledby="review-dialog-title"
+          onCancel={event => { event.preventDefault(); closeStory(); }}
+          onClick={event => { if (event.target === event.currentTarget) closeStory(); }}
+          className="review-dialog max-h-[calc(100dvh-120px)] w-[min(90vw,760px)] overflow-y-auto border-0 rounded-2xl bg-page p-0 text-ink shadow-2xl shadow-brand-navy/25"
+          style={selected !== null ? { viewTransitionName: `review-${selected}` } : undefined}
+        >
+          {selected !== null && (
+            <>
+              <div className="relative min-h-[240px] overflow-hidden bg-ink p-7 text-white sm:min-h-[300px] sm:p-10">
+                <img src={images[selected]} alt="" className="absolute inset-0 h-full w-full object-cover opacity-40" />
+                <div className="relative">
+                  <button type="button" onClick={closeStory} autoFocus aria-label="Close section" className="float-right p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white text-white">
+                    <X size={20} aria-hidden="true" />
+                  </button>
+                  <p className="pt-3 text-xs font-bold uppercase tracking-widest">{names[selected]} / 2025–26</p>
+                  <h3 id="review-dialog-title" className="mt-14 max-w-xl text-4xl font-black tracking-tight sm:text-5xl">{REVIEW_SECTIONS[selected].heading}</h3>
+                </div>
+              </div>
+              <div className="px-7 py-4 sm:px-10">
+                {REVIEW_SECTIONS[selected].items.map(([title, text]) => (
+                  <article key={title} className="border-b border-hairline py-6 last:border-0">
+                    <h4 className="text-xl font-bold">{title}</h4>
+                    <p className="mt-3 max-w-[65ch] font-serif text-base leading-7 text-ecell-text-muted">{text}</p>
+                  </article>
+                ))}
+              </div>
+            </>
+          )}
+        </dialog>
+      </div>
+    </section>
+  );
+}
+
+function StartupSpotlight() {
+  const stats = [
+    ["38", "startups incubated since 2019"],
+    ["₹14 Cr", "raised by campus founders"],
+    ["120+", "mentors in the alumni network"],
+    ["6,400", "students at E-Cell events last year"],
+  ];
+
+  return (
+    <section id="spotlight" aria-labelledby="startup-spotlight-heading" className="pt-12">
+      <div className="mx-auto max-w-[1080px] px-6">
+        <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+          <h2 id="startup-spotlight-heading" className={SECTION_TITLE}>Startup spotlight</h2>
+          <p className="max-w-xl font-serif text-base leading-relaxed text-ecell-text-muted">One alumni venture, covered in depth every issue.</p>
+        </div>
+        <div className="grid grid-cols-1 items-stretch gap-4 lg:grid-cols-2">
+          <article className="flex flex-col justify-between rounded-2xl border border-black/10 bg-white p-6 transition-colors duration-300 hover:border-brand-maroon/25 sm:p-8">
+            <div>
+              <h3 className="text-xl font-bold tracking-tight text-brand-navy">KhetiLink</h3>
+              <blockquote className="mt-4 max-w-[50ch] font-serif text-xl italic leading-[1.55] text-ink sm:text-2xl">“We sold our first order before we had a company name. The name came when the invoice needed one.”</blockquote>
+              <p className="mt-4 max-w-[58ch] text-sm leading-6 text-ecell-text-muted">Ananya Rao recalls the first customer order arriving before the company had a name; the invoice made choosing one necessary.</p>
+            </div>
+            <p className="mt-6 text-sm font-semibold text-ink">Ananya Rao <span className="font-normal text-ecell-text-muted">· Co-founder, KhetiLink · Class of 2021</span></p>
+          </article>
+          <dl className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {stats.map(([value, label]) => (
+              <div key={label} className="flex min-h-32 flex-col justify-center rounded-2xl border border-black/10 bg-white p-5 transition-colors duration-300 hover:border-brand-maroon/25 sm:p-6">
+                <dt className="text-3xl font-extrabold leading-none tracking-tight text-brand-navy">{value}</dt>
+                <dd className="mt-3 max-w-[22ch] text-sm leading-5 text-ink/70">{label}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PastVolumesSection() {
+  return (
+    <section id="archive" aria-labelledby="archive-heading" className="pt-16">
+      <div className="mx-auto max-w-[1080px] px-6">
+        <h2 id="archive-heading" className={SECTION_TITLE}>Past volumes</h2>
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <Link to="/udyama-volume-1" aria-label="Read Udyama, 2025–26 current volume" className="group block w-full max-w-[220px] no-underline text-ink">
+            <div className="relative flex aspect-[3/4] flex-col justify-between overflow-hidden bg-brand-navy p-5 text-brand-cream transition-transform duration-300 group-hover:-translate-y-1 motion-reduce:transition-none">
+              <img src={launchpadPhoto} alt="" className="absolute inset-0 h-full w-full object-cover opacity-25" />
+              <span className="relative text-xs font-bold uppercase tracking-wider">Udyama</span>
+              <span className="relative text-3xl font-extrabold leading-none">2025–26</span>
+            </div>
+            <h3 className="mt-3 text-lg font-bold tracking-tight text-brand-navy">A year of building together</h3>
+          </Link>
+        </div>
+        <p className="mt-4 text-sm leading-6 text-ecell-text-muted">Earlier volumes will be added here when they are available.</p>
+      </div>
+    </section>
+  );
+}
+
+function ConversationsSection() {
+  return (
+    <section id="podcast" aria-labelledby="podcast-heading" className="pt-16">
+      <div className="mx-auto max-w-[1080px] px-6">
+        <SectionHead id="podcast-heading" title="Continue the conversation" />
+        <div className="flex flex-col items-start gap-4">
+          <p className="max-w-2xl text-sm leading-7 text-ecell-text-muted mb-0">Explore conversations and updates from E-Cell on our YouTube channel.</p>
+          <a href={MAGAZINE_LINKS.podcast} target="_blank" rel="noopener noreferrer" className="inline-block text-sm font-semibold text-brand-navy underline-offset-4 hover:underline">Visit the E-Cell channel →</a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function NewsletterSection() {
+  const [note, setNote] = useState("");
+
+  return (
+    <section>
+      <div className="mx-auto max-w-[1080px] px-6">
+        <div id="subscribe" data-stagger="" className="mt-16 grid grid-cols-2 items-center gap-9 py-12 max-[760px]:grid-cols-1 max-[760px]:py-8 [&_p]:mt-3 [&_p]:max-w-[400px] [&_p]:text-[13.5px] [&_p]:leading-[1.7] [&_p]:text-ecell-text-muted">
+          <div>
+            <h2 className={SECTION_TITLE}>One email when each issue goes live.</h2>
+            <p>
+              A note when the next issue is published, with new stories and the
+              events shaping the E-Cell year.
+            </p>
+          </div>
+          <form
+            className="flex flex-col gap-2.5 [&_input]:h-[44px] [&_input]:rounded-[12px] [&_input]:border-hairline-strong [&_input]:bg-surface [&_input]:text-ink [&_input::placeholder]:text-ecell-text-muted"
+            onSubmit={(e) => {
+              e.preventDefault();
+              const input = document.getElementById("nlEmail");
+              const email = input ? input.value.trim() : "";
+              setNote(
+                email
+                  ? "Demo form. Signups are not stored yet. Write to ecell@hyderabad.bits-pilani.ac.in to get on the list."
+                  : ""
+              );
+            }}
+          >
+            <input
+              className="w-full min-w-0 border px-4 py-2.5 focus:outline-2 focus:outline-offset-2 focus:outline-brand-navy"
+              aria-label="Email address"
+              id="nlEmail"
+              type="email"
+              placeholder="reader@bits-hyderabad.ac.in"
+              required
+            />
+            <button className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-navy px-5 py-[11px] text-[13px] font-semibold tracking-[0.01em] text-brand-cream transition-colors duration-200 hover:bg-brand-ink" type="submit">
+              Sign Up
+            </button>
+            <span className="text-[11.5px] text-ecell-text-muted">{note}</span>
+          </form>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default function Magazine() {
+  const pageRef = useRef(null);
+  useScrollMotion(pageRef);
+  useSectionHash();
+
+  return (
+    <div ref={pageRef} className="bg-page text-ink font-sans selection:bg-secondary selection:text-ink [&>header]:pt-[88px] [&>header]:pb-12 min-h-screen">
+      <SEO
+        title="Udyama — The Annual Magazine | E-Cell BITS Hyderabad"
+        description="A year of building together. Stories, people and ideas from E-Cell BITS Pilani Hyderabad Campus."
+        url="https://www.ecellbits.com/magazine"
+        keywords={["Udyama", "E-Cell Magazine", "BITS Hyderabad", "Launchpad", "Entrepreneurship", "Annual Magazine"]}
+      />
+      <header id="top">
+        <div className="mx-auto grid max-w-[1080px] grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] items-center gap-12 px-6 max-[720px]:grid-cols-1">
+          <div>
+            <p className="mb-5 text-xs font-bold uppercase tracking-[0.16em] text-brand-navy font-sans">The annual E-Cell magazine · 2025–26</p>
+            <h1 className="text-[clamp(56px,8.5vw,112px)] leading-[0.88] font-black tracking-[-0.05em] text-brand-navy font-sans">Udyama<span className="text-brand-maroon">.</span></h1>
+            <p className="mt-7 max-w-[470px] font-serif text-lg leading-relaxed text-ecell-text-muted sm:text-xl">A year of building together. Stories, people and ideas from E-Cell BITS Pilani Hyderabad Campus.</p>
+            <Link to="/udyama-volume-1" className="mt-7 inline-flex rounded-full bg-brand-navy px-6 py-3 text-sm font-bold text-brand-cream transition-colors hover:bg-brand-ink no-underline font-sans">Read the issue →</Link>
+          </div>
+          <Link to="/udyama-volume-1" aria-label="Read the 2025–26 issue" className="group relative mx-auto flex aspect-[3/4] w-full max-w-[360px] min-h-[420px] rotate-2 flex-col justify-between overflow-hidden rounded-2xl bg-brand-navy p-7 text-white shadow-[12px_12px_0_#510609] transition-transform duration-300 hover:rotate-0 sm:p-8 no-underline shrink-0">
+            <span className="relative z-10 border-b border-white/40 pb-3 text-xs font-bold uppercase tracking-widest font-sans">Udyama · 2025–26</span>
+            <img src={launchpadPhoto} alt="" className="absolute inset-x-0 bottom-0 h-[58%] w-full object-cover opacity-70 mix-blend-luminosity" />
+            <span className="relative z-10 max-w-[8ch] text-[clamp(38px,5vw,60px)] leading-[0.95] font-black tracking-tight font-sans">A year of building together.</span>
+            <span className="relative z-10 text-xs font-bold uppercase tracking-widest font-sans">The year in review ↗</span>
+          </Link>
+        </div>
+      </header>
+
+      <nav aria-label="In this issue" className="mx-auto max-w-[1080px] px-6">
+        <div data-stagger="" className="flex flex-wrap gap-x-6 gap-y-2 py-3 text-xs text-ecell-text-muted">
+          <a href="#year-review" className="hover:text-brand-navy no-underline text-ecell-text-muted">Year in review</a>
+          <a href="#stories" className="hover:text-brand-navy no-underline text-ecell-text-muted">More stories</a>
+          <a href="#spotlight" className="hover:text-brand-navy no-underline text-ecell-text-muted">Spotlight</a>
+          <a href="#podcast" className="hover:text-brand-navy no-underline text-ecell-text-muted">Podcast</a>
+          <a href="#archive" className="hover:text-brand-navy no-underline text-ecell-text-muted">Past volumes</a>
+          <a href="#subscribe" className="hover:text-brand-navy no-underline text-ecell-text-muted">Subscribe</a>
+        </div>
+      </nav>
+
+      <YearReview />
+      <StoriesSection />
+      <StartupSpotlight />
+      <ConversationsSection />
+      <PastVolumesSection />
+      <NewsletterSection />
+      <div className="mx-auto flex max-w-[1080px] justify-between px-6 py-8 text-xs text-ecell-text-muted">
+        <span>E-Cell Magazine · {MAGAZINE.year}</span>
+        <a href="#top" className="hover:text-brand-navy no-underline text-ecell-text-muted">Back to top ↑</a>
+      </div>
+    </div>
+  );
+}

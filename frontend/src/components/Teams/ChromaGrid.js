@@ -1,82 +1,10 @@
-import React, { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import './ChromaGrid.css';
+import React from 'react';
 
-export const ChromaGrid = ({
-  items = [],
-  className = '',
-  radius = 300,
-  columns = 3,
-  rows = 2,
-  damping = 0.45,
-  fadeOut = 0.6,
-  ease = 'power3.out'
-}) => {
-  const rootRef = useRef(null);
-  const fadeRef = useRef(null);
-  const setX = useRef(null);
-  const setY = useRef(null);
-  const pos = useRef({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const el = rootRef.current;
-    if (!el) return;
-    setX.current = gsap.quickSetter(el, '--x', 'px');
-    setY.current = gsap.quickSetter(el, '--y', 'px');
-    const { width, height } = el.getBoundingClientRect();
-    pos.current = { x: width / 2, y: height / 2 };
-    setX.current(pos.current.x);
-    setY.current(pos.current.y);
-
-    if (fadeRef.current) {
-      gsap.set(fadeRef.current, { opacity: 0 });
-    }
-  }, []);
-
-  const moveTo = (x, y) => {
-    gsap.to(pos.current, {
-      x,
-      y,
-      duration: damping,
-      ease,
-      onUpdate: () => {
-        setX.current?.(pos.current.x);
-        setY.current?.(pos.current.y);
-      },
-      overwrite: true
-    });
-  };
-
-  const handleMove = e => {
-    const r = rootRef.current.getBoundingClientRect();
-    moveTo(e.clientX - r.left, e.clientY - r.top);
-  };
-
-  const handleLeave = () => { };
-
-  const handleCardClick = url => {
-    if (url) window.open(url, '_blank', 'noopener,noreferrer');
-  };
-
-  const handleCardMove = e => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    card.style.setProperty('--mouse-x', `${x}px`);
-    card.style.setProperty('--mouse-y', `${y}px`);
-  };
-
+export const ChromaGrid = ({ items = [], className = '', columns = 3 }) => {
   return (
     <div
-      ref={rootRef}
-      className={`chroma-grid ${className}`}
-      style={{
-        '--r': `${radius}px`,
-        '--cols': columns
-      }}
-      onPointerMove={handleMove}
-      onPointerLeave={handleLeave}
+      className={`mx-auto grid w-full max-w-[1200px] grid-cols-1 gap-6 min-[561px]:grid-cols-2 min-[901px]:grid-cols-[repeat(var(--cols),minmax(0,1fr))] ${className}`}
+      style={{ '--cols': columns }}
     >
       {items.map((c, i) => {
         const name = c.title?.toLowerCase();
@@ -86,19 +14,9 @@ export const ChromaGrid = ({
         return (
           <article
             key={i}
-            className={`chroma-card ${c.type === 'header' ? 'chroma-header' : ''}`}
-            onMouseMove={c.type === 'header' ? undefined : handleCardMove}
-            onClick={c.type === 'header' ? undefined : () => handleCardClick(c.url)}
-            style={{
-              '--card-border': c.borderColor || 'transparent',
-              '--card-gradient': c.gradient,
-              gridColumn: c.type === 'header' ? `1 / span ${columns}` : 'auto',
-              cursor: c.url ? 'pointer' : 'default',
-              background: c.type === 'header' ? 'transparent' : undefined,
-              border: c.type === 'header' ? 'none' : undefined,
-            }}
+            className="relative flex min-w-0 flex-col overflow-hidden rounded-2xl border border-hairline bg-card text-card-foreground transition-all duration-200 hover:border-hairline-strong hover:shadow-lg"
           >
-            <div className="chroma-img-wrapper">
+            <div className="relative aspect-square shrink-0 overflow-hidden border-b border-hairline bg-muted [&_img]:absolute [&_img]:inset-0 [&_img]:size-full [&_img]:object-cover">
               <img
                 src={c.image}
                 alt={c.title}
@@ -110,7 +28,7 @@ export const ChromaGrid = ({
                       height: "100%",
                       objectFit: "cover",
                       objectPosition: "center top",
-                      transform: "none",      // ✅ FULL BLEED
+                      transform: "none",
                       display: "block"
                     }
                     : undefined)
@@ -118,23 +36,31 @@ export const ChromaGrid = ({
               />
             </div>
 
-            <footer className="chroma-info">
-              <h3 className="name">{c.title}</h3>
-              {c.handle && <span className="handle">{c.handle}</span>}
-              <p className="role">{c.subtitle}</p>
-              {c.location && <span className="location">{c.location}</span>}
+            <footer className="relative flex-1 px-4 py-5 text-ecell-text">
+              <h3 className="text-[clamp(14px,2.2vw,18px)] leading-[1.2] font-bold tracking-[0.2px]">
+                {c.url ? (
+                  <a href={c.url} target="_blank" rel="noopener noreferrer" className="hover:text-brand-navy focus-visible:outline-2 focus-visible:outline-offset-4 text-ink no-underline">
+                    {c.title}
+                  </a>
+                ) : (
+                  c.title
+                )}
+              </h3>
+              {c.handle && <span className="ml-2 inline-block text-[0.85em] text-ecell-text-muted">{c.handle}</span>}
+              <p className="mt-1.5 text-[clamp(12px,2vw,14px)] text-ecell-text font-medium">{c.subtitle}</p>
+              {c.location && <span className="mt-1.5 inline-block text-xs text-ecell-text-muted">{c.location}</span>}
 
               {/* Contact Row */}
-              <div className="chroma-contact">
+              <div className="mt-3 flex flex-wrap items-center gap-2">
                 {/* Phone pill */}
                 {c.phone && (
                   <a
                     href={`tel:${c.phone}`}
-                    className="chroma-phone"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-hairline-strong bg-raised px-3.5 py-1.5 text-[13px] whitespace-nowrap text-ecell-text no-underline transition-all duration-200 hover:border-brand-navy hover:bg-brand-navy hover:text-brand-cream [&_svg]:shrink-0"
                     onClick={e => e.stopPropagation()}
                     title={`Call ${c.title}`}
                   >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                     </svg>
                     <span>{c.phone}</span>
@@ -145,25 +71,21 @@ export const ChromaGrid = ({
                 {c.email && (
                   <a
                     href={`mailto:${c.email}`}
-                    className="chroma-icon-btn"
+                    className="inline-flex size-[34px] cursor-pointer items-center justify-center rounded-full border border-hairline-strong bg-raised text-ecell-text no-underline transition-all duration-200 hover:border-brand-navy hover:bg-brand-navy hover:text-brand-cream"
                     onClick={e => e.stopPropagation()}
                     title={`Email ${c.title}`}
                   >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <rect x="2" y="4" width="20" height="16" rx="2" />
                       <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
                     </svg>
                   </a>
                 )}
-
               </div>
             </footer>
           </article>
         );
       })}
-
-      <div className="chroma-overlay" />
-      <div ref={fadeRef} className="chroma-fade" />
     </div>
   );
 };

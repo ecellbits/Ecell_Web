@@ -122,7 +122,7 @@ const OurTeam = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-ecell-bg text-ecell-text">
       {/* Hero Section */}
       <motion.section
         className="h-screen relative overflow-hidden flex items-center justify-center"
@@ -131,9 +131,9 @@ const OurTeam = () => {
           backgroundPosition: "center",
         }}
       >
-        <div className="relative z-10 text-center px-4 bg-black bg-opacity-50 p-8 rounded-xl">
+        <div className="relative z-10 text-center px-4 p-8">
           <motion.h1
-            className="text-4xl sm:text-6xl md:text-8xl font-bold mb-6"
+            className="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 text-ink"
             initial="hidden"
             animate="visible"
             variants={fadeIn}
@@ -142,7 +142,7 @@ const OurTeam = () => {
             Our Team
           </motion.h1>
           <motion.p
-            className="text-lg sm:text-2xl md:text-3xl text-gray-300"
+            className="text-xl sm:text-2xl text-ecell-text-muted"
             initial="hidden"
             animate="visible"
             variants={fadeIn}

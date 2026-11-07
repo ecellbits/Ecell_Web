@@ -21,6 +21,8 @@ const Contact = lazy(() => import("./components/contact"));
 const Gallery = lazy(() => import("./components/Gallery/gallery"));
 const LaunchpadGallery = lazy(() => import("./components/Gallery/launchpadgallery"));
 const Navbar = lazy(() => import("./components/navbar"));
+const HomeNavbar = lazy(() => import("./components/Home/HomeNavbar"));
+const HomeFooter = lazy(() => import("./components/Home/HomeFooter"));
 const BlogPage = lazy(() => import("./components/Blog/BlogPage"));
 const Magazine = lazy(() => import("./components/Magazine/Magazine"));
 
@@ -119,6 +121,7 @@ function App() {
 function MainContent() {
   const location = useLocation();
   const isLaunchpadRoute = location.pathname.startsWith("/launchpad");
+  const isHome = location.pathname === "/";
 
   const menuRef = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -175,20 +178,26 @@ function MainContent() {
       {location.pathname === '/' && !isLoaderActive && (
         <Link
           to="/startup-mentorship"
-          className="fixed left-0 top-1/2 -translate-y-1/2 z-50 flex items-center justify-center py-3 px-2 md:py-3.5 md:px-2.5 bg-[#080b12]/90 hover:bg-[#0c101c] border-y border-r border-[#d4ff00]/30 hover:border-[#d4ff00] rounded-r-xl shadow-[0_4px_20px_rgba(0,0,0,0.6),0_0_15px_rgba(212,255,0,0.12)] hover:shadow-[0_4px_25px_rgba(212,255,0,0.3)] backdrop-blur-xl font-outfit text-[11px] md:text-xs font-medium tracking-wide transition-all duration-300 hover:translate-x-1 group no-underline"
+          className="fixed left-0 top-1/2 -translate-y-1/2 z-50 flex items-center justify-center py-3 px-2 md:py-3.5 md:px-2.5 bg-brand-maroon hover:bg-brand-ink border-y border-r border-brand-cream/20 rounded-r-xl shadow-[0_8px_24px_-8px_rgba(0,0,0,0.5)] font-copy text-[11px] md:text-xs font-semibold tracking-wide transition-all duration-300 hover:translate-x-1 group no-underline"
           style={{ writingMode: 'vertical-rl' }}
           title="Founder's First Mentorship"
         >
           <div className="rotate-180 flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#d4ff00] shadow-[0_0_8px_#d4ff00] animate-pulse group-hover:scale-125 transition-transform shrink-0" />
-            <span className="whitespace-nowrap text-neutral-300 group-hover:text-white transition-colors">
-              Founder's First <span className="text-[#d4ff00] font-semibold">Mentorship</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-brand-cream animate-pulse group-hover:scale-125 transition-transform shrink-0" />
+            <span className="whitespace-nowrap text-brand-cream">
+              Founder's First Mentorship
             </span>
           </div>
         </Link>
       )}
 
-      <Navbar onToggleMenu={toggleMenu} isOpen={isMenuOpen} isLaunchpad={isLaunchpadRoute} />
+      <Suspense fallback={null}>
+        {isHome ? (
+          <HomeNavbar onToggleMenu={toggleMenu} isOpen={isMenuOpen} />
+        ) : (
+          <Navbar onToggleMenu={toggleMenu} isOpen={isMenuOpen} isLaunchpad={isLaunchpadRoute} />
+        )}
+      </Suspense>
 
       {isLaunchpadRoute ? (
         <StaggeredMenu
@@ -221,9 +230,10 @@ function MainContent() {
           menuButtonColor="#fff"
           openMenuButtonColor="#fff"
           changeMenuColorOnOpen={false}
-          colors={['#1a1a1a', '#2a2a2a']}
+          className={isHome ? 'home-menu' : ''}
+          colors={isHome ? ['#000000', '#0F1754'] : ['#1a1a1a', '#2a2a2a']}
           logoUrl="/navbarlogo.png"
-          accentColor="#d4ff00"
+          accentColor={isHome ? '#FEF8E6' : '#d4ff00'}
           isFixed={true}
           onMenuOpen={() => setIsMenuOpen(true)}
           onMenuClose={() => setIsMenuOpen(false)}
@@ -295,7 +305,9 @@ function MainContent() {
       </AnimatePresence>
 
       {/* Global Footer */}
-      <Footer />
+      <Suspense fallback={null}>
+        {isHome ? <HomeFooter /> : <Footer />}
+      </Suspense>
       <SpeedInsights />
     </div>
   );

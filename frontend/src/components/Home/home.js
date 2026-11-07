@@ -1,11 +1,10 @@
 import React from 'react';
-import Startup from './startups';
-
-import Initiatives from './initiatives';
-import Launchpad from './launchpad';
+import { MotionConfig } from 'framer-motion';
 import Hero from './hero';
+import Startups from './startups';
 import BlogShortcut from './BlogShortcut';
-import GradientBackground from '../GradientBackground';
+import Launchpad from './launchpad';
+import Initiatives from './initiatives';
 import SEO from '../common/SEO';
 
 function Home() {
@@ -25,7 +24,8 @@ function Home() {
   };
 
   return (
-    <div className="relative">
+    <MotionConfig reducedMotion="user">
+    <div className="relative bg-brand-cream">
       <SEO
         title="Home"
         description="E-Cell BITS Pilani Hyderabad Campus - Fostering Entrepreneurship and Innovation. Join our events and programs like Launchpad to grow your startup."
@@ -33,13 +33,12 @@ function Home() {
         schemaData={jsonLd}
       />
       <Hero />
-      <GradientBackground>
-        <Startup />
-        <BlogShortcut />
-        <Launchpad />
-        <Initiatives />
-      </GradientBackground>
+      <Startups />
+      <BlogShortcut />
+      <Initiatives />
+      <Launchpad />
     </div>
+    </MotionConfig>
   );
 }
 

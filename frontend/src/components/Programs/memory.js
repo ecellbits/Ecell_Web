@@ -52,7 +52,7 @@ const Memories = () => {
 
   return (
     <div
-      className="w-full py-24 bg-black relative overflow-hidden"
+      className="w-full py-24 bg-page relative overflow-hidden"
       ref={(el) => {
         containerRef.current = el;
         inViewRef(el);
@@ -61,27 +61,27 @@ const Memories = () => {
       onMouseLeave={handleMouseLeave}
     >
       {/* Background Glows */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-[#6F66FF]/10 rounded-full blur-[120px] pointer-events-none"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[#BCFF2F]/5 rounded-full blur-[100px] pointer-events-none"></div>
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-brand-navy/10 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-brand-maroon/5 rounded-full blur-[100px] pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 relative z-10">
         {/* Title Section */}
         <div className="text-center mb-16 md:mb-24">
           <motion.h2
-            initial={{ opacity: 0, y: 30 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-5xl md:text-7xl font-bold font-syne tracking-tight"
+            className="text-5xl md:text-7xl font-bold font-sans tracking-tight"
           >
-            <span className="text-white">Memory</span>{" "}
-            <span className="bg-gradient-to-r from-[#6F66FF] to-[#BCFF2F] bg-clip-text text-transparent">Lane</span>
+            <span className="text-ink">Memory</span>{" "}
+            <span className="text-ink">Lane</span>
           </motion.h2>
           <motion.div
-            initial={{ opacity: 0, width: 0 }}
+            initial={false}
             whileInView={{ opacity: 1, width: 100 }}
             viewport={{ once: true }}
             transition={{ delay: 0.5, duration: 1 }}
-            className="h-1 bg-gradient-to-r from-[#6F66FF] to-[#BCFF2F] mx-auto mt-4 rounded-full"
+            className="h-1 bg-gradient-to-r from-[#0F1754] to-[#510609] mx-auto mt-4 rounded-full"
           />
         </div>
 
@@ -93,7 +93,6 @@ const Memories = () => {
           >
             <AnimatePresence mode="popLayout">
               {images.map((img, idx) => {
-                const isCenter = idx === activeIndex;
                 const offset = (idx - activeIndex + images.length) % images.length;
 
                 // Hide images that are far back
@@ -145,15 +144,23 @@ const Memories = () => {
                       z: zTranslate,
                       rotateY: rotateYCard,
                     }}
-                    transition={{ type: "spring", stiffness: 100, damping: 20 }}
-                    className={`absolute w-[85%] md:w-[70%] h-[70%] md:h-[85%] rounded-[2rem] overflow-hidden shadow-2xl cursor-pointer ${isCenter ? 'z-30 pointer-events-auto' : 'z-10 pointer-events-none'}`}
-                    onClick={() => isCenter && setActiveIndex((idx + 1) % images.length)}
-                    onMouseEnter={() => isCenter && setIsHovered(true)}
-                    onMouseLeave={() => isCenter && setIsHovered(false)}
-                    style={{ transformStyle: "preserve-3d" }}
+                    exit={{ opacity: 0, scale: 0.5, z: -500 }}
+                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    className="absolute w-[80vw] max-w-[500px] h-[260px] sm:h-[340px] md:h-[400px] rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl cursor-pointer"
+                    style={{
+                      transformStyle: "preserve-3d",
+                      backfaceVisibility: "hidden",
+                    }}
+                    onClick={() => setActiveIndex(idx)}
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
                   >
-                    <img src={img} alt={`Memory ${idx}`} className="w-full h-full object-cover" loading="lazy" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                    <img
+                      src={img}
+                      alt={`Memory ${idx + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
                   </motion.div>
                 );
               })}
@@ -172,14 +179,14 @@ const Memories = () => {
               <motion.div
                 animate={{
                   width: activeIndex === idx ? 40 : 8,
-                  backgroundColor: activeIndex === idx ? "#6F66FF" : "rgba(255, 255, 255, 0.2)",
+                  backgroundColor: activeIndex === idx ? "#0F1754" : "rgba(0,0,0,0.2)",
                 }}
                 className="h-1.5 rounded-full transition-all duration-500"
               />
               {activeIndex === idx && (
                 <motion.div
                   layoutId="indicator"
-                  className="absolute -bottom-2 left-0 right-0 h-0.5 bg-[#BCFF2F] blur-[2px]"
+                  className="absolute -bottom-2 left-0 right-0 h-0.5 bg-brand-maroon blur-[2px]"
                 />
               )}
             </button>
@@ -191,4 +198,3 @@ const Memories = () => {
 };
 
 export default Memories;
-

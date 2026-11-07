@@ -8,6 +8,7 @@ const usefulLinks = [
   { label: 'Programs', to: '/program' },
   { label: 'Our Team', to: '/team' },
   { label: 'Blog', to: '/blog' },
+  { label: 'Magazine', to: '/magazine' },
   { label: 'Gallery', to: '/gallery' },
   { label: 'Contact Us', to: '/contact' },
 ];

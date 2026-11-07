@@ -34,7 +34,7 @@ export default function Gallery() {
   const images = useMemo(() => importAllImages(), []);
 
   return (
-    <div style={{ width: '100%', height: '100dvh' }}>
+    <div style={{ width: '100%', height: '100dvh', overflow: 'hidden' }}>
       <DomeGallery
         images={images}
         grayscale={false}

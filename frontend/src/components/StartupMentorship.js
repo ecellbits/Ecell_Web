@@ -151,9 +151,9 @@ const StartupMentorship = () => {
         // Update these statuses when confirmed by organizers.
         // Options: "upcoming", "live", "completed"
         const statuses = [
-          "upcoming",
-          "upcoming",
-          "upcoming",
+          "completed",
+          "completed",
+          "live",
           "upcoming",
           "upcoming",
         ];
@@ -230,7 +230,7 @@ const StartupMentorship = () => {
                 {isLive && (
                   <span className="flex items-center gap-2 text-xs font-bold uppercase text-[#d4ff00]">
                     <span className="h-2 w-2 animate-pulse rounded-full bg-[#d4ff00]" />
-                    In Progress
+                    Live
                   </span>
                 )}
 

@@ -1,7 +1,14 @@
 
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { FaWhatsapp, FaCheckCircle } from 'react-icons/fa';
+
 console.log("SUPABASE URL:", process.env.REACT_APP_SUPABASE_URL);
+
+const WHATSAPP_COMMUNITY_URL =
+  process.env.REACT_APP_MENTOR_WHATSAPP_URL ||
+  'https://chat.whatsapp.com/ES9ec8vrX6c8ZMnIVeSGCc?s=sw&p=i&mlu=4&ilr=4&iam=2';
 
 const initialState = {
   founderName: '',
@@ -19,6 +26,8 @@ const MentorConnectForm = () => {
   const [formData, setFormData] = useState(initialState);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
 
  useEffect(() => {
@@ -66,29 +75,38 @@ const handleSubmit = async (e) => {
    }
   setError('');
   setSuccess('');
-  const { supabase } = await import('../supabaseClient');
-  const { error: dbError } = await supabase
-    .from('mentorship_applications')
-    .insert([
-      {
-        founder_name: formData.founderName,
-        email: formData.email,
-        phone: formData.phone,
-        startup_name: formData.startupName,
-        website_linkedin: formData.websiteLinkedin,
-        startup_description: formData.startupDescription,
-        industry: formData.industry,
-        startup_stage: formData.startupStage,
-        mentorship_areas: formData.mentorshipAreas,
-      },
-    ]);
-  if (dbError) {
-    setError('Database error: ' + dbError.message);
-    return;
+  setIsSubmitting(true);
+  try {
+    const { supabase } = await import('../supabaseClient');
+    const { error: dbError } = await supabase
+      .from('mentorship_applications')
+      .insert([
+        {
+          founder_name: formData.founderName,
+          email: formData.email,
+          phone: formData.phone,
+          startup_name: formData.startupName,
+          website_linkedin: formData.websiteLinkedin,
+          startup_description: formData.startupDescription,
+          industry: formData.industry,
+          startup_stage: formData.startupStage,
+          mentorship_areas: formData.mentorshipAreas,
+        },
+      ]);
+    if (dbError) {
+      setError('Database error: ' + dbError.message);
+      setIsSubmitting(false);
+      return;
+    }
+    setSuccess('Application submitted successfully!');
+    setIsSubmitted(true);
+    setFormData(initialState);
+  } catch (err) {
+    setError('Submission error: ' + (err.message || 'Something went wrong'));
+  } finally {
+    setIsSubmitting(false);
   }
-   setSuccess('Application submitted successfully!');
-   setFormData(initialState);
-  };
+};
 
   return (
     <div className="min-h-screen py-16 px-4 bg-ecell-bg overflow-hidden relative">
@@ -105,13 +123,15 @@ const handleSubmit = async (e) => {
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-ecell-secondary/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-2xl mx-auto p-8 md:p-12 rounded-[2rem] glass-dark border border-white/10 mt-16 mb-8 relative z-10">
-        <div className="text-center mb-10">
-          <h2 className="text-4xl font-bold tracking-tight text-white font-syne mb-2">
-            Mentorship <span className="text-ecell-primary">Connect</span>
-          </h2>
-          <p className="text-gray-400 font-manrope font-light">Apply for the Startup Mentorship Cohort.</p>
-        </div>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        {!isSubmitted ? (
+          <>
+            <div className="text-center mb-10">
+              <h2 className="text-4xl font-bold tracking-tight text-white font-syne mb-2">
+                Mentorship <span className="text-ecell-primary">Connect</span>
+              </h2>
+              <p className="text-gray-400 font-manrope font-light">Apply for the Startup Mentorship Cohort.</p>
+            </div>
+            <form onSubmit={handleSubmit} className="space-y-6">
           <div>
   <label htmlFor="founderName" className="block text-sm font-semibold text-gray-300 mb-2 ml-1">
     Founder Name <span className="text-ecell-primary">*</span>
@@ -280,28 +300,105 @@ const handleSubmit = async (e) => {
 
           <button
             type="submit"
-            className="btn-premium w-full py-4 rounded-xl text-lg font-bold tracking-wider uppercase transition-all font-manrope"
+            disabled={isSubmitting}
+            className="btn-premium w-full py-4 rounded-xl text-lg font-bold tracking-wider uppercase transition-all font-manrope disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Submit Application
+            {isSubmitting ? 'Submitting...' : 'Submit Application'}
           </button>
           <div className="mt-6 text-center font-manrope text-sm text-gray-400">
-  <p className="mb-2">For any queries, contact:</p>
-
-  <p className="mb-1">
-    Sanay —{" "}
-    <a href="tel:+918169523199" className="text-white hover:text-ecell-primary transition-colors">
-      +91 81695 23199
-    </a>
-  </p>
-
-  <p>
-    Shami —{" "}
-    <a href="tel:+919407045723" className="text-white hover:text-ecell-primary transition-colors">
-      +91 94070 45723
-    </a>
-  </p>
-      </div>
+            <p className="mb-2">For any queries, contact:</p>
+            <p className="mb-1">
+              Sanay —{" "}
+              <a href="tel:+918169523199" className="text-white hover:text-ecell-primary transition-colors">
+                +91 81695 23199
+              </a>
+            </p>
+            <p>
+              Shami —{" "}
+              <a href="tel:+919407045723" className="text-white hover:text-ecell-primary transition-colors">
+                +91 94070 45723
+              </a>
+            </p>
+          </div>
         </form>
+      </>
+    ) : (
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.4 }}
+        className="text-center py-4"
+      >
+        <div className="w-16 h-16 mx-auto mb-5 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-emerald-400">
+          <FaCheckCircle className="text-3xl text-emerald-400" />
+        </div>
+
+        <h3 className="text-3xl font-extrabold font-syne text-white mb-3">
+          Application <span className="text-ecell-primary">Submitted!</span>
+        </h3>
+
+        <p className="text-gray-300 font-manrope text-base max-w-md mx-auto mb-8 leading-relaxed">
+          Thank you for applying. We've received your startup's details. Make sure to join the WhatsApp community below to stay connected with mentors and organizers.
+        </p>
+
+        {/* WhatsApp CTA Card */}
+        <div className="p-6 md:p-8 rounded-2xl bg-white/[0.03] border border-white/10 mb-8">
+          <h4 className="text-xl font-bold text-white font-syne mb-2">
+            Join the Mentorship Community
+          </h4>
+          <p className="text-sm text-gray-400 font-manrope mb-6 max-w-md mx-auto">
+            Get direct access to mentor office hours, session reminders, and networking with fellow founders.
+          </p>
+
+          <a
+            href={WHATSAPP_COMMUNITY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-3 w-full py-3.5 px-6 rounded-xl text-base font-bold text-white bg-[#1f8a4c] hover:bg-[#25a55b] border border-[#25D366]/30 hover:scale-[1.01] active:scale-[0.99] transition-all duration-200 no-underline font-manrope cursor-pointer"
+          >
+            <FaWhatsapp className="text-2xl" />
+            <span>Join WhatsApp Community</span>
+          </a>
+        </div>
+
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+          <button
+            type="button"
+            onClick={() => {
+              setIsSubmitted(false);
+              setSuccess('');
+            }}
+            className="w-full sm:w-auto px-6 py-3 rounded-xl border border-white/20 text-gray-300 hover:text-white hover:border-white/40 transition-all font-manrope text-sm font-semibold"
+          >
+            Submit Another Application
+          </button>
+
+          <Link
+            to="/startup-mentorship"
+            className="w-full sm:w-auto px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-all font-manrope text-sm font-semibold no-underline flex items-center justify-center"
+          >
+            View Mentorship Roadmap →
+          </Link>
+        </div>
+
+        {/* Contact details */}
+        <div className="mt-10 pt-6 border-t border-white/10 text-center font-manrope text-sm text-gray-400">
+          <p className="mb-2">For any queries, contact:</p>
+          <p className="mb-1">
+            Sanay —{" "}
+            <a href="tel:+918169523199" className="text-white hover:text-ecell-primary transition-colors">
+              +91 81695 23199
+            </a>
+          </p>
+          <p>
+            Shami —{" "}
+            <a href="tel:+919407045723" className="text-white hover:text-ecell-primary transition-colors">
+              +91 94070 45723
+            </a>
+          </p>
+        </div>
+      </motion.div>
+    )}
          </div>
         </div>
   );

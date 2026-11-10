@@ -8,6 +8,7 @@ const links = [
   { label: 'Gallery', to: '/gallery' },
   { label: 'Blog', to: '/blog' },
   { label: 'Launchpad', to: '/launchpad' },
+  { label: 'Magazine', to: '/magazine' },
 ];
 
 // Transparent over the navy hero, solid cream once the page scrolls.

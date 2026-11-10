@@ -31,17 +31,16 @@ module.exports = {
         'elegant-box': ['Satoshi', 'sans-serif'],
         'elegant-body': ['Manrope', 'sans-serif'],
 
-        // ✨ New Modern Standard
-        'sans': ['Syne', 'sans-serif'],
-        'header': ['Outfit', 'sans-serif'],
-        'outfit': ['Outfit', 'sans-serif'],
-        'syne': ['Syne', 'sans-serif'],
-        'hypebuzz': ['Hypebuzz', 'sans-serif'],
-        'poppins': ['Poppins', 'sans-serif'],
-        // Homepage body copy
-        'copy': ['Manrope', 'Inter', 'sans-serif'],
-        // Homepage hero heading
+        // ✨ Brand Typography from zip (apps/marketing)
+        'sans': ['Manrope', 'Inter', 'sans-serif'],
+        'copy': ['Manrope', 'sans-serif'],
         'display': ['"Inter Tight"', 'Inter', 'sans-serif'],
+        'syne': ['Syne', 'sans-serif'],
+        'header': ['Outfit', 'sans-serif'],
+        'outfit': ['Outfit', 'Manrope', 'sans-serif'],
+        'hypebuzz': ['Hypebuzz', 'sans-serif'],
+        'mono': ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+        'poppins': ['Poppins', 'sans-serif'],
       },
       letterSpacing: {
         'startup-header': '0.02em',
@@ -56,18 +55,28 @@ module.exports = {
         'elegant-box': '0.05em',
       },
       colors: {
-        'ecell-bg': '#000000', // Pure black for complete synchronization
-        'ecell-bg-light': '#0a0a0a', // Slightly lighter black for contrast
-        'ecell-primary': '#d4ff00', // Bright Lime Green
-        'ecell-secondary': '#6b5fff', // Purple
-        'ecell-text': '#ffffff', // Pure White
-        'ecell-text-muted': '#f7fafc', // Off-white for secondary text
+        'ecell-bg': '#FEF8E6', // Brand Cream
+        'ecell-bg-light': '#ffffff', // Clean white
+        'ecell-primary': '#0F1754', // Brand Navy
+        'ecell-secondary': '#510609', // Brand Maroon
+        'ecell-text': '#000000', // Black Ink
+        'ecell-text-muted': '#66665e', // Muted text for editorial & brand pages
         'ecell-dark': '#000000', // Deep Black
         // Brand palette (logo guidelines)
         'brand-cream': '#FEF8E6',
         'brand-navy': '#0F1754',
         'brand-maroon': '#510609',
         'brand-ink': '#000000',
+        'hairline': 'rgba(0, 0, 0, 0.12)',
+        'hairline-strong': 'rgba(0, 0, 0, 0.24)',
+        'page': '#FEF8E6',
+        'surface': '#ffffff',
+        'raised': '#f8f2e1',
+        'ink': '#000000',
+        'card': '#ffffff',
+        'card-foreground': '#000000',
+        'muted': '#f8f2e1',
+        'muted-foreground': '#66665e',
       },
       animation: {
         'gradient-x': 'gradient-x 6s ease infinite',

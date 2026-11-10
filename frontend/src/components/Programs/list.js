@@ -22,17 +22,17 @@ import na3 from '../../assets/pitch.jpg';
 const ProgramCard = ({ program, navigate }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={false}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
       viewport={{ once: true }}
       onClick={() => program.link !== "#" && navigate(program.link)}
-      className={`group relative overflow-hidden rounded-[2rem] md:rounded-[2.5rem] cursor-pointer transition-all duration-500 hover:scale-[1.01] bg-[#1a1a1a] flex flex-col ${program.className}`}
+      className={`group relative overflow-hidden rounded-lg md:rounded-lg cursor-pointer transition-all duration-500 bg-raised flex flex-col ${program.className}`}
     >
       {/* Header Image */}
       <div className="flex-grow overflow-hidden relative min-h-[150px]">
         {program.type === 'triple' ? (
-          // ✅ ONLY MIDDLE IMAGE
+          // ONLY MIDDLE IMAGE
           <img
             loading="lazy" src={program.images[1]}
             alt={program.title}
@@ -54,7 +54,7 @@ const ProgramCard = ({ program, navigate }) => {
       >
         <div className="flex flex-col gap-4 md:gap-6 z-10 w-full">
           <h3
-            className="text-2xl md:text-4xl font-bold font-syne tracking-tight leading-[1.1] break-words w-full"
+            className="text-2xl md:text-4xl font-bold font-sans tracking-tight leading-[1.1] break-words w-full"
             style={{ color: program.textColor }}
           >
             {program.title}
@@ -62,7 +62,7 @@ const ProgramCard = ({ program, navigate }) => {
 
           <div className="flex items-stretch justify-between gap-3 md:gap-4 w-full">
             <div
-              className={`px-4 py-2 rounded-full border-2 text-sm md:text-base font-medium font-manrope flex items-center flex-1 min-w-0`}
+              className={`px-4 py-2 rounded-full border-2 text-sm md:text-base font-medium font-sans flex items-center flex-1 min-w-0`}
               style={{
                 borderColor:
                   program.textColor === 'black'
@@ -95,18 +95,18 @@ const List = () => {
       subtitle: "Largest E-Summit of South India",
       type: "triple",
       images: [lp1, lp2, lp3],
-      color: "#6F66FF",
+      color: "#0F1754",
       textColor: "white",
       link: "/launchpad",
       className: "md:col-span-2 md:row-span-2",
     },
     {
       title: "SPEAKER SESSIONS",
-      subtitle: "Engaging sessions throughout the year",
+      subtitle: "Engaging sessions all year",
       type: "triple",
       images: [ss1, ss2, ss3],
-      color: "#BCFF2F",
-      textColor: "black",
+      color: "#510609",
+      textColor: "white",
       link: "#",
       className: "md:col-span-1 md:row-span-2",
     },
@@ -115,7 +115,7 @@ const List = () => {
       subtitle: "Ideas Into Impact",
       type: "single",
       image: cm2,
-      color: "#6F66FF",
+      color: "#0F1754",
       textColor: "white",
       link: "/community-meet",
       className: "md:col-span-1 md:row-span-1",
@@ -125,8 +125,8 @@ const List = () => {
       subtitle: "Unleash your strategic genius",
       type: "single",
       image: mt1,
-      color: "#BCFF2F",
-      textColor: "black",
+      color: "#510609",
+      textColor: "white",
       link: "#",
       className: "md:col-span-1 md:row-span-1",
     },
@@ -135,7 +135,7 @@ const List = () => {
       subtitle: "Connect, collaborate & create",
       type: "triple",
       images: [na1, na2, na3],
-      color: "#6F66FF",
+      color: "#0F1754",
       textColor: "white",
       link: "#",
       className: "md:col-span-1 md:row-span-1",
@@ -143,7 +143,7 @@ const List = () => {
   ];
 
   return (
-    <section className="min-h-screen py-24 px-4 md:px-8 bg-black text-white relative overflow-hidden">
+    <section className="min-h-screen py-24 px-4 md:px-8 bg-page text-ink relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[300px] md:auto-rows-[350px]">
           {programs.map((program, index) => (

@@ -11,7 +11,7 @@ const {
   HarmCategory,
   HarmBlockThreshold,
 } = require("@google/generative-ai");
-const { toolDeclarations, executeFunction } = require("./lib/knowledge");
+const { toolDeclarations, executeFunction } = require("./_lib/knowledge");
 
 // ── System instruction ──────────────────────────────────────────────────────
 

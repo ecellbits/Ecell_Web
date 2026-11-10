@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@google/generative-ai": "^0.21.0",
     "@gsap/react": "^2.1.2",
     "@heroicons/react": "^2.2.0",
     "@supabase/supabase-js": "^2.57.2",

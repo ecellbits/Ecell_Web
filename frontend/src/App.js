@@ -63,6 +63,7 @@ const CampusAmbassador = lazy(() => import("./components/CampusAmbassador"));
 const CorporatePasses = lazy(() => import("./components/CorporatePasses"));
 const LaunchpadTimer = lazy(() => import("./components/LaunchpadTimer"));
 const LaunchpadLinks = lazy(() => import("./components/Launchpadlinks/LaunchpadLinks"));
+const Chatbot = lazy(() => import("./components/Chatbot/Chatbot"));
 
 
 
@@ -304,6 +305,11 @@ function MainContent() {
       <Suspense fallback={null}>
         {isHome ? <HomeFooter /> : <Footer />}
       </Suspense>
+      {!isLoaderActive && (
+        <Suspense fallback={null}>
+          <Chatbot />
+        </Suspense>
+      )}
       <SpeedInsights />
     </div>
   );

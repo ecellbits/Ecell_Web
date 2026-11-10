@@ -21,6 +21,10 @@ const Contact = lazy(() => import("./components/contact"));
 const Gallery = lazy(() => import("./components/Gallery/gallery"));
 const LaunchpadGallery = lazy(() => import("./components/Gallery/launchpadgallery"));
 const Navbar = lazy(() => import("./components/navbar"));
+const HomeFooter = lazy(() => import("./components/Home/HomeFooter"));
+const BlogPage = lazy(() => import("./components/Blog/BlogPage"));
+const Magazine = lazy(() => import("./components/Magazine/Magazine"));
+const UdyamaVolume1 = lazy(() => import("./components/Magazine/UdyamaVolume1"));
 
 
 const Lteam = lazy(() => import("./components/team/team"));
@@ -60,6 +64,7 @@ const CampusAmbassador = lazy(() => import("./components/CampusAmbassador"));
 const CorporatePasses = lazy(() => import("./components/CorporatePasses"));
 const LaunchpadTimer = lazy(() => import("./components/LaunchpadTimer"));
 const LaunchpadLinks = lazy(() => import("./components/Launchpadlinks/LaunchpadLinks"));
+const Chatbot = lazy(() => import("./components/Chatbot/Chatbot"));
 
 
 
@@ -117,6 +122,7 @@ function App() {
 function MainContent() {
   const location = useLocation();
   const isLaunchpadRoute = location.pathname.startsWith("/launchpad");
+  const isHome = location.pathname === "/";
 
   const menuRef = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -127,13 +133,16 @@ function MainContent() {
   };
 
   // Menu items for StaggeredMenu
+  //this is for the slideout animated hamburger menu
   const menuItems = [
     { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
     { label: 'Programs', ariaLabel: 'View our programs', link: '/program' },
     { label: 'Our Team', ariaLabel: 'Meet the team', link: '/team' },
     { label: 'Gallery', ariaLabel: 'View our gallery', link: '/gallery' },
+    { label: 'Blog', ariaLabel: 'Read our entrepreneurial blog', link: '/blog' },
     { label: 'Launchpad', ariaLabel: 'Explore Launchpad', link: '/launchpad' },
-    { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' }
+    { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' },
+    { label: 'Magazine', ariaLabel: 'Read our magazine', link: '/magazine' }
   ];
 
   const socialItems = [
@@ -170,20 +179,22 @@ function MainContent() {
       {location.pathname === '/' && !isLoaderActive && (
         <Link
           to="/startup-mentorship"
-          className="fixed left-0 top-1/2 -translate-y-1/2 z-50 flex items-center justify-center py-3 px-2 md:py-3.5 md:px-2.5 bg-[#080b12]/90 hover:bg-[#0c101c] border-y border-r border-[#d4ff00]/30 hover:border-[#d4ff00] rounded-r-xl shadow-[0_4px_20px_rgba(0,0,0,0.6),0_0_15px_rgba(212,255,0,0.12)] hover:shadow-[0_4px_25px_rgba(212,255,0,0.3)] backdrop-blur-xl font-outfit text-[11px] md:text-xs font-medium tracking-wide transition-all duration-300 hover:translate-x-1 group no-underline"
+          className="fixed left-0 top-1/2 -translate-y-1/2 z-50 flex items-center justify-center py-3 px-2 md:py-3.5 md:px-2.5 bg-brand-maroon hover:bg-brand-ink border-y border-r border-brand-cream/20 rounded-r-xl shadow-[0_8px_24px_-8px_rgba(0,0,0,0.5)] font-copy text-[11px] md:text-xs font-semibold tracking-wide transition-all duration-300 hover:translate-x-1 group no-underline"
           style={{ writingMode: 'vertical-rl' }}
           title="Founder's First Mentorship"
         >
           <div className="rotate-180 flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#d4ff00] shadow-[0_0_8px_#d4ff00] animate-pulse group-hover:scale-125 transition-transform shrink-0" />
-            <span className="whitespace-nowrap text-neutral-300 group-hover:text-white transition-colors">
-              Founder's First <span className="text-[#d4ff00] font-semibold">Mentorship</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-brand-cream animate-pulse group-hover:scale-125 transition-transform shrink-0" />
+            <span className="whitespace-nowrap text-brand-cream">
+              Founder's First Mentorship
             </span>
           </div>
         </Link>
       )}
 
-      <Navbar onToggleMenu={toggleMenu} isOpen={isMenuOpen} isLaunchpad={isLaunchpadRoute} />
+      <Suspense fallback={null}>
+        <Navbar onToggleMenu={toggleMenu} isOpen={isMenuOpen} isLaunchpad={isLaunchpadRoute} />
+      </Suspense>
 
       {isLaunchpadRoute ? (
         <StaggeredMenu
@@ -213,12 +224,12 @@ function MainContent() {
           socialItems={socialItems}
           displaySocials={true}
           displayItemNumbering={false}
-          menuButtonColor="#fff"
-          openMenuButtonColor="#fff"
+          menuButtonColor="#0F1754"
+          openMenuButtonColor="#0F1754"
           changeMenuColorOnOpen={false}
-          colors={['#1a1a1a', '#2a2a2a']}
+          colors={['#FEF8E6', '#FBF0D7']}
           logoUrl="/navbarlogo.png"
-          accentColor="#d4ff00"
+          accentColor="#510609"
           isFixed={true}
           onMenuOpen={() => setIsMenuOpen(true)}
           onMenuClose={() => setIsMenuOpen(false)}
@@ -227,10 +238,13 @@ function MainContent() {
 
       <AnimatePresence mode="wait">
         <Suspense fallback={<ECellLoader />}>
-          <div className={`main-content ${location.pathname === "/" || location.pathname === "/launchpad" ? "no-padding" : ""}`}>
+          <div className={`main-content ${location.pathname === "/" || location.pathname === "/launchpad" || location.pathname === "/gallery" || location.pathname === "/launchpad/gallery" ? "no-padding" : ""}`}>
             <Routes location={location} key={location.pathname}>
               {/* Normal Routes */}
               <Route path="/" element={<Home />} />
+              <Route path="/blog" element={<BlogPage />} />
+              <Route path="/magazine" element={<Magazine />} />
+              <Route path="/udyama-volume-1" element={<UdyamaVolume1 />} />
               <Route path="/team" element={<Team />} />
               <Route path="/program" element={<Program />} />
               <Route path="/community-meet" element={<CommunityMeet />} />
@@ -288,7 +302,14 @@ function MainContent() {
       </AnimatePresence>
 
       {/* Global Footer */}
-      <Footer />
+      <Suspense fallback={null}>
+        {isHome ? <HomeFooter /> : <Footer />}
+      </Suspense>
+      {!isLoaderActive && (
+        <Suspense fallback={null}>
+          <Chatbot />
+        </Suspense>
+      )}
       <SpeedInsights />
     </div>
   );

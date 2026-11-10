@@ -2,6 +2,10 @@
   "version": 2,
   "builds": [
     {
+      "src": "api/chat.js",
+      "use": "@vercel/node"
+    },
+    {
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
       "config": { "distDir": "build" }
@@ -12,6 +16,8 @@
     "CI": "false"
   },
   "routes": [
+    { "src": "/api/chat", "dest": "/api/chat.js" },
+    { "src": "/api/(.*)", "dest": "/api/$1" },
     { "handle": "filesystem" },
     { "src": "/.*", "dest": "/index.html" }
   ]

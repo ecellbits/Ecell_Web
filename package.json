@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/akshatajmera7/Ecell_Web#readme",
   "dependencies": {
+    "@google/generative-ai": "^0.21.0",
     "fs-extra": "^11.3.3",
     "sharp": "^0.34.5"
   }

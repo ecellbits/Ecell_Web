@@ -1,0 +1,764 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+/* --- Theme & Typography Variables --- */
+.magazine-page-container {
+  --bg: #0C1026;
+  --surface: #161B3D;
+  --ink: #EEF0FF;
+  --muted: #A3A9CC;
+  --blue: #7B86FF;
+  --gold: #FFC53D;
+  --line: #2A3166;
+  --onblue: #0C1026;
+
+  /* Typography set to Inter across the page */
+  --display: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Override Bootstrap typography variables inside magazine container */
+  --bs-body-font-family: var(--body); /*if we don't add--bs and just normal font_family 
+  the boostrap version will override it */
+  --bs-btn-font-family: var(--display);
+  --bs-heading-color: var(--ink);
+
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 18px;
+  line-height: 1.65;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+  padding-top: 24px;
+  padding-bottom: 2px;
+  box-sizing: border-box;
+}
+
+/* Ensure typography is applied to all elements */
+.magazine-page-container p,
+.magazine-page-container span,
+.magazine-page-container a,
+.magazine-page-container li,
+.magazine-page-container input,
+.magazine-page-container blockquote,
+.magazine-page-container cite,
+.magazine-page-container div {
+  font-family: var(--body);
+}
+
+.magazine-page-container h1,
+.magazine-page-container h2,
+.magazine-page-container h3,
+.magazine-page-container h4,
+.mag-masthead,
+.mag-logo,
+.mag-tag,
+.mag-btn,
+.mag-chip,
+.mag-event-date,
+.mag-fact b,
+.mag-issue-item,
+.mag-cover h2,
+.mag-cover small {
+  font-family: var(--display) !important;
+}
+
+.magazine-page-container *,
+.magazine-page-container *::before,
+.magazine-page-container *::after {
+  box-sizing: border-box;
+}
+
+/* --- Container Wrap --- */
+.mag-wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Headings inherit display typography */
+.magazine-page-container h1,
+.magazine-page-container h2,
+.magazine-page-container h3,
+.magazine-page-container h4 {
+  font-family: var(--display);
+  line-height: 1.08;
+  margin: 0;
+  color: var(--ink);
+}
+
+/* --- Sub-Navigation Bar --- */
+.mag-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 0 20px;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 15px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.mag-nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.mag-nav .mag-logo {
+  font-weight: 800;
+  font-size: 24px;
+  text-decoration: none;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+
+.mag-issue-badge {
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--blue);
+  color: var(--onblue);
+  padding: 3px 8px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.mag-nav ul {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding-left: 400px;
+  overflow-x: auto;
+}
+
+.mag-nav a {
+  text-decoration: none;
+  color: var(--muted);
+  white-space: nowrap;
+  font-weight: 600;
+  transition: color 0.2s ease;
+  cursor: pointer;
+}
+
+.mag-nav a:hover {
+  color: var(--blue);
+}
+
+.mag-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* --- Hero Section --- */
+.mag-hero {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 48px;
+  align-items: center;
+  padding: 24px 0 64px;
+}
+
+.mag-masthead {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(68px, 14vw, 156px);
+  letter-spacing: -0.05em;
+  line-height: 0.85;
+  color: var(--blue);
+  margin: 0 0 20px;
+}
+
+.mag-hero p.mag-lead {
+  font-size: 21px;
+  max-width: 30em;
+  margin: 0 0 28px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.mag-btn-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.mag-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 16px;
+  background: var(--ink);
+  color: var(--bg) !important;
+  padding: 13px 26px;
+  border-radius: 999px;
+  text-decoration: none !important;
+  border: 0;
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.mag-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+
+.mag-btn-alt {
+  background: var(--gold);
+  color: #10142E !important;
+}
+
+.mag-btn-alt:hover {
+  background: #f7ad11;
+  color: #10142E !important;
+}
+
+/* --- 3D Cover Card --- */
+.mag-cover {
+  position: relative;
+  aspect-ratio: 3/4;
+  background: var(--blue);
+  color: var(--onblue);
+  border-radius: 8px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 14px 14px 0 var(--gold);
+  overflow: hidden;
+  transform: rotate(2deg);
+  animation: magSettle 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
+}
+
+.mag-cover:hover {
+  transform: rotate(0deg) translateY(-4px);
+  box-shadow: 18px 18px 0 var(--gold);
+}
+
+@keyframes magSettle {
+  from {
+    transform: rotate(9deg) translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(2deg) translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mag-cover {
+    animation: none;
+  }
+}
+
+.mag-cover small {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  opacity: 0.95;
+}
+
+.mag-cover h2 {
+  color: #ffffff !important;
+  line-height: 1.05;
+  font-size: clamp(32px, 4.6vw, 48px);
+  position: relative;
+  z-index: 1;
+  font-weight: 800;
+}
+
+.mag-cover svg.mag-cover-art {
+  position: absolute;
+  right: -30px;
+  bottom: -30px;
+  width: 78%;
+  opacity: 0.95;
+  pointer-events: none;
+}
+
+/* --- Section Dividers & Headers --- */
+.mag-section {
+  padding: 56px 0;
+  border-top: 2px solid var(--ink);
+}
+
+.mag-sec-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.mag-sec-head h2 {
+  font-size: clamp(34px, 4.8vw, 54px);
+  letter-spacing: -0.03em;
+  font-weight: 800;
+}
+
+.mag-sec-head p {
+  margin: 0;
+  color: var(--muted);
+  max-width: 26em;
+  font-size: 17px;
+}
+
+/* --- Stories Filters --- */
+.mag-filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.mag-chip {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink);
+  background: transparent;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  padding: 7px 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mag-chip:hover {
+  background: rgba(123, 134, 255, 0.1);
+}
+
+.mag-chip.active,
+.mag-chip[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+/* --- Stories Grid --- */
+.mag-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+
+.mag-card {
+  grid-column: span 4;
+  background: var(--surface);
+  border: 2px solid var(--ink);
+  border-radius: 6px;
+  padding: 0;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mag-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}
+
+.mag-card.featured {
+  grid-column: span 8;
+}
+
+.mag-card .mag-card-art {
+  height: 150px;
+  width: 100%;
+  display: block;
+}
+
+.mag-card.featured .mag-card-art {
+  height: 210px;
+}
+
+.mag-card .mag-card-txt {
+  padding: 20px 22px 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.mag-tag {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--blue);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.mag-card h3 {
+  font-size: 24px;
+  margin: 6px 0 10px;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  transition: text-decoration 0.2s ease;
+}
+
+.mag-card.featured h3 {
+  font-size: 34px;
+}
+
+.mag-card .mag-by {
+  font-size: 15px;
+  color: var(--muted);
+  margin-top: auto;
+}
+
+.mag-card:hover h3 {
+  text-decoration: underline;
+  text-decoration-color: var(--gold);
+  text-decoration-thickness: 4px;
+}
+
+/* --- Startup Spotlight --- */
+.mag-spot {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.mag-spot blockquote {
+  margin: 0;
+  font-size: clamp(23px, 2.8vw, 34px);
+  line-height: 1.32;
+  font-style: italic;
+  color: var(--ink);
+  border: 0;
+  padding: 0;
+}
+
+.mag-spot cite {
+  display: block;
+  margin-top: 18px;
+  font: 600 16px var(--display);
+  font-style: normal;
+  color: var(--muted);
+}
+
+.mag-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.mag-fact {
+  background: var(--surface);
+  border: 2px solid var(--ink);
+  padding: 20px;
+  border-radius: 6px;
+  transition: transform 0.2s ease;
+}
+
+.mag-fact:hover {
+  transform: translateY(-2px);
+}
+
+.mag-fact b {
+  display: block;
+  font: 800 40px/1 var(--display);
+  color: var(--blue);
+  margin-bottom: 6px;
+}
+
+.mag-fact span {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.35;
+  display: block;
+}
+
+/* --- Events Section --- */
+.mag-events-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mag-events-list li {
+  display: grid;
+  grid-template-columns: 120px 1fr auto;
+  gap: 20px;
+  align-items: center;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.mag-events-list li:last-child {
+  border-bottom: none;
+}
+
+.mag-events-list .mag-event-date {
+  font: 800 26px/1 var(--display);
+  color: var(--blue);
+}
+
+.mag-events-list h3 {
+  font-size: 22px;
+  margin-bottom: 4px;
+  font-weight: 700;
+}
+
+.mag-events-list p {
+  margin: 0;
+  font-size: 16px;
+  color: var(--muted);
+}
+
+/* --- Archive Section --- */
+.mag-issues-scroll {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  padding-bottom: 14px;
+  scrollbar-width: thin;
+}
+
+.mag-issue-item {
+  flex: 0 0 150px;
+  aspect-ratio: 3/4;
+  border-radius: 6px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: var(--display);
+  color: #10142E;
+  border: 2px solid var(--ink);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  user-select: none;
+}
+
+.mag-issue-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+}
+
+.mag-issue-item b {
+  font-size: 26px;
+  line-height: 1;
+  font-weight: 800;
+}
+
+.mag-issue-item span {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* --- Subscribe Section --- */
+.mag-sub-box {
+  background: var(--blue);
+  color: var(--onblue);
+  border-radius: 8px;
+  padding: 44px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: center;
+}
+
+.mag-sub-box h2 {
+  font-size: clamp(28px, 4vw, 42px);
+  color: #ffffff !important;
+  font-weight: 800;
+}
+
+.mag-sub-box form {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.mag-sub-box input {
+  flex: 1 1 200px;
+  font: inherit;
+  font-size: 16px;
+  padding: 13px 18px;
+  border-radius: 999px;
+  border: 2px solid var(--onblue);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  outline: none;
+}
+
+.mag-sub-box input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.mag-sub-box .mag-btn {
+  background: var(--gold);
+  color: #10142E !important;
+}
+
+.mag-sub-msg {
+  flex-basis: 100%;
+  margin: 6px 0 0;
+  font-size: 15px;
+  min-height: 1.4em;
+  color: #ffffff;
+}
+
+/* --- Magazine Editorial Footer --- */
+.mag-footer-note {
+  padding: 36px 0 10px;
+  font-size: 15px;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-family: var(--display);
+}
+
+/* --- Interactive Story Modal --- */
+.mag-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 11, 26, 0.75);
+  backdrop-filter: blur(5px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: magFadeIn 0.2s ease-out;
+}
+
+.mag-modal-dialog {
+  width: min(700px, 92vw);
+  margin-top: 80px; /*this shifts downards by 80px so no problem with the nav bar */
+  max-height: 78vh;
+  overflow-y: auto;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  padding: 36px 32px;
+  position: relative;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.35);
+  animation: magScaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mag-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: var(--ink);
+  color: var(--bg);
+  border: 0;
+  border-radius: 999px;
+  width: 36px;
+  height: 36px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.mag-modal-close:hover {
+  transform: scale(1.1);
+}
+
+.mag-modal-dialog h2 {
+  font-size: clamp(26px, 4.4vw, 40px);
+  margin: 8px 0 6px;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+}
+
+.mag-modal-dialog .mag-by {
+  color: var(--muted);
+  font-size: 15px;
+  margin-bottom: 18px;
+  display: block;
+}
+
+.mag-modal-body p {
+  margin: 16px 0;
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+@keyframes magFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes magScaleUp {
+  from {
+    transform: scale(0.95) translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+/* --- Responsive Media Queries --- */
+@media (max-width: 860px) {
+  .mag-hero,
+  .mag-spot,
+  .mag-sub-box {
+    grid-template-columns: 1fr;
+  }
+
+  .mag-cover {
+    max-width: 340px;
+    margin: 0 auto 20px;
+  }
+
+  .mag-card,
+  .mag-card.featured {
+    grid-column: span 12;
+  }
+
+  .mag-card.featured .mag-card-art {
+    height: 160px;
+  }
+
+  .mag-card.featured h3 {
+    font-size: 24px;
+  }
+
+  .mag-events-list li {
+    grid-template-columns: 80px 1fr;
+  }
+
+  .mag-events-list li .mag-btn {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .mag-sub-box {
+    padding: 28px;
+  }
+
+  .mag-modal-dialog {
+    padding: 26px 20px;
+  }
+}

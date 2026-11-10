@@ -1,149 +1,158 @@
 import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
-import { Phone } from "lucide-react";
-import "./Navbar.css";
-import logo from "../assets/navbarlogo.png";
+import { NavLink, useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
 import lplogo from "../assets/ecell/lp_logo_new.png";
 
+// Transparent over dark hero surfaces, then full-width cream once the page scrolls.
 const Navbar = ({ onToggleMenu, isOpen, isLaunchpad }) => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
+  const hasDarkHero = isLaunchpad || location.pathname === "/";
+  const overDarkHero = !isScrolled && hasDarkHero;
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 32);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  return (
-    <nav className={`navbar-new ${isScrolled ? "scrolled" : ""} ${isOpen ? "menu-open" : ""} ${isLaunchpad ? "launchpad-mode" : ""}`}>
-      <div className="navbar-container-new">
-        <div className="nav-logo-box">
-          <NavLink to={isLaunchpad ? "/launchpad" : "/"} className="navbar-logo-link">
-            <img src={isLaunchpad ? lplogo : logo} alt={isLaunchpad ? "LP" : "E-CELL"} className="nav-logo-img" />
-          </NavLink>
-        </div>
+  // Transparent over the hero; full-width cream chrome once the page scrolls.
+  const chrome = isScrolled
+    ? "bg-brand-cream/95 border-b border-black/10 shadow-[0_8px_24px_-20px_rgba(15,23,84,0.6)] backdrop-blur-md"
+    : "bg-transparent border-transparent";
+  const linkTone = overDarkHero
+    ? "text-brand-cream/75 hover:text-brand-cream"
+    : "text-brand-navy/70 hover:text-brand-navy";
 
-        <div className="nav-main-content">
-          <div className="nav-row-top">
+  return (
+    <>
+      {/* Keep the page content aligned below the fixed navigation (except full-viewport hero/canvas routes). */}
+      {location.pathname !== "/" && location.pathname !== "/gallery" && location.pathname !== "/launchpad/gallery" && (
+        <div aria-hidden="true" className={`h-[76px] ${hasDarkHero ? "bg-brand-navy" : ""}`} />
+      )}
+
+      <motion.nav
+        initial={{ y: -72, opacity: 0 }}
+        animate={{ y: isOpen ? -96 : 0, opacity: isOpen ? 0 : 1 }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        aria-label="Main navigation"
+        className={`fixed top-0 inset-x-0 z-[1000] border-b font-sans transition-[background-color,border-color,box-shadow,opacity] duration-300 ${chrome} ${
+          isOpen ? "pointer-events-none opacity-0" : ""
+        }`}
+      >
+        <div className="mx-auto flex h-[72px] w-full max-w-7xl items-center justify-between gap-6 px-5 sm:px-8 lg:px-10">
+          <NavLink to={isLaunchpad ? "/launchpad" : "/"} className="flex shrink-0 items-center no-underline" aria-label="E-Cell home">
+            <img
+              src={isLaunchpad ? lplogo : "/navbarlogo.png"}
+              alt={isLaunchpad ? "Launchpad" : "E-CELL"}
+              className={`h-12 w-auto transition-[filter] duration-300 ${overDarkHero ? "" : "brightness-0"}`}
+            />
+          </NavLink>
+
+          <div className="hidden items-center gap-9 lg:flex">
             {isLaunchpad ? (
               <>
-                <NavLink
-                  to="/launchpad/events"
-                  className={({ isActive }) => `nav-link-new ${isActive ? "active" : ""}`}
-                >
+                <NavLink to="/launchpad/events" className={`text-sm font-semibold no-underline transition-colors ${linkTone}`}>
                   Events
                 </NavLink>
-                <NavLink
-                  to="/launchpad/team"
-                  className={({ isActive }) => `nav-link-new ${isActive ? "active" : ""}`}
-                >
+                <NavLink to="/launchpad/team" className={`text-sm font-semibold no-underline transition-colors ${linkTone}`}>
                   Team
                 </NavLink>
-                {/* Temporarily hidden from public:
-                <NavLink
-                  to="/launchpad/passes"
-                  className={({ isActive }) => `nav-link-new ${isActive ? "active" : ""}`}
-                >
-                  Passes
+                <NavLink to="/" end className={`text-sm font-semibold no-underline transition-colors ${linkTone}`}>
+                  E-Cell Page
                 </NavLink>
-                <NavLink
-                  to="/launchpad/accommodation"
-                  className={({ isActive }) => `nav-link-new ${isActive ? "active" : ""}`}
-                >
-                  Accoms
+                <NavLink to="/launchpad/contact" className={`text-sm font-semibold no-underline transition-colors ${linkTone}`}>
+                  Contact
                 </NavLink>
-                <NavLink
-                  to="/launchpad/schedules"
-                  className={({ isActive }) => `nav-link-new ${isActive ? "active" : ""}`}
-                >
-                  Schedule
-                </NavLink>
-                */}
               </>
             ) : (
               <>
-                <NavLink
-                  to="/program"
-                  className={({ isActive }) => `nav-link-new ${isActive ? "active" : ""}`}
-                >
-                  Programs & Initiatives
+                <NavLink to="/program" className={`text-[15px] font-semibold no-underline transition-colors ${linkTone}`}>
+                  Programs
                 </NavLink>
-                <NavLink
-                  to="/team"
-                  className={({ isActive }) => `nav-link-new ${isActive ? "active" : ""}`}
-                >
-                  Our Team
+                <NavLink to="/team" className={`text-[15px] font-semibold no-underline transition-colors ${linkTone}`}>
+                  Team
                 </NavLink>
-                <NavLink
-                  to="/gallery"
-                  className={({ isActive }) => `nav-link-new ${isActive ? "active" : ""}`}
-                >
+                <NavLink to="/gallery" className={`text-[15px] font-semibold no-underline transition-colors ${linkTone}`}>
                   Gallery
                 </NavLink>
+                <NavLink to="/blog" className={`text-[15px] font-semibold no-underline transition-colors ${linkTone}`}>
+                  Blog
+                </NavLink>
+                <NavLink to="/launchpad" className={`text-[15px] font-semibold no-underline transition-colors ${linkTone}`}>
+                  Launchpad
+                </NavLink>
+                <NavLink to="/magazine" className={`text-[15px] font-semibold no-underline transition-colors ${linkTone}`}>
+                  Magazine
+                </NavLink>
               </>
             )}
           </div>
-          <div className="nav-row-bottom">
-            {isLaunchpad ? (
-              <>
-                <div className="nav-cell-bottom border-right">
-                  <NavLink
-                    to="/"
-                    className={({ isActive }) => `nav-link-new launchpad-link ${isActive ? "active" : ""}`}
-                  >
-                    <img src={logo} alt="E-CELL" className="lp-icon-nav scale-75" />
-                    ECell Page
-                  </NavLink>
-                </div>
-                <div className="nav-cell-bottom">
-                  <NavLink
-                    to="/launchpad/contact"
-                    className={({ isActive }) => `nav-link-new ${isActive ? "active" : ""}`}
-                  >
-                    <Phone size={14} className="nav-icon-phone" />
-                    Contact Us
-                  </NavLink>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="nav-cell-bottom border-right">
-                  <NavLink
-                    to="/launchpad"
-                    className={({ isActive }) => `nav-link-new launchpad-link ${isActive ? "active" : ""}`}
-                  >
-                    <img src={lplogo} alt="LP" className="lp-icon-nav" />
-                    Launchpad
-                  </NavLink>
-                </div>
-                <div className="nav-cell-bottom">
-                  <NavLink
-                    to="/contact"
-                    className={({ isActive }) => `nav-link-new ${isActive ? "active" : ""}`}
-                  >
-                    <Phone size={14} className="nav-icon-phone" />
-                    Contact Us
-                  </NavLink>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
 
-        <div className="nav-hamburger-box" onClick={onToggleMenu}>
-          <div className={`sm-hamburger ${isOpen ? "active" : ""}`}>
-            <span className="sm-hamburger-line"></span>
-            <span className="sm-hamburger-line"></span>
-            <span className="sm-hamburger-line"></span>
-          </div>
+          {!isLaunchpad && (
+            <div className="flex items-center gap-2">
+              <NavLink
+                to="/contact"
+                className={`hidden items-center rounded-full px-5 py-2.5 text-sm font-bold no-underline transition-colors lg:inline-flex ${
+                  overDarkHero ? "bg-brand-cream text-brand-navy hover:bg-white" : "bg-brand-navy text-brand-cream hover:bg-brand-ink"
+                }`}
+              >
+                Contact
+              </NavLink>
+              <button
+                type="button"
+                aria-label={isOpen ? "Close menu" : "Open menu"}
+                aria-expanded={isOpen}
+                onClick={onToggleMenu}
+                className={`flex h-11 w-11 flex-col items-center justify-center border-0 bg-transparent transition-colors lg:hidden ${
+                  overDarkHero ? "text-brand-cream" : "text-brand-navy"
+                } ${isOpen ? "is-open" : ""}`}
+              >
+                <span
+                  className={`h-0.5 w-[22px] rounded-sm transition-transform ${isOpen ? "translate-y-[7px] rotate-45" : ""}`}
+                  style={{ backgroundColor: "currentColor" }}
+                />
+                <span
+                  className={`mt-[5px] h-0.5 w-[22px] rounded-sm transition-opacity ${isOpen ? "opacity-0" : ""}`}
+                  style={{ backgroundColor: "currentColor" }}
+                />
+                <span
+                  className={`mt-[5px] h-0.5 w-[22px] rounded-sm transition-transform ${isOpen ? "-translate-y-[7px] -rotate-45" : ""}`}
+                  style={{ backgroundColor: "currentColor" }}
+                />
+              </button>
+            </div>
+          )}
+
+          {isLaunchpad && (
+            <button
+              type="button"
+              aria-label={isOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isOpen}
+              onClick={onToggleMenu}
+              className={`flex h-11 w-11 flex-col items-center justify-center border-0 bg-transparent transition-colors lg:hidden ${
+                overDarkHero ? "text-brand-cream" : "text-brand-navy"
+              } ${isOpen ? "is-open" : ""}`}
+            >
+              <span
+                className={`h-0.5 w-[22px] rounded-sm transition-transform ${isOpen ? "translate-y-[7px] rotate-45" : ""}`}
+                style={{ backgroundColor: "currentColor" }}
+              />
+              <span
+                className={`mt-[5px] h-0.5 w-[22px] rounded-sm transition-opacity ${isOpen ? "opacity-0" : ""}`}
+                style={{ backgroundColor: "currentColor" }}
+              />
+              <span
+                className={`mt-[5px] h-0.5 w-[22px] rounded-sm transition-transform ${isOpen ? "-translate-y-[7px] -rotate-45" : ""}`}
+                style={{ backgroundColor: "currentColor" }}
+              />
+            </button>
+          )}
         </div>
-      </div>
-    </nav>
+      </motion.nav>
+    </>
   );
 };
 
 export default Navbar;
-

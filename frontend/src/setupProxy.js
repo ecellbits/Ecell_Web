@@ -30,7 +30,7 @@ module.exports = function (app) {
 
     // 2. Delegate to the serverless function handler
     try {
-      const handlerPath = path.resolve(__dirname, "../../api/chat.js");
+      const handlerPath = path.resolve(__dirname, "../api/chat.js");
       delete require.cache[require.resolve(handlerPath)];
       const handler = require(handlerPath);
       await handler(req, res);

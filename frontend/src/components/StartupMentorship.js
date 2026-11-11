@@ -8,6 +8,7 @@ const sessions = [
   {
     number: "01",
     date: "18 OCT",
+    status: "Completed",
     title: "Problem, Customer & ICP",
     description:
       "Understand your customers, sharpen your problem statement, identify your ideal customer profile, and discover why now is the right time.",
@@ -15,6 +16,7 @@ const sessions = [
   {
     number: "02",
     date: "01 NOV*",
+    status: "Completed",
     title: "MVP & Product Validation",
     description:
       "Learn what to build first, what to skip, and how to validate your product with real users.",
@@ -22,6 +24,7 @@ const sessions = [
   {
     number: "03",
     date: "15 NOV*",
+    status: "Live",
     title: "Business Model & Unit Economics",
     description:
       "Explore customer acquisition costs, lifetime value, burn rate, and early monetisation.",
@@ -29,6 +32,7 @@ const sessions = [
   {
     number: "04",
     date: "22 NOV*",
+    status: "Upcoming",
     title: "Market, Competition & GTM",
     description:
       "Map your market, understand competitors, position your startup, and plan for your first 100 customers.",
@@ -36,6 +40,7 @@ const sessions = [
   {
     number: "05",
     date: "DEC — WEEK 3*",
+    status: "Upcoming",
     title: "Fundraising Strategy",
     description:
       "Understand how investors evaluate startups, what makes a pitch deck fundable, and common fundraising mistakes.",
@@ -98,7 +103,22 @@ export default function StartupMentorship() {
               <li key={session.number}>
                 <span className="content-number">{session.number}</span>
                 <div>
-                  <p className="content-meta">{session.date} · Upcoming</p>
+                  <p className="content-meta">
+                    {session.date} ·{' '}
+                    <span
+                      style={{
+                        fontWeight: 600,
+                        color:
+                          session.status === 'Completed'
+                            ? '#1a7f45'
+                            : session.status === 'Live'
+                            ? '#b45309'
+                            : 'inherit',
+                      }}
+                    >
+                      {session.status === 'Completed' ? '✓ Completed' : session.status}
+                    </span>
+                  </p>
                   <h3>{session.title}</h3>
                   <p>{session.description}</p>
                 </div>

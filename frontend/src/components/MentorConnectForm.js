@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FaWhatsapp } from 'react-icons/fa';
 import SEO from './common/SEO';
 import { supabase } from '../supabaseClient';
 import './common/content-pages.css';
+
+const WHATSAPP_COMMUNITY_URL =
+  process.env.REACT_APP_MENTOR_WHATSAPP_URL ||
+  'https://chat.whatsapp.com/ES9ec8vrX6c8ZMnIVeSGCc?s=sw&p=i&mlu=4&ilr=4&iam=2';
 
 const fields = [
   { name: 'founder_name', label: 'Founder name', type: 'text', autoComplete: 'name', placeholder: 'John Doe', required: true },
@@ -93,9 +98,47 @@ export default function MentorConnectForm() {
           </fieldset>
           {error && <p className="content-form-error" role="alert">{error}</p>}
           {success && (
-            <p className="content-form-success" role="status">
-              Application submitted successfully. Thank you for applying!
-            </p>
+            <div className="content-form-success" role="status" style={{ marginTop: '1.5rem' }}>
+              <p style={{ fontWeight: 600, fontSize: '1.1rem' }}>
+                Application submitted successfully. Thank you for applying!
+              </p>
+              <div
+                style={{
+                  marginTop: '1.25rem',
+                  padding: '1.5rem',
+                  borderRadius: '16px',
+                  background: 'rgba(31, 138, 76, 0.08)',
+                  border: '1px solid rgba(31, 138, 76, 0.25)',
+                  textAlign: 'center',
+                }}
+              >
+                <p style={{ marginBottom: '1rem', color: 'var(--content-text)', fontSize: '0.95rem' }}>
+                  Make sure to join the WhatsApp community below to stay connected with mentors and organizers:
+                </p>
+                <a
+                  href={WHATSAPP_COMMUNITY_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="content-button content-button-primary"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.5rem',
+                    background: '#1f8a4c',
+                    borderColor: '#25a55b',
+                    color: '#ffffff',
+                    fontWeight: 600,
+                    textDecoration: 'none',
+                    padding: '0.85rem 1.75rem',
+                    borderRadius: '12px',
+                  }}
+                >
+                  <FaWhatsapp style={{ fontSize: '1.35rem' }} />
+                  Join WhatsApp Community
+                </a>
+              </div>
+            </div>
           )}
         </form>
         <section className="content-section">
